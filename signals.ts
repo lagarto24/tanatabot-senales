@@ -15,7 +15,7 @@ const CRYPTO = ["BTCUSDT", "ETHUSDT", "SOLUSDT", "HYPEUSDT", "BNBUSDT"];
 // criptos que se leen de Hyperliquid (Binance tiene poco historial de HYPE)
 const HYPERLIQUID: Record<string, string> = { HYPEUSDT: "HYPE" };
 const STOCKS = ["AAPL", "TSLA", "NVDA", "MSFT", "AMZN", "SPY"];
-const TIMEFRAMES = ["1d"] as const; // solo 1D: las únicas estrategias que pasaron las 5 pruebas de estrés
+const TIMEFRAMES = ["4h", "1d"] as const; // 1D: 3 estrategias validadas · 4H: rebote en rango (baja volatilidad)
 const CHECK_EVERY_MIN = 15;
 const MIN_FILTERS = 3; // de 4 filtros (ADX, RSI, MACD, volumen)
 const SL_ATR = 1.5;    // stop loss = 1.5 × ATR
@@ -294,7 +294,7 @@ const madrid = (ms: number) => new Date(ms).toLocaleString("es-ES", { timeZone: 
 //  DON  Donchian 20/10 "Tortugas" — todas las temporalidades y activos. En 1D: PF 1.69 → 1.33 en datos no vistos.
 //  RSI2 Connors RSI(2) — solo acciones, solo LONG, 1D. PF 1.28 → 2.05, acierto ~70%.
 //  EMA  EMA 30/150/200 retroceso — 1D, TP fijo 1:2. PF 1.23 → 1.42.
-type Strat = "DON" | "RSI2" | "EMA";
+type Strat = "DON" | "RSI2" | "EMA" | "RNG";
 const STRAT_INFO: Record<Strat, { name: string; how: string; hist: (tf: TF) => string }> = {
   DON: {
     name: "Ruptura Donchian (método \"Tortugas\")",
@@ -308,6 +308,7 @@ const STRAT_INFO: Record<Strat, { name: string; how: string; hist: (tf: TF) => s
     how: "Una acción en tendencia alcista cae fuerte unos días. Se compra la caída y se vende en el rebote.",
     hist: () => "En pruebas con años de historial: acierta ~70% de las veces, con operaciones cortas (pocos días).",
   },
+  RNG: { name: "Rebote en rango (baja volatilidad)", how: "Mercado tranquilo y sin tendencia: el precio sale por debajo de la banda de Bollinger y vuelve a entrar.", hist: () => "PF 1.62 en datos no vistos." },
   EMA: {
     name: "Retroceso a la EMA30 (EMA 30/150/200)",
     how: "En tendencia clara, el precio retrocede a su media de 30 velas y rebota a favor.",
@@ -324,7 +325,7 @@ function entryMessage(sym: string, tf: TF, e: Entry, isCrypto: boolean): string 
   const pct = (x: number) => `${x >= e.price ? "+" : "−"}${Math.abs(((x - e.price) / e.price) * 100).toFixed(2)}%`;
   const rr = e.tp ? Math.abs(e.tp - e.price) / Math.abs(e.price - e.sl) : 0;
   return [
-    `${L ? "🟢" : "🔴"} <b>${e.side} · ${sym}</b> (1D)`,
+    `${L ? "🟢" : "🔴"} <b>${e.side} · ${sym}</b> (${tf.toUpperCase()})`,
     ``,
     `Entrada: <b>${fmt(e.price)} ${cur}</b>`,
     `Take profit: <b>${fmt(e.tp!)}</b> (${pct(e.tp!)})`,
@@ -363,7 +364,9 @@ function stopMoveMessage(p: Position, newStop: number): string {
 function sma(v: number[], p: number) { const o = new Array(v.length).fill(NaN); let s = 0; for (let i = 0; i < v.length; i++) { s += v[i]; if (i >= p) s -= v[i - p]; if (i >= p - 1) o[i] = s / p; } return o; }
 const ind = (k: Candle[]) => {
   const c = k.map((x) => x.c);
-  return { c, e200: ema(c, 200), s200: sma(c, 200), s5: sma(c, 5), r2: rsi(c, 2), atr: atrAdx(k).atr };
+  const aa = atrAdx(k), mid = sma(c, 20);
+  const sd = c.map((_, i) => { if (i < 19) return NaN; let s = 0; for (let j = i - 19; j <= i; j++) s += (c[j] - mid[i]) ** 2; return Math.sqrt(s / 20); });
+  return { c, e200: ema(c, 200), s200: sma(c, 200), s5: sma(c, 5), r2: rsi(c, 2), atr: aa.atr, adx: aa.adx, mid, bbLo: c.map((_, i) => mid[i] - 2 * sd[i]), bbUp: c.map((_, i) => mid[i] + 2 * sd[i]) };
 };
 
 function donchianEntry(k: Candle[], I: ReturnType<typeof ind>): Entry | null {
@@ -380,6 +383,14 @@ function rsi2Entry(k: Candle[], I: ReturnType<typeof ind>): Entry | null {
   const c = I.c[i];
   if (c > I.s200[i] && I.r2[i] < 10)
     return { strat: "RSI2", side: "LONG", price: c, sl: c - 1.5 * I.atr[i], tp: c + 1.5 * 1.5 * I.atr[i], t: k[i].t, reasons: [`En tendencia alcista: sobre su media de 200 días`, `Caída fuerte a corto plazo: RSI(2) = ${I.r2[i].toFixed(1)} (menor de 10) → rebote probable`] };
+  return null;
+}
+// Rebote en rango 4H: ADX < 20, bandas estrechas (< 6%), cierre previo bajo la banda inferior y cierre actual dentro. SL 1.5 ATR, TP 1:1.5.
+function rangeEntry(k: Candle[], I: ReturnType<typeof ind>): Entry | null {
+  const i = k.length - 1; if (i < 220) return null;
+  const c = I.c[i], a = I.atr[i];
+  if (I.adx[i] < 20 && (I.bbUp[i] - I.bbLo[i]) / I.mid[i] < 0.06 && I.c[i - 1] < I.bbLo[i - 1] && c > I.bbLo[i])
+    return { strat: "RNG", side: "LONG", price: c, sl: c - 1.5 * a, tp: c + 1.5 * 1.5 * a, t: k[i].t, reasons: [`Mercado en rango tranquilo (ADX ${I.adx[i].toFixed(0)})`, `Volvió a entrar en las bandas de Bollinger`] };
   return null;
 }
 function emaEntry(k: Candle[]): Entry | null {
@@ -411,7 +422,7 @@ function track(p: Position, k: Candle[], I: ReturnType<typeof ind>): { msgs: str
       const t10 = L ? Math.min(...k.slice(m - 9, m + 1).map((y) => y.l)) : Math.max(...k.slice(m - 9, m + 1).map((y) => y.h));
       p.stop = L ? Math.max(p.stop, t10) : Math.min(p.stop, t10);
     }
-    if (p.bars >= (p.strat === "EMA" ? 60 : 120)) { msgs.push(exitMessage(p, x.c, "llevaba demasiado tiempo abierta sin resolverse")); return { msgs, closed: true }; }
+    if (p.bars >= (p.strat === "EMA" || p.strat === "RNG" ? 60 : 120)) { msgs.push(exitMessage(p, x.c, "llevaba demasiado tiempo abierta sin resolverse")); return { msgs, closed: true }; }
   }
   // avisar de movimiento de stop solo si es relevante (≥ 0.25 ATR); en 1h solo si es ≥ 1 ATR para no saturar
   const a = I.atr[k.length - 1], minMove = (p.tf === "1h" ? 1 : 0.25) * a;
@@ -440,7 +451,7 @@ async function scan(report = false) {
         const k = isCrypto ? await fetchCrypto(sym, tf) : await fetchStock(sym, tf);
         if (k.length < 220) { lines.push(`${sym} ${tf}: datos insuficientes`); continue; }
         const I = ind(k), last = k[k.length - 1];
-        const strats: Strat[] = tf === "1d" ? (isCrypto ? ["DON", "EMA"] : ["DON", "RSI2", "EMA"]) : ["DON"];
+        const strats: Strat[] = tf === "1d" ? (isCrypto ? ["DON", "EMA"] : ["DON", "RSI2", "EMA"]) : ["RNG"];
         const tags: string[] = [];
         for (const st of strats) {
           const key = `${st}|${sym}|${tf}`;
@@ -452,7 +463,7 @@ async function scan(report = false) {
             continue;
           }
           if (state.last[key] === last.t) continue;
-          const e = st === "DON" ? donchianEntry(k, I) : st === "RSI2" ? rsi2Entry(k, I) : emaEntry(k);
+          const e = st === "DON" ? donchianEntry(k, I) : st === "RSI2" ? rsi2Entry(k, I) : st === "RNG" ? rangeEntry(k, I) : emaEntry(k);
           if (!e) continue;
           tags.push(`${st} ${e.side} NUEVA`);
           if (report) continue;
@@ -480,9 +491,10 @@ if (args.includes("--sample")) {
   await sendTelegram("🧪 <b>EJEMPLO DE FORMATO — no es una señal real</b>\n\n" + entryMessage("BTCUSDT", "1d", ex, true));
 } else if (args.includes("--replay")) {
   // verificación: reproduce el historial vela a vela con la lógica en vivo (sin Telegram)
-  for (const [sym, isCrypto] of [["BTCUSDT", true], ["SOLUSDT", true], ["SPY", false], ["NVDA", false]] as const) {
-    const all = isCrypto ? await fetchCrypto(sym, "1d") : await fetchStock(sym, "1d");
-    const strats: Strat[] = isCrypto ? ["DON", "EMA"] : ["DON", "RSI2", "EMA"];
+  const REPLAY_TF = (process.env.REPLAY_TF ?? "1d") as TF;
+  for (const [sym, isCrypto] of [["BTCUSDT", true], ["SOLUSDT", true], ["ETHUSDT", true], ["SPY", false], ["NVDA", false], ["MSFT", false]] as const) {
+    const all = isCrypto ? await fetchCrypto(sym, REPLAY_TF) : await fetchStock(sym, REPLAY_TF);
+    const strats: Strat[] = REPLAY_TF === "4h" ? ["RNG"] : isCrypto ? ["DON", "EMA"] : ["DON", "RSI2", "EMA"];
     for (const st of strats) {
       let pos: Position | null = null; const R: number[] = [];
       for (let n = 221; n <= all.length; n++) {
@@ -495,8 +507,8 @@ if (args.includes("--sample")) {
           }
           continue;
         }
-        const e = st === "DON" ? donchianEntry(k, I) : st === "RSI2" ? rsi2Entry(k, I) : emaEntry(k);
-        if (e) pos = { ...e, sym, tf: "1d", isCrypto, lastBar: last.t, bars: 0, stop: e.sl };
+        const e = st === "DON" ? donchianEntry(k, I) : st === "RSI2" ? rsi2Entry(k, I) : st === "RNG" ? rangeEntry(k, I) : emaEntry(k);
+        if (e) pos = { ...e, sym, tf: REPLAY_TF, isCrypto, lastBar: last.t, bars: 0, stop: e.sl };
       }
       const w = R.filter((x) => x > 0), l = R.filter((x) => x <= 0);
       const pf = -l.reduce((a, b) => a + b, 0) ? w.reduce((a, b) => a + b, 0) / -l.reduce((a, b) => a + b, 0) : 0;
