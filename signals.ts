@@ -15,7 +15,7 @@ const CRYPTO = ["BTCUSDT", "ETHUSDT", "SOLUSDT", "HYPEUSDT", "BNBUSDT"];
 // criptos que se leen de Hyperliquid (Binance tiene poco historial de HYPE)
 const HYPERLIQUID: Record<string, string> = { HYPEUSDT: "HYPE" };
 const STOCKS = ["AAPL", "TSLA", "NVDA", "MSFT", "AMZN", "SPY"];
-const TIMEFRAMES = ["1h", "4h", "1d"] as const;
+const TIMEFRAMES = ["1d"] as const; // solo 1D: las únicas estrategias que pasaron las 5 pruebas de estrés
 const CHECK_EVERY_MIN = 15;
 const MIN_FILTERS = 3; // de 4 filtros (ADX, RSI, MACD, volumen)
 const SL_ATR = 1.5;    // stop loss = 1.5 × ATR
@@ -320,42 +320,16 @@ type Entry = { strat: Strat; side: "LONG" | "SHORT"; price: number; sl: number; 
 type Position = Entry & { sym: string; tf: TF; isCrypto: boolean; lastBar: number; bars: number; stop: number };
 
 function entryMessage(sym: string, tf: TF, e: Entry, isCrypto: boolean): string {
-  const L = e.side === "LONG", cur = isCrypto ? "USDT" : "USD", info = STRAT_INFO[e.strat];
-  const slPct = Math.abs((e.sl - e.price) / e.price) * 100;
-  const tpPct = e.tp ? Math.abs((e.tp - e.price) / e.price) * 100 : NaN;
-  const pos1000 = Math.round(10 / (slPct / 100));
-  const high = HIGH_CONF(e.strat, tf);
-  const exitLines = e.tp
-    ? [`3️⃣ Poner <b>take profit</b> en <b>${fmt(e.tp)}</b>`, `     → si el precio ${L ? "sube" : "baja"} ahí, cobras ~${tpPct.toFixed(2)}%`, `⚖️ Ganas el <b>doble</b> de lo que arriesgas (1:2).`]
-    : e.strat === "DON"
-      ? [`3️⃣ <b>Sin objetivo fijo</b>: se deja correr la ganancia.`, `     → el bot te avisará para <b>mover el stop</b> a favor y cuándo <b>salir</b>.`]
-      : [`3️⃣ <b>Salida</b>: cuando el precio rebote sobre su media de 5 días.`, `     → el bot te avisará cuándo <b>cerrar</b> (suele ser en pocos días).`];
+  const L = e.side === "LONG", cur = isCrypto ? "USDT" : "USD";
+  const pct = (x: number) => `${x >= e.price ? "+" : "−"}${Math.abs(((x - e.price) / e.price) * 100).toFixed(2)}%`;
+  const rr = e.tp ? Math.abs(e.tp - e.price) / Math.abs(e.price - e.sl) : 0;
   return [
-    `${L ? "🟢" : "🔴"} <b>${e.side}</b> ${L ? "📈" : "📉"} <b>${sym}</b> · gráfico de ${tfName(tf)} ${isCrypto ? "🪙" : "🏛"}`,
-    L ? `<i>LONG = apostar a que el precio SUBE</i>` : `<i>SHORT = apostar a que el precio BAJA</i>`,
-    high ? `⭐ <b>ALTA CONFIANZA</b> — pasó las 5 pruebas de estrés` : `🧪 <b>EN PRUEBA</b> — gana a la larga, pero depende de pocas operaciones grandes (no pasó 1 de 5 pruebas de estrés). Ideal para practicar en demo.`,
-    `🧠 Estrategia: <b>${info.name}</b>`,
+    `${L ? "🟢" : "🔴"} <b>${e.side} · ${sym}</b> (1D)`,
     ``,
-    `<b>📋 QUÉ HACER</b>`,
-    `1️⃣ ${L ? "Comprar" : "Vender (abrir short)"} cerca de <b>${fmt(e.price)} ${cur}</b>`,
-    `2️⃣ Poner <b>stop loss</b> en <b>${fmt(e.sl)}</b>`,
-    `     → si el precio ${L ? "baja" : "sube"} ahí, sales y pierdes ~${slPct.toFixed(2)}%`,
-    ...exitLines,
-    `🕒 Vela que cerró el ${madrid(e.t + TF_MS_MSG[tf])} (hora España)${isCrypto ? "" : " · bolsa EE.UU. en dólares"}`,
-    ``,
-    `<b>💰 CUÁNTO METER</b>`,
-    `Regla de oro: no arriesgar más del 1% de tu cuenta.`,
-    `Ejemplo: con una cuenta de 1.000 ${cur}, abre una posición de ~<b>${pos1000} ${cur}</b> sin apalancamiento. Si toca el stop pierdes ~10 ${cur}.`,
-    ``,
-    `<b>⚡ CON APALANCAMIENTO</b> (multiplica ganancias Y pérdidas)`,
-    ...LEVERAGES.map((lev) => `• x${lev}: si toca el stop pierdes <b>−${(slPct * lev).toFixed(1)}%</b> de lo que pongas${e.tp ? ` · si gana <b>+${(tpPct * lev).toFixed(1)}%</b>` : ""}${slPct * lev >= 80 ? " ⚠️ muy arriesgado" : ""}`),
-    ``,
-    `<b>🔍 POR QUÉ ESTA SEÑAL</b>`,
-    `<i>${info.how}</i>`,
-    ...e.reasons.map((r) => `✓ ${r}`),
-    `📊 ${info.hist(tf)}`,
-    ``,
-    `🛡 Respeta SIEMPRE el stop loss. Señal automática educativa, no es asesoría financiera.`,
+    `Entrada: <b>${fmt(e.price)} ${cur}</b>`,
+    `Take profit: <b>${fmt(e.tp!)}</b> (${pct(e.tp!)})`,
+    `Stop loss: <b>${fmt(e.sl)}</b> (${pct(e.sl)})`,
+    `Riesgo/beneficio: 1:${+rr.toFixed(1)}`,
   ].join("\n");
 }
 
@@ -396,7 +370,7 @@ function donchianEntry(k: Candle[], I: ReturnType<typeof ind>): Entry | null {
   const i = k.length - 1; if (i < 220) return null;
   const hi = Math.max(...k.slice(i - 20, i).map((x) => x.h)), lo = Math.min(...k.slice(i - 20, i).map((x) => x.l));
   const c = I.c[i], a = I.atr[i];
-  if (c > hi && c > I.e200[i]) return { strat: "DON", side: "LONG", price: c, sl: c - 2 * a, t: k[i].t, reasons: [`Rompió el máximo de las últimas 20 velas (${fmt(hi)})`, `Tendencia alcista: precio sobre la EMA200`] };
+  if (c > hi && c > I.e200[i]) return { strat: "DON", side: "LONG", price: c, sl: c - 2 * a, tp: c + 3 * 2 * a, t: k[i].t, reasons: [`Rompió el máximo de las últimas 20 velas (${fmt(hi)})`, `Tendencia alcista: precio sobre la EMA200`] };
   // SHORT desactivado: en backtest los cortos de Donchian perdían (PF 0.78). Solo LONG.
   //   if (c < lo && c < I.e200[i]) return { strat: "DON", side: "SHORT", price: c, sl: c + 2 * a, t: k[i].t, reasons: [`Rompió el mínimo de las últimas 20 velas (${fmt(lo)})`, `Tendencia bajista: precio bajo la EMA200`] };
   return null;
@@ -405,7 +379,7 @@ function rsi2Entry(k: Candle[], I: ReturnType<typeof ind>): Entry | null {
   const i = k.length - 1; if (i < 220) return null;
   const c = I.c[i];
   if (c > I.s200[i] && I.r2[i] < 10)
-    return { strat: "RSI2", side: "LONG", price: c, sl: c - 3 * I.atr[i], t: k[i].t, reasons: [`En tendencia alcista: sobre su media de 200 días`, `Caída fuerte a corto plazo: RSI(2) = ${I.r2[i].toFixed(1)} (menor de 10) → rebote probable`] };
+    return { strat: "RSI2", side: "LONG", price: c, sl: c - 1.5 * I.atr[i], tp: c + 1.5 * 1.5 * I.atr[i], t: k[i].t, reasons: [`En tendencia alcista: sobre su media de 200 días`, `Caída fuerte a corto plazo: RSI(2) = ${I.r2[i].toFixed(1)} (menor de 10) → rebote probable`] };
   return null;
 }
 function emaEntry(k: Candle[]): Entry | null {
@@ -420,6 +394,7 @@ function emaEntry(k: Candle[]): Entry | null {
 // Procesa las velas cerradas posteriores a la última vista. Devuelve mensajes a enviar y si la posición se cerró.
 function track(p: Position, k: Candle[], I: ReturnType<typeof ind>): { msgs: string[]; closed: boolean } {
   const L = p.side === "LONG", msgs: string[] = [];
+  const legacy = !p.tp; // posiciones antiguas (sin TP fijo) siguen con sus avisos; las nuevas cierran en silencio en TP o SL
   const start = k.findIndex((x) => x.t > p.lastBar);
   if (start < 0) return { msgs, closed: false };
   const prevStop = p.stop;
@@ -431,8 +406,8 @@ function track(p: Position, k: Candle[], I: ReturnType<typeof ind>): { msgs: str
       return { msgs, closed: true };
     }
     if (p.tp && (L ? x.h >= p.tp : x.l <= p.tp)) { msgs.push(exitMessage(p, p.tp, "🎯 se alcanzó el objetivo (take profit)")); return { msgs, closed: true }; }
-    if (p.strat === "RSI2" && x.c > I.s5[m]) { msgs.push(exitMessage(p, x.c, "el precio rebotó sobre su media de 5 días (fin del rebote)")); return { msgs, closed: true }; }
-    if (p.strat === "DON" && m >= 10) {
+    if (legacy && p.strat === "RSI2" && x.c > I.s5[m]) { msgs.push(exitMessage(p, x.c, "el precio rebotó sobre su media de 5 días (fin del rebote)")); return { msgs, closed: true }; }
+    if (legacy && p.strat === "DON" && m >= 10) {
       const t10 = L ? Math.min(...k.slice(m - 9, m + 1).map((y) => y.l)) : Math.max(...k.slice(m - 9, m + 1).map((y) => y.h));
       p.stop = L ? Math.max(p.stop, t10) : Math.min(p.stop, t10);
     }
@@ -440,9 +415,10 @@ function track(p: Position, k: Candle[], I: ReturnType<typeof ind>): { msgs: str
   }
   // avisar de movimiento de stop solo si es relevante (≥ 0.25 ATR); en 1h solo si es ≥ 1 ATR para no saturar
   const a = I.atr[k.length - 1], minMove = (p.tf === "1h" ? 1 : 0.25) * a;
-  if (p.strat === "DON" && Math.abs(p.stop - prevStop) >= minMove) msgs.push(stopMoveMessage(p, p.stop));
+  if (legacy && p.strat === "DON" && Math.abs(p.stop - prevStop) >= minMove) msgs.push(stopMoveMessage(p, p.stop));
   return { msgs, closed: false };
 }
+const silent = (r: { msgs: string[]; closed: boolean }, p: Position) => (p.tp ? { msgs: [], closed: r.closed } : r);
 
 // ───────────── Bucle ─────────────
 type State = { last: Record<string, number>; open: Record<string, Position> };
@@ -470,7 +446,7 @@ async function scan(report = false) {
           const key = `${st}|${sym}|${tf}`;
           const pos = state.open[key];
           if (pos) {
-            const r = track(pos, k, I);
+            const r = silent(track(pos, k, I), pos);
             for (const m of r.msgs) await send(m);
             if (r.closed) delete state.open[key]; else tags.push(`${st} ${pos.side} abierta`);
             continue;
@@ -500,11 +476,8 @@ const args = process.argv.slice(2);
 if (args.includes("--sample")) {
   // envía ejemplos de formato con precios reales (no son señales reales)
   const k = await fetchBinance("BTCUSDT", "1d"), I = ind(k), i = k.length - 1, c = I.c[i];
-  const ex: Entry = { strat: "DON", side: "LONG", price: c, sl: c - 2 * I.atr[i], t: k[i].t, reasons: [`Rompió el máximo de las últimas 20 velas`, `Tendencia alcista: precio sobre la EMA200`] };
+  const ex: Entry = { strat: "DON", side: "LONG", price: c, sl: c - 2 * I.atr[i], tp: c + 6 * I.atr[i], t: k[i].t, reasons: [`Rompió el máximo de las últimas 20 velas`, `Tendencia alcista: precio sobre la EMA200`] };
   await sendTelegram("🧪 <b>EJEMPLO DE FORMATO — no es una señal real</b>\n\n" + entryMessage("BTCUSDT", "1d", ex, true));
-  const p: Position = { ...ex, sym: "BTCUSDT", tf: "1d", isCrypto: true, lastBar: 0, bars: 0, stop: ex.sl };
-  await sendTelegram("🧪 <b>EJEMPLO — aviso de mover stop</b>\n\n" + stopMoveMessage(p, c * 1.02));
-  await sendTelegram("🧪 <b>EJEMPLO — aviso de cierre</b>\n\n" + exitMessage(p, c * 1.06, "el precio tocó el stop que fuimos subiendo"));
 } else if (args.includes("--replay")) {
   // verificación: reproduce el historial vela a vela con la lógica en vivo (sin Telegram)
   for (const [sym, isCrypto] of [["BTCUSDT", true], ["SOLUSDT", true], ["SPY", false], ["NVDA", false]] as const) {

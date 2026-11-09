@@ -14,283 +14,277 @@ HYPEUSDT 1d: 704 velas desde 2024-12-05
 BNBUSDT 1h: 7999 velas desde 2025-12-11
 BNBUSDT 4h: 3999 velas desde 2025-01-12
 BNBUSDT 1d: 1999 velas desde 2021-05-20
-AAPL 1h: 5088 velas desde 2023-12-12
-AAPL 4h: 1453 velas desde 2023-12-12
-AAPL 1d: 2512 velas desde 2016-11-09
-TSLA 1h: 5088 velas desde 2023-12-12
-TSLA 4h: 1453 velas desde 2023-12-12
-TSLA 1d: 2512 velas desde 2016-11-09
-NVDA 1h: 5088 velas desde 2023-12-12
-NVDA 4h: 1453 velas desde 2023-12-12
+NVDA 1h: 5089 velas desde 2023-12-12
+NVDA 4h: 1454 velas desde 2023-12-12
 NVDA 1d: 2512 velas desde 2016-11-09
-MSFT 1h: 5088 velas desde 2023-12-12
-MSFT 4h: 1453 velas desde 2023-12-12
+MSFT 1h: 5089 velas desde 2023-12-12
+MSFT 4h: 1454 velas desde 2023-12-12
 MSFT 1d: 2512 velas desde 2016-11-09
-AMZN 1h: 5088 velas desde 2023-12-12
-AMZN 4h: 1453 velas desde 2023-12-12
+AMZN 1h: 5089 velas desde 2023-12-12
+AMZN 4h: 1454 velas desde 2023-12-12
 AMZN 1d: 2512 velas desde 2016-11-09
-SPY 1h: 5088 velas desde 2023-12-12
-SPY 4h: 1453 velas desde 2023-12-12
+SPY 1h: 5089 velas desde 2023-12-12
+SPY 4h: 1454 velas desde 2023-12-12
 SPY 1d: 2512 velas desde 2016-11-09
 
 ═══ RESUMEN POR VARIANTE (todos los activos y temporalidades) ═══
                                      ops acierto     total   media    PF   maxDD
-A actual (3 filtros, SL 1.5 ATR)    3072   35.4%    -51.1R  -0.02R  0.98  167.0R
-B 4 filtros                         1112   34.4%    -55.6R  -0.05R  0.93  123.4R
-C + tendencia mayor                 1716   33.7%   -133.0R  -0.08R  0.89  166.9R
-D + tendencia mayor, 4 filtros       651   32.7%    -72.7R  -0.11R  0.85  106.7R
-E + tendencia mayor, SL 2 ATR       1436   33.6%   -119.6R  -0.08R  0.88  147.8R
-F + tendencia mayor, ADX 25         1491   33.7%   -114.1R  -0.08R  0.89  142.0R
-G artículo (S/R + vela, 1:2)        3112   34.5%   -268.1R  -0.09R  0.88  308.8R
-H artículo + breakeven en 1R        3334   27.1%   -287.4R  -0.09R  0.85  338.3R
-I artículo + tendencia propia       1818   34.0%   -162.5R  -0.09R  0.88  192.3R
-J EMA30/150/200 retroceso            944   34.2%    -48.1R  -0.05R  0.93   93.8R
-K EMA retroceso + parcial 1R         995   48.8%    -78.0R  -0.08R  0.86  111.4R
-L EMA30/150 cruce                     93   35.5%      1.1R   0.01R  1.02   11.7R
-M EMA retroceso, SL 2 ATR            815   36.1%    -17.1R  -0.02R  0.97   68.1R
-N Alex Ruiz estructura 1:3          1123   32.0%     20.1R   0.02R  1.03   66.0R
-O Alex Ruiz estructura 1:2          1183   37.4%     15.9R   0.01R  1.02   56.6R
-P Alex Ruiz estructura 1:3, giros 3   804   32.2%     -8.5R  -0.01R  0.98   58.5R
-Q Connors RSI(2) solo LONG          2854   62.2%      0.8R   0.00R  1.00   63.9R
-R Connors RSI(2) LONG+SHORT         5127   61.5%    -55.9R  -0.01R  0.93  108.5R
-S Donchian 20/10 Tortugas           3132   33.8%    267.7R   0.09R  1.17  108.1R
-S2 Donchian solo LONG               1736   37.2%    439.0R   0.25R  1.53   67.3R
-T Williams ruptura volatilidad 0.6 13107   48.9%  -1795.4R  -0.14R  0.73 1921.2R
-U Williams ruptura volatilidad L+S 23358   48.2%  -3457.8R  -0.15R  0.71 3574.9R
-V Williams Smash Day                2587   51.2%   -429.2R  -0.17R  0.62  448.3R
-W Williams Oops                     5257   41.1%    341.6R   0.06R  1.10  120.7R
-X Williams %R en tendencia          1593   52.2%    -15.6R  -0.01R  0.97   49.1R
-SA SHORT Donchian bajista, stop móvil   743   34.2%     -1.5R  -0.00R  1.00   74.1R
-SB SHORT Donchian bajista, TP 1:2    760   35.1%    -37.6R  -0.05R  0.93   84.5R
-SC SHORT Donchian bajista, TP 1:1.5   837   40.6%    -40.5R  -0.05R  0.92   75.5R
-SD SHORT RSI(2) rebote fallido      2400   59.4%   -126.1R  -0.05R  0.72  135.3R
-SE SHORT rebote a EMA20, TP 1:2      683   30.2%   -116.1R  -0.17R  0.76  116.1R
+A actual (3 filtros, SL 1.5 ATR)    2623   35.8%    -21.2R  -0.01R  0.99  144.8R
+B 4 filtros                          951   35.4%    -22.8R  -0.02R  0.97  111.0R
+C + tendencia mayor                 1485   34.1%    -99.8R  -0.07R  0.91  150.9R
+D + tendencia mayor, 4 filtros       562   33.3%    -55.5R  -0.10R  0.86  100.7R
+E + tendencia mayor, SL 2 ATR       1243   34.0%    -96.7R  -0.08R  0.89  123.0R
+F + tendencia mayor, ADX 25         1295   34.1%    -91.0R  -0.07R  0.90  131.1R
+G artículo (S/R + vela, 1:2)        2721   34.7%   -228.1R  -0.08R  0.88  289.1R
+H artículo + breakeven en 1R        2922   27.1%   -249.8R  -0.09R  0.85  312.7R
+I artículo + tendencia propia       1568   34.4%   -127.1R  -0.08R  0.89  189.8R
+J EMA30/150/200 retroceso            797   34.9%    -28.5R  -0.04R  0.95   83.5R
+K EMA retroceso + parcial 1R         846   48.8%    -71.9R  -0.09R  0.85   98.1R
+L EMA30/150 cruce                     75   37.3%      5.0R   0.07R  1.10   11.6R
+M EMA retroceso, SL 2 ATR            687   37.3%      2.5R   0.00R  1.01   65.8R
+N Alex Ruiz estructura 1:3           944   33.6%     66.3R   0.07R  1.10   47.3R
+O Alex Ruiz estructura 1:2           995   38.9%     52.6R   0.05R  1.09   38.9R
+P Alex Ruiz estructura 1:3, giros 3   692   32.9%     13.5R   0.02R  1.03   43.3R
+Q Connors RSI(2) solo LONG          2385   62.2%      0.9R   0.00R  1.00   60.8R
+R Connors RSI(2) LONG+SHORT         4341   61.6%    -48.6R  -0.01R  0.93   99.4R
+S Donchian 20/10 Tortugas           2646   33.6%    189.2R   0.07R  1.14   94.1R
+S2 Donchian solo LONG               1459   36.3%    317.3R   0.22R  1.45   53.6R
+T Williams ruptura volatilidad 0.6 10919   48.4%  -1718.2R  -0.16R  0.68 1798.1R
+U Williams ruptura volatilidad L+S 19827   47.7%  -3279.7R  -0.17R  0.67 3355.6R
+V Williams Smash Day                2136   49.5%   -421.2R  -0.20R  0.55  430.6R
+W Williams Oops                     3558   38.8%     10.4R   0.00R  1.00  122.3R
+X Williams %R en tendencia          1322   52.0%    -11.2R  -0.01R  0.97   55.2R
+SA SHORT Donchian bajista, stop móvil   664   34.8%     12.2R   0.02R  1.04   59.9R
+SB SHORT Donchian bajista, TP 1:2    679   36.5%    -10.7R  -0.02R  0.98   74.3R
+SC SHORT Donchian bajista, TP 1:1.5   749   41.9%    -14.8R  -0.02R  0.97   65.8R
+SD SHORT RSI(2) rebote fallido      2149   60.3%   -101.3R  -0.05R  0.74  106.2R
+SE SHORT rebote a EMA20, TP 1:2      619   30.7%    -96.5R  -0.16R  0.78  100.6R
 
 ═══ 1H ═══
                                      ops acierto     total   media    PF   maxDD
-A actual (3 filtros, SL 1.5 ATR)    1761   35.3%    -76.1R  -0.04R  0.94  105.4R
-B 4 filtros                          692   32.8%    -82.6R  -0.12R  0.84   85.2R
-C + tendencia mayor                 1226   33.9%   -103.1R  -0.08R  0.88  122.5R
-D + tendencia mayor, 4 filtros       486   32.3%    -66.5R  -0.14R  0.82   78.0R
-E + tendencia mayor, SL 2 ATR       1024   34.2%    -72.5R  -0.07R  0.90   94.0R
-F + tendencia mayor, ADX 25         1070   33.6%    -99.2R  -0.09R  0.87  115.6R
-G artículo (S/R + vela, 1:2)        1910   34.9%   -215.2R  -0.11R  0.85  248.4R
-H artículo + breakeven en 1R        2038   27.5%   -237.6R  -0.12R  0.81  273.4R
-I artículo + tendencia propia        922   34.4%   -117.5R  -0.13R  0.83  140.2R
-J EMA30/150/200 retroceso            483   32.7%    -62.6R  -0.13R  0.83   72.0R
-K EMA retroceso + parcial 1R         510   46.9%    -78.6R  -0.15R  0.74   82.6R
-L EMA30/150 cruce                     47   36.2%      0.4R   0.01R  1.01   10.6R
-M EMA retroceso, SL 2 ATR            411   33.8%    -38.0R  -0.09R  0.87   51.0R
-N Alex Ruiz estructura 1:3           524   32.8%     16.5R   0.03R  1.04   31.1R
-O Alex Ruiz estructura 1:2           553   38.7%     14.1R   0.03R  1.04   27.5R
-P Alex Ruiz estructura 1:3, giros 3   393   34.1%     10.4R   0.03R  1.04   26.6R
-Q Connors RSI(2) solo LONG          1584   57.3%    -47.4R  -0.03R  0.83   68.7R
-R Connors RSI(2) LONG+SHORT         2977   58.3%    -97.5R  -0.03R  0.81  116.2R
-S Donchian 20/10 Tortugas           1791   33.1%     53.7R   0.03R  1.06   67.4R
-S2 Donchian solo LONG                956   35.6%    136.4R   0.14R  1.28   40.7R
-T Williams ruptura volatilidad 0.6  6938   41.9%  -1654.8R  -0.24R  0.58 1666.6R
-U Williams ruptura volatilidad L+S 13232   42.6%  -3053.7R  -0.23R  0.59 3067.6R
-V Williams Smash Day                1423   45.3%   -293.2R  -0.21R  0.55  303.4R
-W Williams Oops                     1750   41.1%     51.4R   0.03R  1.05   61.9R
-X Williams %R en tendencia           864   49.3%    -57.3R  -0.07R  0.79   63.5R
-SA SHORT Donchian bajista, stop móvil   455   35.6%      0.6R   0.00R  1.00   35.3R
-SB SHORT Donchian bajista, TP 1:2    471   35.0%    -28.9R  -0.06R  0.91   58.1R
-SC SHORT Donchian bajista, TP 1:1.5   517   41.8%    -17.5R  -0.03R  0.94   50.8R
-SD SHORT RSI(2) rebote fallido      1494   57.6%   -106.6R  -0.07R  0.63  112.1R
-SE SHORT rebote a EMA20, TP 1:2      399   32.6%    -47.2R  -0.12R  0.83   52.9R
+A actual (3 filtros, SL 1.5 ATR)    1493   35.6%    -61.2R  -0.04R  0.94   92.3R
+B 4 filtros                          585   33.8%    -54.4R  -0.09R  0.87   76.2R
+C + tendencia mayor                 1057   34.2%    -86.2R  -0.08R  0.89  108.5R
+D + tendencia mayor, 4 filtros       422   32.5%    -57.2R  -0.14R  0.82   77.2R
+E + tendencia mayor, SL 2 ATR        884   34.7%    -56.3R  -0.06R  0.91   79.3R
+F + tendencia mayor, ADX 25          929   33.7%    -88.1R  -0.09R  0.87  101.8R
+G artículo (S/R + vela, 1:2)        1656   35.0%   -191.9R  -0.12R  0.84  226.3R
+H artículo + breakeven en 1R        1772   27.4%   -216.1R  -0.12R  0.80  249.1R
+I artículo + tendencia propia        788   34.3%   -106.0R  -0.13R  0.82  132.1R
+J EMA30/150/200 retroceso            406   33.3%    -49.0R  -0.12R  0.84   64.4R
+K EMA retroceso + parcial 1R         432   47.5%    -68.0R  -0.16R  0.73   73.2R
+L EMA30/150 cruce                     39   35.9%      0.1R   0.00R  1.00   11.5R
+M EMA retroceso, SL 2 ATR            342   35.1%    -23.6R  -0.07R  0.90   43.3R
+N Alex Ruiz estructura 1:3           457   34.4%     42.2R   0.09R  1.13   25.1R
+O Alex Ruiz estructura 1:2           482   40.7%     40.7R   0.08R  1.14   20.3R
+P Alex Ruiz estructura 1:3, giros 3   347   34.9%     26.2R   0.08R  1.11   22.4R
+Q Connors RSI(2) solo LONG          1324   57.3%    -38.4R  -0.03R  0.83   60.9R
+R Connors RSI(2) LONG+SHORT         2507   58.4%    -86.3R  -0.03R  0.80  101.5R
+S Donchian 20/10 Tortugas           1519   33.0%     25.6R   0.02R  1.03   70.7R
+S2 Donchian solo LONG                808   35.1%     97.1R   0.12R  1.24   33.8R
+T Williams ruptura volatilidad 0.6  5849   41.4%  -1521.3R  -0.26R  0.54 1533.4R
+U Williams ruptura volatilidad L+S 11259   41.9%  -2845.8R  -0.25R  0.55 2854.1R
+V Williams Smash Day                1180   44.1%   -279.1R  -0.24R  0.49  281.1R
+W Williams Oops                     1162   38.2%    -32.7R  -0.03R  0.96   65.0R
+X Williams %R en tendencia           722   48.5%    -57.0R  -0.08R  0.76   61.1R
+SA SHORT Donchian bajista, stop móvil   412   36.2%      3.4R   0.01R  1.02   37.5R
+SB SHORT Donchian bajista, TP 1:2    429   35.9%    -17.6R  -0.04R  0.94   52.0R
+SC SHORT Donchian bajista, TP 1:1.5   471   42.3%    -12.0R  -0.03R  0.96   45.2R
+SD SHORT RSI(2) rebote fallido      1340   58.3%    -92.9R  -0.07R  0.64   93.9R
+SE SHORT rebote a EMA20, TP 1:2      367   33.5%    -34.3R  -0.09R  0.86   39.8R
   — validación: 70% inicial vs 30% final (datos no vistos) —
-A actual (3 filtros, SL 1.5 ATR) · 70%  1223   34.7%    -69.4R  -0.06R  0.92   86.9R
-A actual (3 filtros, SL 1.5 ATR) · 30%   538   36.8%     -6.7R  -0.01R  0.98   42.9R
-B 4 filtros · 70%                    498   32.9%    -54.3R  -0.11R  0.85   66.8R
-B 4 filtros · 30%                    194   32.5%    -28.4R  -0.15R  0.80   39.1R
-C + tendencia mayor · 70%            850   33.3%    -83.7R  -0.10R  0.86   99.8R
-C + tendencia mayor · 30%            376   35.4%    -19.5R  -0.05R  0.93   48.1R
-D + tendencia mayor, 4 filtros · 70%   345   31.9%    -48.2R  -0.14R  0.81   63.4R
-D + tendencia mayor, 4 filtros · 30%   141   33.3%    -18.3R  -0.13R  0.82   29.0R
-E + tendencia mayor, SL 2 ATR · 70%   704   34.2%    -45.3R  -0.06R  0.91   65.7R
-E + tendencia mayor, SL 2 ATR · 30%   320   34.1%    -27.3R  -0.09R  0.88   42.7R
-F + tendencia mayor, ADX 25 · 70%    737   32.4%    -90.8R  -0.12R  0.83  104.4R
-F + tendencia mayor, ADX 25 · 30%    333   36.3%     -8.4R  -0.03R  0.96   42.5R
-G artículo (S/R + vela, 1:2) · 70%  1328   34.6%   -150.9R  -0.11R  0.85  187.5R
-G artículo (S/R + vela, 1:2) · 30%   582   35.6%    -64.3R  -0.11R  0.85   80.7R
-H artículo + breakeven en 1R · 70%  1410   27.6%   -157.1R  -0.11R  0.82  193.1R
-H artículo + breakeven en 1R · 30%   628   27.2%    -80.5R  -0.13R  0.79   95.9R
-I artículo + tendencia propia · 70%   657   32.6%   -118.1R  -0.18R  0.77  137.7R
-I artículo + tendencia propia · 30%   265   38.9%      0.6R   0.00R  1.00   28.8R
-J EMA30/150/200 retroceso · 70%      337   32.6%    -42.3R  -0.13R  0.83   58.8R
-J EMA30/150/200 retroceso · 30%      146   32.9%    -20.3R  -0.14R  0.81   22.7R
-K EMA retroceso + parcial 1R · 70%   354   47.7%    -44.6R  -0.13R  0.78   56.2R
-K EMA retroceso + parcial 1R · 30%   156   44.9%    -34.0R  -0.22R  0.65   34.0R
-L EMA30/150 cruce · 70%               32   37.5%      1.9R   0.06R  1.09    7.7R
-L EMA30/150 cruce · 30%               15   33.3%     -1.5R  -0.10R  0.87    8.1R
-M EMA retroceso, SL 2 ATR · 70%      292   33.6%    -28.1R  -0.10R  0.86   43.6R
-M EMA retroceso, SL 2 ATR · 30%      119   34.5%     -9.9R  -0.08R  0.88   22.4R
-N Alex Ruiz estructura 1:3 · 70%     382   34.6%     34.8R   0.09R  1.13   22.0R
-N Alex Ruiz estructura 1:3 · 30%     142   28.2%    -18.4R  -0.13R  0.83   30.7R
-O Alex Ruiz estructura 1:2 · 70%     406   40.4%     31.5R   0.08R  1.13   20.1R
-O Alex Ruiz estructura 1:2 · 30%     147   34.0%    -17.4R  -0.12R  0.83   26.6R
-P Alex Ruiz estructura 1:3, giros 3 · 70%   286   36.0%     24.1R   0.08R  1.13   16.5R
-P Alex Ruiz estructura 1:3, giros 3 · 30%   107   29.0%    -13.7R  -0.13R  0.82   24.9R
-Q Connors RSI(2) solo LONG · 70%    1109   57.5%    -18.9R  -0.02R  0.90   39.4R
-Q Connors RSI(2) solo LONG · 30%     475   56.6%    -28.5R  -0.06R  0.70   30.9R
-R Connors RSI(2) LONG+SHORT · 70%   2031   59.3%    -34.8R  -0.02R  0.90   51.0R
-R Connors RSI(2) LONG+SHORT · 30%    946   56.2%    -62.7R  -0.07R  0.66   66.8R
-S Donchian 20/10 Tortugas · 70%     1225   34.4%     19.4R   0.02R  1.03   49.1R
-S Donchian 20/10 Tortugas · 30%      566   30.2%     34.4R   0.06R  1.11   59.9R
-S2 Donchian solo LONG · 70%          664   36.9%     51.5R   0.08R  1.16   29.1R
-S2 Donchian solo LONG · 30%          292   32.5%     84.9R   0.29R  1.54   40.7R
-T Williams ruptura volatilidad 0.6 · 70%  4893   42.2%  -1109.1R  -0.23R  0.59 1124.2R
-T Williams ruptura volatilidad 0.6 · 30%  2045   41.1%   -545.8R  -0.27R  0.54  547.1R
-U Williams ruptura volatilidad L+S · 70%  9040   43.1%  -1973.9R  -0.22R  0.60 1986.8R
-U Williams ruptura volatilidad L+S · 30%  4192   41.4%  -1079.8R  -0.26R  0.56 1080.8R
-V Williams Smash Day · 70%          1004   47.6%   -160.1R  -0.16R  0.62  169.2R
-V Williams Smash Day · 30%           419   39.9%   -133.1R  -0.32R  0.43  134.7R
-W Williams Oops · 70%               1185   43.0%     83.0R   0.07R  1.11   41.6R
-W Williams Oops · 30%                565   37.3%    -31.5R  -0.06R  0.92   59.5R
-X Williams %R en tendencia · 70%     595   50.9%    -25.9R  -0.04R  0.86   33.8R
-X Williams %R en tendencia · 30%     269   45.7%    -31.4R  -0.12R  0.66   31.7R
-SA SHORT Donchian bajista, stop móvil · 70%   397   37.5%     12.0R   0.03R  1.06   28.0R
-SA SHORT Donchian bajista, stop móvil · 30%    58   22.4%    -11.4R  -0.20R  0.69   20.3R
-SB SHORT Donchian bajista, TP 1:2 · 70%   413   36.1%    -12.6R  -0.03R  0.95   41.4R
-SB SHORT Donchian bajista, TP 1:2 · 30%    58   27.6%    -16.3R  -0.28R  0.64   23.7R
-SC SHORT Donchian bajista, TP 1:1.5 · 70%   455   43.3%      3.5R   0.01R  1.01   31.8R
-SC SHORT Donchian bajista, TP 1:1.5 · 30%    62   30.6%    -21.1R  -0.34R  0.55   24.1R
-SD SHORT RSI(2) rebote fallido · 70%  1275   60.2%    -56.9R  -0.04R  0.74   64.3R
-SD SHORT RSI(2) rebote fallido · 30%   219   42.5%    -49.7R  -0.23R  0.27   51.2R
-SE SHORT rebote a EMA20, TP 1:2 · 70%   348   33.3%    -34.0R  -0.10R  0.86   47.3R
-SE SHORT rebote a EMA20, TP 1:2 · 30%    51   27.5%    -13.2R  -0.26R  0.66   14.9R
+A actual (3 filtros, SL 1.5 ATR) · 70%  1032   34.9%    -56.8R  -0.06R  0.92   72.9R
+A actual (3 filtros, SL 1.5 ATR) · 30%   461   37.1%     -4.4R  -0.01R  0.99   30.8R
+B 4 filtros · 70%                    421   34.4%    -28.9R  -0.07R  0.90   59.6R
+B 4 filtros · 30%                    164   32.3%    -25.5R  -0.16R  0.79   33.1R
+C + tendencia mayor · 70%            727   33.7%    -65.8R  -0.09R  0.88   82.7R
+C + tendencia mayor · 30%            330   35.2%    -20.4R  -0.06R  0.91   46.4R
+D + tendencia mayor, 4 filtros · 70%   297   32.7%    -35.7R  -0.12R  0.84   58.3R
+D + tendencia mayor, 4 filtros · 30%   125   32.0%    -21.5R  -0.17R  0.77   27.3R
+E + tendencia mayor, SL 2 ATR · 70%   604   34.9%    -31.4R  -0.05R  0.92   55.2R
+E + tendencia mayor, SL 2 ATR · 30%   280   34.3%    -24.9R  -0.09R  0.87   38.2R
+F + tendencia mayor, ADX 25 · 70%    632   32.6%    -77.1R  -0.12R  0.83   85.9R
+F + tendencia mayor, ADX 25 · 30%    297   36.0%    -11.0R  -0.04R  0.95   41.0R
+G artículo (S/R + vela, 1:2) · 70%  1154   35.1%   -119.3R  -0.10R  0.86  157.1R
+G artículo (S/R + vela, 1:2) · 30%   502   34.7%    -72.5R  -0.14R  0.81   88.1R
+H artículo + breakeven en 1R · 70%  1227   27.9%   -131.9R  -0.11R  0.82  165.1R
+H artículo + breakeven en 1R · 30%   545   26.4%    -84.2R  -0.15R  0.75  100.4R
+I artículo + tendencia propia · 70%   560   32.7%    -99.7R  -0.18R  0.77  122.8R
+I artículo + tendencia propia · 30%   228   38.2%     -6.2R  -0.03R  0.96   23.0R
+J EMA30/150/200 retroceso · 70%      273   33.7%    -27.8R  -0.10R  0.86   50.8R
+J EMA30/150/200 retroceso · 30%      133   32.3%    -21.2R  -0.16R  0.79   23.5R
+K EMA retroceso + parcial 1R · 70%   289   48.8%    -35.0R  -0.12R  0.79   47.9R
+K EMA retroceso + parcial 1R · 30%   143   44.8%    -33.0R  -0.23R  0.63   33.0R
+L EMA30/150 cruce · 70%               26   38.5%      2.4R   0.09R  1.15    7.2R
+L EMA30/150 cruce · 30%               13   30.8%     -2.3R  -0.18R  0.77    9.0R
+M EMA retroceso, SL 2 ATR · 70%      234   35.9%    -10.3R  -0.04R  0.94   34.3R
+M EMA retroceso, SL 2 ATR · 30%      108   33.3%    -13.3R  -0.12R  0.83   20.2R
+N Alex Ruiz estructura 1:3 · 70%     337   35.6%     45.4R   0.13R  1.20   18.0R
+N Alex Ruiz estructura 1:3 · 30%     120   30.8%     -3.1R  -0.03R  0.96   21.5R
+O Alex Ruiz estructura 1:2 · 70%     357   42.0%     44.9R   0.13R  1.21   15.6R
+O Alex Ruiz estructura 1:2 · 30%     125   36.8%     -4.2R  -0.03R  0.95   20.3R
+P Alex Ruiz estructura 1:3, giros 3 · 70%   255   36.5%     29.4R   0.12R  1.18   15.1R
+P Alex Ruiz estructura 1:3, giros 3 · 30%    92   30.4%     -3.2R  -0.03R  0.95   16.2R
+Q Connors RSI(2) solo LONG · 70%     926   57.0%    -15.9R  -0.02R  0.90   38.3R
+Q Connors RSI(2) solo LONG · 30%     398   58.0%    -22.5R  -0.06R  0.71   24.2R
+R Connors RSI(2) LONG+SHORT · 70%   1715   59.1%    -35.2R  -0.02R  0.88   48.8R
+R Connors RSI(2) LONG+SHORT · 30%    792   56.8%    -51.1R  -0.06R  0.67   54.3R
+S Donchian 20/10 Tortugas · 70%     1045   34.4%    -20.1R  -0.02R  0.96   61.2R
+S Donchian 20/10 Tortugas · 30%      474   30.2%     45.7R   0.10R  1.18   51.8R
+S2 Donchian solo LONG · 70%          565   36.3%      5.0R   0.01R  1.02   37.0R
+S2 Donchian solo LONG · 30%          243   32.5%     92.1R   0.38R  1.71   32.4R
+T Williams ruptura volatilidad 0.6 · 70%  4110   41.9%  -1009.8R  -0.25R  0.56 1026.2R
+T Williams ruptura volatilidad 0.6 · 30%  1739   40.3%   -511.5R  -0.29R  0.50  511.9R
+U Williams ruptura volatilidad L+S · 70%  7698   42.6%  -1829.2R  -0.24R  0.57 1836.6R
+U Williams ruptura volatilidad L+S · 30%  3561   40.2%  -1016.6R  -0.29R  0.52 1017.5R
+V Williams Smash Day · 70%           839   46.8%   -155.4R  -0.19R  0.55  157.3R
+V Williams Smash Day · 30%           341   37.2%   -123.7R  -0.36R  0.38  124.4R
+W Williams Oops · 70%                789   39.9%      6.9R   0.01R  1.01   54.0R
+W Williams Oops · 30%                373   34.6%    -39.6R  -0.11R  0.85   54.2R
+X Williams %R en tendencia · 70%     495   50.3%    -24.9R  -0.05R  0.84   30.1R
+X Williams %R en tendencia · 30%     227   44.5%    -32.0R  -0.14R  0.59   34.7R
+SA SHORT Donchian bajista, stop móvil · 70%   368   37.8%     14.9R   0.04R  1.08   27.4R
+SA SHORT Donchian bajista, stop móvil · 30%    44   22.7%    -11.5R  -0.26R  0.58   18.1R
+SB SHORT Donchian bajista, TP 1:2 · 70%   385   36.6%     -6.5R  -0.02R  0.97   41.4R
+SB SHORT Donchian bajista, TP 1:2 · 30%    44   29.5%    -11.1R  -0.25R  0.67   18.1R
+SC SHORT Donchian bajista, TP 1:1.5 · 70%   424   43.4%      3.5R   0.01R  1.01   31.8R
+SC SHORT Donchian bajista, TP 1:1.5 · 30%    47   31.9%    -15.5R  -0.33R  0.56   19.4R
+SD SHORT RSI(2) rebote fallido · 70%  1170   60.7%    -51.1R  -0.04R  0.74   54.8R
+SD SHORT RSI(2) rebote fallido · 30%   170   41.8%    -41.8R  -0.25R  0.25   42.6R
+SE SHORT rebote a EMA20, TP 1:2 · 70%   327   34.3%    -23.6R  -0.07R  0.89   36.3R
+SE SHORT rebote a EMA20, TP 1:2 · 30%    40   27.5%    -10.7R  -0.27R  0.64   14.1R
 
 ═══ 4H ═══
                                      ops acierto     total   media    PF   maxDD
-A actual (3 filtros, SL 1.5 ATR)     727   34.1%    -23.0R  -0.03R  0.95   82.9R
-B 4 filtros                          251   34.3%     -6.4R  -0.03R  0.96   44.0R
-C + tendencia mayor                  490   33.1%    -29.8R  -0.06R  0.91   60.4R
-D + tendencia mayor, 4 filtros       165   33.9%     -6.2R  -0.04R  0.95   31.0R
-E + tendencia mayor, SL 2 ATR        412   32.3%    -47.1R  -0.11R  0.83   66.8R
-F + tendencia mayor, ADX 25          421   34.0%    -14.9R  -0.04R  0.95   52.8R
-G artículo (S/R + vela, 1:2)         751   33.7%    -46.2R  -0.06R  0.91   69.1R
-H artículo + breakeven en 1R         825   25.2%    -64.7R  -0.08R  0.86   71.6R
-I artículo + tendencia propia        445   33.3%    -38.2R  -0.09R  0.88   66.1R
-J EMA30/150/200 retroceso            238   33.6%    -11.4R  -0.05R  0.93   33.2R
-K EMA retroceso + parcial 1R         253   47.4%    -19.8R  -0.08R  0.86   34.2R
-L EMA30/150 cruce                     16   25.0%     -4.6R  -0.29R  0.63    7.5R
-M EMA retroceso, SL 2 ATR            209   34.9%    -12.9R  -0.06R  0.91   37.5R
-N Alex Ruiz estructura 1:3           262   30.9%    -12.6R  -0.05R  0.93   27.6R
-O Alex Ruiz estructura 1:2           273   35.2%     -9.1R  -0.03R  0.95   33.1R
-P Alex Ruiz estructura 1:3, giros 3   195   30.8%    -19.9R  -0.10R  0.85   28.3R
-Q Connors RSI(2) solo LONG           641   66.3%      4.5R   0.01R  1.05   15.8R
-R Connors RSI(2) LONG+SHORT         1180   64.7%      9.0R   0.01R  1.05   22.2R
-S Donchian 20/10 Tortugas            738   30.9%     53.8R   0.07R  1.14   40.2R
-S2 Donchian solo LONG                402   33.3%    100.7R   0.25R  1.52   25.9R
-T Williams ruptura volatilidad 0.6  3229   52.3%   -254.8R  -0.08R  0.83  279.3R
-U Williams ruptura volatilidad L+S  5702   51.8%   -427.2R  -0.07R  0.84  473.1R
-V Williams Smash Day                 526   50.8%   -114.1R  -0.22R  0.52  120.1R
-W Williams Oops                     1112   46.0%    214.8R   0.19R  1.34   35.5R
-X Williams %R en tendencia           380   51.8%      2.1R   0.01R  1.02   25.7R
-SA SHORT Donchian bajista, stop móvil   173   27.2%    -10.7R  -0.06R  0.89   28.8R
-SB SHORT Donchian bajista, TP 1:2    167   34.7%     -6.2R  -0.04R  0.94   27.4R
-SC SHORT Donchian bajista, TP 1:1.5   186   38.2%    -14.7R  -0.08R  0.87   28.1R
-SD SHORT RSI(2) rebote fallido       588   63.3%     -6.8R  -0.01R  0.93   12.1R
-SE SHORT rebote a EMA20, TP 1:2      152   27.0%    -34.8R  -0.23R  0.69   41.5R
+A actual (3 filtros, SL 1.5 ATR)     657   35.2%     -1.5R  -0.00R  1.00   66.8R
+B 4 filtros                          225   35.6%      2.6R   0.01R  1.02   39.5R
+C + tendencia mayor                  428   34.1%    -13.5R  -0.03R  0.95   52.9R
+D + tendencia mayor, 4 filtros       140   35.7%      1.8R   0.01R  1.02   28.7R
+E + tendencia mayor, SL 2 ATR        359   32.3%    -40.4R  -0.11R  0.84   56.5R
+F + tendencia mayor, ADX 25          366   35.0%     -2.8R  -0.01R  0.99   44.2R
+G artículo (S/R + vela, 1:2)         706   33.7%    -43.2R  -0.06R  0.91   71.9R
+H artículo + breakeven en 1R         777   25.4%    -59.6R  -0.08R  0.86   75.4R
+I artículo + tendencia propia        421   34.0%    -28.1R  -0.07R  0.90   65.4R
+J EMA30/150/200 retroceso            208   35.1%     -1.4R  -0.01R  0.99   28.5R
+K EMA retroceso + parcial 1R         223   48.4%    -12.8R  -0.06R  0.89   26.8R
+L EMA30/150 cruce                     15   26.7%     -3.6R  -0.24R  0.68    7.5R
+M EMA retroceso, SL 2 ATR            185   35.7%     -7.8R  -0.04R  0.94   33.2R
+N Alex Ruiz estructura 1:3           233   31.3%     -5.6R  -0.02R  0.96   23.0R
+O Alex Ruiz estructura 1:2           244   36.1%     -1.8R  -0.01R  0.99   29.1R
+P Alex Ruiz estructura 1:3, giros 3   172   30.8%    -17.2R  -0.10R  0.85   22.8R
+Q Connors RSI(2) solo LONG           571   66.0%     -0.8R  -0.00R  0.99   18.3R
+R Connors RSI(2) LONG+SHORT         1073   65.1%      5.8R   0.01R  1.04   22.3R
+S Donchian 20/10 Tortugas            655   31.0%     66.0R   0.10R  1.20   35.0R
+S2 Donchian solo LONG                350   32.9%     97.3R   0.28R  1.58   26.0R
+T Williams ruptura volatilidad 0.6  2814   52.5%   -268.1R  -0.10R  0.79  276.3R
+U Williams ruptura volatilidad L+S  5113   52.1%   -438.6R  -0.09R  0.81  478.1R
+V Williams Smash Day                 472   50.0%   -101.1R  -0.21R  0.51  104.8R
+W Williams Oops                      742   44.2%     91.8R   0.12R  1.21   38.7R
+X Williams %R en tendencia           336   51.2%      2.3R   0.01R  1.03   22.3R
+SA SHORT Donchian bajista, stop móvil   162   28.4%     -4.2R  -0.03R  0.95   28.8R
+SB SHORT Donchian bajista, TP 1:2    155   36.8%      3.1R   0.02R  1.03   27.4R
+SC SHORT Donchian bajista, TP 1:1.5   174   40.2%     -4.9R  -0.03R  0.95   28.1R
+SD SHORT RSI(2) rebote fallido       553   65.1%      0.1R   0.00R  1.00   10.3R
+SE SHORT rebote a EMA20, TP 1:2      146   27.4%    -31.6R  -0.22R  0.70   38.4R
   — validación: 70% inicial vs 30% final (datos no vistos) —
-A actual (3 filtros, SL 1.5 ATR) · 70%   474   37.6%     36.5R   0.08R  1.12   27.1R
-A actual (3 filtros, SL 1.5 ATR) · 30%   253   27.7%    -59.4R  -0.23R  0.69   61.4R
-B 4 filtros · 70%                    161   38.5%     16.3R   0.10R  1.16   19.0R
-B 4 filtros · 30%                     90   26.7%    -22.7R  -0.25R  0.67   26.8R
-C + tendencia mayor · 70%            324   35.5%      4.6R   0.01R  1.02   26.0R
-C + tendencia mayor · 30%            166   28.3%    -34.4R  -0.21R  0.72   34.4R
-D + tendencia mayor, 4 filtros · 70%   113   35.4%     -0.1R  -0.00R  1.00   22.6R
-D + tendencia mayor, 4 filtros · 30%    52   30.8%     -6.1R  -0.12R  0.84   10.4R
-E + tendencia mayor, SL 2 ATR · 70%   270   34.1%    -14.9R  -0.06R  0.92   34.6R
-E + tendencia mayor, SL 2 ATR · 30%   142   28.9%    -32.2R  -0.23R  0.69   32.2R
-F + tendencia mayor, ADX 25 · 70%    280   37.1%     17.5R   0.06R  1.10   22.2R
-F + tendencia mayor, ADX 25 · 30%    141   27.7%    -32.3R  -0.23R  0.70   33.7R
-G artículo (S/R + vela, 1:2) · 70%   516   34.9%    -10.5R  -0.02R  0.97   40.9R
-G artículo (S/R + vela, 1:2) · 30%   235   31.1%    -35.7R  -0.15R  0.79   42.1R
-H artículo + breakeven en 1R · 70%   572   25.7%    -29.9R  -0.05R  0.91   36.9R
-H artículo + breakeven en 1R · 30%   253   24.1%    -34.9R  -0.14R  0.77   43.1R
-I artículo + tendencia propia · 70%   317   34.1%    -17.0R  -0.05R  0.92   42.1R
-I artículo + tendencia propia · 30%   128   31.3%    -21.2R  -0.17R  0.78   32.4R
-J EMA30/150/200 retroceso · 70%      154   35.1%     -1.4R  -0.01R  0.99   15.6R
-J EMA30/150/200 retroceso · 30%       84   31.0%    -10.0R  -0.12R  0.84   19.0R
-K EMA retroceso + parcial 1R · 70%   165   51.5%     -1.1R  -0.01R  0.99   11.2R
-K EMA retroceso + parcial 1R · 30%    88   39.8%    -18.7R  -0.21R  0.66   23.0R
+A actual (3 filtros, SL 1.5 ATR) · 70%   434   38.2%     41.8R   0.10R  1.15   25.8R
+A actual (3 filtros, SL 1.5 ATR) · 30%   223   29.1%    -43.3R  -0.19R  0.74   45.3R
+B 4 filtros · 70%                    143   39.9%     20.0R   0.14R  1.22   19.0R
+B 4 filtros · 30%                     82   28.0%    -17.4R  -0.21R  0.72   22.3R
+C + tendencia mayor · 70%            287   35.9%      6.9R   0.02R  1.04   29.2R
+C + tendencia mayor · 30%            141   30.5%    -20.5R  -0.15R  0.80   23.7R
+D + tendencia mayor, 4 filtros · 70%    95   36.8%      3.6R   0.04R  1.06   22.5R
+D + tendencia mayor, 4 filtros · 30%    45   33.3%     -1.8R  -0.04R  0.94   10.4R
+E + tendencia mayor, SL 2 ATR · 70%   240   33.3%    -17.8R  -0.07R  0.89   33.9R
+E + tendencia mayor, SL 2 ATR · 30%   119   30.3%    -22.6R  -0.19R  0.74   22.8R
+F + tendencia mayor, ADX 25 · 70%    246   37.4%     16.7R   0.07R  1.10   19.1R
+F + tendencia mayor, ADX 25 · 30%    120   30.0%    -19.5R  -0.16R  0.78   25.1R
+G artículo (S/R + vela, 1:2) · 70%   482   34.9%    -10.0R  -0.02R  0.97   42.6R
+G artículo (S/R + vela, 1:2) · 30%   224   31.3%    -33.2R  -0.15R  0.80   39.6R
+H artículo + breakeven en 1R · 70%   536   25.7%    -25.3R  -0.05R  0.91   39.6R
+H artículo + breakeven en 1R · 30%   241   24.5%    -34.3R  -0.14R  0.76   42.7R
+I artículo + tendencia propia · 70%   298   35.2%     -6.2R  -0.02R  0.97   41.6R
+I artículo + tendencia propia · 30%   123   30.9%    -21.9R  -0.18R  0.76   32.2R
+J EMA30/150/200 retroceso · 70%      134   36.6%      4.3R   0.03R  1.05   15.6R
+J EMA30/150/200 retroceso · 30%       74   32.4%     -5.6R  -0.08R  0.89   15.3R
+K EMA retroceso + parcial 1R · 70%   145   51.7%     -0.4R  -0.00R  0.99   10.1R
+K EMA retroceso + parcial 1R · 30%    78   42.3%    -12.4R  -0.16R  0.74   16.7R
 L EMA30/150 cruce · 70%               11   27.3%     -2.5R  -0.22R  0.70    6.4R
-L EMA30/150 cruce · 30%                5   20.0%     -2.2R  -0.43R  0.48    3.1R
-M EMA retroceso, SL 2 ATR · 70%      137   36.5%     -4.8R  -0.04R  0.95   21.0R
-M EMA retroceso, SL 2 ATR · 30%       72   31.9%     -8.1R  -0.11R  0.84   16.4R
-N Alex Ruiz estructura 1:3 · 70%     185   33.0%      2.5R   0.01R  1.02   20.0R
-N Alex Ruiz estructura 1:3 · 30%      77   26.0%    -15.1R  -0.20R  0.73   18.8R
-O Alex Ruiz estructura 1:2 · 70%     194   38.1%     10.3R   0.05R  1.09   12.8R
-O Alex Ruiz estructura 1:2 · 30%      79   27.8%    -19.4R  -0.25R  0.65   23.3R
-P Alex Ruiz estructura 1:3, giros 3 · 70%   139   31.7%     -4.3R  -0.03R  0.95   16.0R
-P Alex Ruiz estructura 1:3, giros 3 · 30%    56   28.6%    -15.7R  -0.28R  0.60   19.7R
-Q Connors RSI(2) solo LONG · 70%     431   66.8%      5.1R   0.01R  1.08   12.2R
-Q Connors RSI(2) solo LONG · 30%     210   65.2%     -0.5R  -0.00R  0.98    7.2R
-R Connors RSI(2) LONG+SHORT · 70%    824   64.6%      7.8R   0.01R  1.06   14.4R
-R Connors RSI(2) LONG+SHORT · 30%    356   65.2%      1.2R   0.00R  1.02   15.3R
-S Donchian 20/10 Tortugas · 70%      488   34.0%     46.6R   0.10R  1.21   25.6R
-S Donchian 20/10 Tortugas · 30%      250   24.8%      7.2R   0.03R  1.05   37.6R
-S2 Donchian solo LONG · 70%          270   36.7%     61.0R   0.23R  1.50   18.2R
-S2 Donchian solo LONG · 30%          132   26.5%     39.7R   0.30R  1.54   19.8R
-T Williams ruptura volatilidad 0.6 · 70%  2117   52.9%   -173.7R  -0.08R  0.82  197.1R
-T Williams ruptura volatilidad 0.6 · 30%  1112   51.2%    -81.1R  -0.07R  0.85   90.7R
-U Williams ruptura volatilidad L+S · 70%  3817   52.7%   -272.2R  -0.07R  0.84  285.1R
-U Williams ruptura volatilidad L+S · 30%  1885   50.0%   -155.0R  -0.08R  0.83  191.4R
-V Williams Smash Day · 70%           368   51.1%    -73.5R  -0.20R  0.55   76.3R
-V Williams Smash Day · 30%           158   50.0%    -40.7R  -0.26R  0.43   43.9R
-W Williams Oops · 70%                703   47.5%    194.1R   0.28R  1.50   22.5R
-W Williams Oops · 30%                409   43.5%     20.7R   0.05R  1.09   35.5R
-X Williams %R en tendencia · 70%     243   53.1%      0.1R   0.00R  1.00   18.6R
-X Williams %R en tendencia · 30%     137   49.6%      2.0R   0.01R  1.06    8.7R
-SA SHORT Donchian bajista, stop móvil · 70%   112   25.0%    -17.1R  -0.15R  0.73   28.3R
-SA SHORT Donchian bajista, stop móvil · 30%    61   31.1%      6.5R   0.11R  1.19   10.2R
-SB SHORT Donchian bajista, TP 1:2 · 70%   106   34.0%     -6.5R  -0.06R  0.91   23.6R
-SB SHORT Donchian bajista, TP 1:2 · 30%    61   36.1%      0.3R   0.01R  1.01   15.8R
-SC SHORT Donchian bajista, TP 1:1.5 · 70%   119   36.1%    -14.0R  -0.12R  0.82   23.2R
-SC SHORT Donchian bajista, TP 1:1.5 · 30%    67   41.8%     -0.7R  -0.01R  0.98   12.9R
-SD SHORT RSI(2) rebote fallido · 70%   402   64.2%     -3.9R  -0.01R  0.94   13.1R
-SD SHORT RSI(2) rebote fallido · 30%   186   61.3%     -2.9R  -0.02R  0.92   10.3R
-SE SHORT rebote a EMA20, TP 1:2 · 70%   100   28.0%    -20.2R  -0.20R  0.72   31.8R
-SE SHORT rebote a EMA20, TP 1:2 · 30%    52   25.0%    -14.6R  -0.28R  0.64   19.7R
+L EMA30/150 cruce · 30%                4   25.0%     -1.1R  -0.29R  0.63    3.1R
+M EMA retroceso, SL 2 ATR · 70%      122   36.9%     -2.9R  -0.02R  0.96   20.0R
+M EMA retroceso, SL 2 ATR · 30%       63   33.3%     -4.9R  -0.08R  0.89   13.2R
+N Alex Ruiz estructura 1:3 · 70%     169   33.1%      3.3R   0.02R  1.03   18.2R
+N Alex Ruiz estructura 1:3 · 30%      64   26.6%     -9.0R  -0.14R  0.80   15.5R
+O Alex Ruiz estructura 1:2 · 70%     178   38.8%     13.3R   0.07R  1.12   12.1R
+O Alex Ruiz estructura 1:2 · 30%      66   28.8%    -15.1R  -0.23R  0.67   19.0R
+P Alex Ruiz estructura 1:3, giros 3 · 70%   123   31.7%     -5.9R  -0.05R  0.93   11.8R
+P Alex Ruiz estructura 1:3, giros 3 · 30%    49   28.6%    -11.2R  -0.23R  0.67   17.6R
+Q Connors RSI(2) solo LONG · 70%     378   66.7%      1.4R   0.00R  1.03   13.5R
+Q Connors RSI(2) solo LONG · 30%     193   64.8%     -2.1R  -0.01R  0.93    9.0R
+R Connors RSI(2) LONG+SHORT · 70%    754   64.9%      5.3R   0.01R  1.05   14.4R
+R Connors RSI(2) LONG+SHORT · 30%    319   65.8%      0.5R   0.00R  1.01   14.6R
+S Donchian 20/10 Tortugas · 70%      439   34.2%     43.9R   0.10R  1.22   25.6R
+S Donchian 20/10 Tortugas · 30%      216   24.5%     22.1R   0.10R  1.18   31.0R
+S2 Donchian solo LONG · 70%          236   36.4%     51.9R   0.22R  1.49   16.6R
+S2 Donchian solo LONG · 30%          114   25.4%     45.4R   0.40R  1.72   18.3R
+T Williams ruptura volatilidad 0.6 · 70%  1820   53.3%   -183.1R  -0.10R  0.77  193.3R
+T Williams ruptura volatilidad 0.6 · 30%   994   51.1%    -85.0R  -0.09R  0.82   90.9R
+U Williams ruptura volatilidad L+S · 70%  3442   52.9%   -286.6R  -0.08R  0.81  295.5R
+U Williams ruptura volatilidad L+S · 30%  1671   50.3%   -151.9R  -0.09R  0.81  195.3R
+V Williams Smash Day · 70%           334   49.4%    -73.9R  -0.22R  0.52   74.4R
+V Williams Smash Day · 30%           138   51.4%    -27.3R  -0.20R  0.50   30.9R
+W Williams Oops · 70%                464   45.7%    104.2R   0.22R  1.39   26.3R
+W Williams Oops · 30%                278   41.7%    -12.5R  -0.04R  0.93   33.7R
+X Williams %R en tendencia · 70%     212   52.4%      0.4R   0.00R  1.01   18.2R
+X Williams %R en tendencia · 30%     124   49.2%      2.0R   0.02R  1.06    7.6R
+SA SHORT Donchian bajista, stop móvil · 70%   106   26.4%    -11.2R  -0.11R  0.80   23.4R
+SA SHORT Donchian bajista, stop móvil · 30%    56   32.1%      7.0R   0.13R  1.23   10.7R
+SB SHORT Donchian bajista, TP 1:2 · 70%   100   36.0%     -0.3R  -0.00R  0.99   21.2R
+SB SHORT Donchian bajista, TP 1:2 · 30%    55   38.2%      3.4R   0.06R  1.10   13.7R
+SC SHORT Donchian bajista, TP 1:1.5 · 70%   113   38.1%     -7.9R  -0.07R  0.89   21.7R
+SC SHORT Donchian bajista, TP 1:1.5 · 30%    61   44.3%      3.0R   0.05R  1.08   10.6R
+SD SHORT RSI(2) rebote fallido · 70%   385   66.0%      1.9R   0.00R  1.03   13.1R
+SD SHORT RSI(2) rebote fallido · 30%   168   63.1%     -1.8R  -0.01R  0.94   10.3R
+SE SHORT rebote a EMA20, TP 1:2 · 70%    97   28.9%    -17.1R  -0.18R  0.75   28.8R
+SE SHORT rebote a EMA20, TP 1:2 · 30%    49   24.5%    -14.5R  -0.30R  0.62   19.7R
 
 ═══ 1D ═══
                                      ops acierto     total   media    PF   maxDD
-A actual (3 filtros, SL 1.5 ATR)     584   37.2%     47.9R   0.08R  1.13   31.5R
-B 4 filtros                          169   41.4%     33.4R   0.20R  1.33   10.6R
+A actual (3 filtros, SL 1.5 ATR)     473   37.4%     41.5R   0.09R  1.14   27.1R
+B 4 filtros                          141   41.8%     29.0R   0.21R  1.35    8.3R
 C + tendencia mayor                    0    0.0%      0.0R   0.00R  0.00    0.0R
 D + tendencia mayor, 4 filtros         0    0.0%      0.0R   0.00R  0.00    0.0R
 E + tendencia mayor, SL 2 ATR          0    0.0%      0.0R   0.00R  0.00    0.0R
 F + tendencia mayor, ADX 25            0    0.0%      0.0R   0.00R  0.00    0.0R
-G artículo (S/R + vela, 1:2)         451   34.1%     -6.7R  -0.01R  0.98   42.5R
-H artículo + breakeven en 1R         471   28.5%     14.9R   0.03R  1.06   28.7R
-I artículo + tendencia propia        451   34.1%     -6.7R  -0.01R  0.98   42.5R
-J EMA30/150/200 retroceso            223   38.1%     25.9R   0.12R  1.19   18.1R
-K EMA retroceso + parcial 1R         232   54.7%     20.4R   0.09R  1.19   14.6R
-L EMA30/150 cruce                     30   40.0%      5.3R   0.18R  1.29    7.3R
-M EMA retroceso, SL 2 ATR            195   42.1%     33.9R   0.17R  1.29   17.2R
-N Alex Ruiz estructura 1:3           337   31.5%     16.3R   0.05R  1.07   38.1R
-O Alex Ruiz estructura 1:2           357   37.0%     10.9R   0.03R  1.05   34.7R
-P Alex Ruiz estructura 1:3, giros 3   216   30.1%      1.1R   0.00R  1.01   21.1R
-Q Connors RSI(2) solo LONG           629   70.3%     43.7R   0.07R  1.48    7.9R
-R Connors RSI(2) LONG+SHORT          970   67.3%     32.6R   0.03R  1.21   10.5R
-S Donchian 20/10 Tortugas            603   39.5%    160.3R   0.27R  1.58   19.6R
-S2 Donchian solo LONG                378   45.2%    201.9R   0.53R  2.37   15.8R
-T Williams ruptura volatilidad 0.6  2940   61.5%    114.2R   0.04R  1.10   48.3R
-U Williams ruptura volatilidad L+S  4424   60.4%     23.1R   0.01R  1.01   89.3R
-V Williams Smash Day                 638   64.7%    -21.9R  -0.03R  0.90   37.8R
-W Williams Oops                     2395   38.7%     75.4R   0.03R  1.04  120.7R
-X Williams %R en tendencia           349   59.9%     39.6R   0.11R  1.45   10.5R
-SA SHORT Donchian bajista, stop móvil   115   39.1%      8.6R   0.07R  1.16   21.2R
-SB SHORT Donchian bajista, TP 1:2    122   36.1%     -2.5R  -0.02R  0.97   24.9R
-SC SHORT Donchian bajista, TP 1:1.5   134   39.6%     -8.3R  -0.06R  0.90   27.1R
-SD SHORT RSI(2) rebote fallido       318   60.7%    -12.6R  -0.04R  0.79   21.7R
-SE SHORT rebote a EMA20, TP 1:2      132   26.5%    -34.2R  -0.26R  0.64   34.2R
+G artículo (S/R + vela, 1:2)         359   35.4%      7.0R   0.02R  1.03   32.7R
+H artículo + breakeven en 1R         373   29.5%     25.8R   0.07R  1.14   19.7R
+I artículo + tendencia propia        359   35.4%      7.0R   0.02R  1.03   32.7R
+J EMA30/150/200 retroceso            183   38.3%     21.9R   0.12R  1.19   17.1R
+K EMA retroceso + parcial 1R         191   52.4%      8.9R   0.05R  1.10   17.4R
+L EMA30/150 cruce                     21   47.6%      8.5R   0.40R  1.76    4.1R
+M EMA retroceso, SL 2 ATR            160   43.8%     33.9R   0.21R  1.37   12.1R
+N Alex Ruiz estructura 1:3           254   34.3%     29.7R   0.12R  1.18   29.9R
+O Alex Ruiz estructura 1:2           269   38.3%     13.7R   0.05R  1.08   27.3R
+P Alex Ruiz estructura 1:3, giros 3   173   31.2%      4.5R   0.03R  1.04   17.0R
+Q Connors RSI(2) solo LONG           490   71.0%     40.0R   0.08R  1.62    6.1R
+R Connors RSI(2) LONG+SHORT          761   67.4%     31.9R   0.04R  1.28    9.6R
+S Donchian 20/10 Tortugas            472   39.0%     97.5R   0.21R  1.45   20.2R
+S2 Donchian solo LONG                301   43.5%    122.8R   0.41R  2.03   13.5R
+T Williams ruptura volatilidad 0.6  2256   61.4%     71.3R   0.03R  1.08   52.2R
+U Williams ruptura volatilidad L+S  3455   60.4%      4.7R   0.00R  1.00   68.5R
+V Williams Smash Day                 484   62.4%    -41.0R  -0.08R  0.77   47.4R
+W Williams Oops                     1654   36.9%    -48.7R  -0.03R  0.96  101.8R
+X Williams %R en tendencia           264   62.9%     43.4R   0.16R  1.73    7.8R
+SA SHORT Donchian bajista, stop móvil    90   40.0%     12.9R   0.14R  1.31   16.0R
+SB SHORT Donchian bajista, TP 1:2     95   38.9%      3.8R   0.04R  1.07   18.7R
+SC SHORT Donchian bajista, TP 1:1.5   104   43.3%      2.1R   0.02R  1.04   19.9R
+SD SHORT RSI(2) rebote fallido       256   60.2%     -8.4R  -0.03R  0.82   14.4R
+SE SHORT rebote a EMA20, TP 1:2      106   25.5%    -30.6R  -0.29R  0.60   32.9R
   — validación: 70% inicial vs 30% final (datos no vistos) —
-A actual (3 filtros, SL 1.5 ATR) · 70%   410   39.0%     55.5R   0.14R  1.22   26.5R
-A actual (3 filtros, SL 1.5 ATR) · 30%   174   32.8%     -7.6R  -0.04R  0.94   21.7R
-B 4 filtros · 70%                    118   44.1%     34.1R   0.29R  1.51    8.2R
-B 4 filtros · 30%                     51   35.3%     -0.6R  -0.01R  0.98    8.3R
+A actual (3 filtros, SL 1.5 ATR) · 70%   340   37.9%     34.1R   0.10R  1.16   27.1R
+A actual (3 filtros, SL 1.5 ATR) · 30%   133   36.1%      7.4R   0.06R  1.08   15.8R
+B 4 filtros · 70%                    101   43.6%     27.4R   0.27R  1.47    8.3R
+B 4 filtros · 30%                     40   37.5%      1.6R   0.04R  1.06    6.1R
 C + tendencia mayor · 70%              0    0.0%      0.0R   0.00R  0.00    0.0R
 C + tendencia mayor · 30%              0    0.0%      0.0R   0.00R  0.00    0.0R
 D + tendencia mayor, 4 filtros · 70%     0    0.0%      0.0R   0.00R  0.00    0.0R
@@ -299,180 +293,180 @@ E + tendencia mayor, SL 2 ATR · 70%     0    0.0%      0.0R   0.00R  0.00    0.
 E + tendencia mayor, SL 2 ATR · 30%     0    0.0%      0.0R   0.00R  0.00    0.0R
 F + tendencia mayor, ADX 25 · 70%      0    0.0%      0.0R   0.00R  0.00    0.0R
 F + tendencia mayor, ADX 25 · 30%      0    0.0%      0.0R   0.00R  0.00    0.0R
-G artículo (S/R + vela, 1:2) · 70%   298   35.2%      4.9R   0.02R  1.02   42.5R
-G artículo (S/R + vela, 1:2) · 30%   153   32.0%    -11.6R  -0.08R  0.89   21.8R
-H artículo + breakeven en 1R · 70%   310   29.0%     15.8R   0.05R  1.10   28.7R
-H artículo + breakeven en 1R · 30%   161   27.3%     -0.9R  -0.01R  0.99   19.8R
-I artículo + tendencia propia · 70%   298   35.2%      4.9R   0.02R  1.02   42.5R
-I artículo + tendencia propia · 30%   153   32.0%    -11.6R  -0.08R  0.89   21.8R
-J EMA30/150/200 retroceso · 70%      150   40.0%     26.8R   0.18R  1.30   13.7R
-J EMA30/150/200 retroceso · 30%       73   34.2%     -0.9R  -0.01R  0.98   10.5R
-K EMA retroceso + parcial 1R · 70%   157   56.7%     20.1R   0.13R  1.29   12.6R
-K EMA retroceso + parcial 1R · 30%    75   50.7%      0.3R   0.00R  1.01    8.7R
-L EMA30/150 cruce · 70%               24   29.2%     -3.5R  -0.15R  0.80    7.3R
-L EMA30/150 cruce · 30%                6   83.3%      8.8R   1.47R  9.69    1.0R
-M EMA retroceso, SL 2 ATR · 70%      132   41.7%     18.3R   0.14R  1.23   17.2R
-M EMA retroceso, SL 2 ATR · 30%       63   42.9%     15.5R   0.25R  1.42    7.2R
-N Alex Ruiz estructura 1:3 · 70%     229   35.8%     49.3R   0.22R  1.34   32.6R
-N Alex Ruiz estructura 1:3 · 30%     108   22.2%    -33.1R  -0.31R  0.60   39.5R
-O Alex Ruiz estructura 1:2 · 70%     244   41.8%     41.1R   0.17R  1.29   27.6R
-O Alex Ruiz estructura 1:2 · 30%     113   26.5%    -30.3R  -0.27R  0.63   37.1R
-P Alex Ruiz estructura 1:3, giros 3 · 70%   144   31.9%      9.4R   0.07R  1.10   21.1R
-P Alex Ruiz estructura 1:3, giros 3 · 30%    72   26.4%     -8.3R  -0.12R  0.83   19.3R
-Q Connors RSI(2) solo LONG · 70%     405   69.4%     18.5R   0.05R  1.28   10.9R
-Q Connors RSI(2) solo LONG · 30%     224   71.9%     25.2R   0.11R  2.05    3.7R
-R Connors RSI(2) LONG+SHORT · 70%    634   66.2%     13.2R   0.02R  1.12   13.8R
-R Connors RSI(2) LONG+SHORT · 30%    336   69.3%     19.4R   0.06R  1.42    7.3R
-S Donchian 20/10 Tortugas · 70%      410   39.8%    131.3R   0.32R  1.69   19.6R
-S Donchian 20/10 Tortugas · 30%      193   38.9%     28.9R   0.15R  1.33   13.4R
-S2 Donchian solo LONG · 70%          251   45.0%    161.7R   0.64R  2.66   12.6R
-S2 Donchian solo LONG · 30%          127   45.7%     40.2R   0.32R  1.81   13.6R
-T Williams ruptura volatilidad 0.6 · 70%  1955   61.4%    113.9R   0.06R  1.15   48.3R
-T Williams ruptura volatilidad 0.6 · 30%   985   61.8%      0.3R   0.00R  1.00   42.9R
-U Williams ruptura volatilidad L+S · 70%  2976   60.3%     37.1R   0.01R  1.03   78.6R
-U Williams ruptura volatilidad L+S · 30%  1448   60.7%    -14.0R  -0.01R  0.97   48.3R
-V Williams Smash Day · 70%           410   63.4%    -22.1R  -0.05R  0.85   36.4R
-V Williams Smash Day · 30%           228   67.1%      0.2R   0.00R  1.00   21.1R
-W Williams Oops · 70%               1655   39.8%     76.6R   0.05R  1.07  120.7R
-W Williams Oops · 30%                740   36.1%     -1.2R  -0.00R  1.00   70.1R
-X Williams %R en tendencia · 70%     208   54.8%      8.3R   0.04R  1.14   10.5R
-X Williams %R en tendencia · 30%     141   67.4%     31.3R   0.22R  2.11    5.6R
-SA SHORT Donchian bajista, stop móvil · 70%    79   43.0%      8.7R   0.11R  1.25   10.1R
-SA SHORT Donchian bajista, stop móvil · 30%    36   30.6%     -0.1R  -0.00R  0.99   12.5R
-SB SHORT Donchian bajista, TP 1:2 · 70%    84   39.3%      5.7R   0.07R  1.11   17.2R
-SB SHORT Donchian bajista, TP 1:2 · 30%    38   28.9%     -8.2R  -0.22R  0.69   10.6R
-SC SHORT Donchian bajista, TP 1:1.5 · 70%    94   39.4%     -6.0R  -0.06R  0.90   19.8R
-SC SHORT Donchian bajista, TP 1:1.5 · 30%    40   40.0%     -2.3R  -0.06R  0.90    9.6R
-SD SHORT RSI(2) rebote fallido · 70%   215   59.5%     -7.5R  -0.04R  0.81   14.0R
-SD SHORT RSI(2) rebote fallido · 30%   103   63.1%     -5.1R  -0.05R  0.75    9.3R
-SE SHORT rebote a EMA20, TP 1:2 · 70%    89   24.7%    -26.2R  -0.29R  0.60   28.1R
-SE SHORT rebote a EMA20, TP 1:2 · 30%    43   30.2%     -8.0R  -0.19R  0.72   12.9R
+G artículo (S/R + vela, 1:2) · 70%   243   37.0%     16.5R   0.07R  1.11   32.7R
+G artículo (S/R + vela, 1:2) · 30%   116   31.9%     -9.5R  -0.08R  0.88   21.5R
+H artículo + breakeven en 1R · 70%   253   30.0%     24.5R   0.10R  1.20   19.7R
+H artículo + breakeven en 1R · 30%   120   28.3%      1.4R   0.01R  1.02   17.7R
+I artículo + tendencia propia · 70%   243   37.0%     16.5R   0.07R  1.11   32.7R
+I artículo + tendencia propia · 30%   116   31.9%     -9.5R  -0.08R  0.88   21.5R
+J EMA30/150/200 retroceso · 70%      125   40.0%     22.4R   0.18R  1.30   10.6R
+J EMA30/150/200 retroceso · 30%       58   34.5%     -0.5R  -0.01R  0.99    8.7R
+K EMA retroceso + parcial 1R · 70%   132   54.5%     11.2R   0.08R  1.18   14.4R
+K EMA retroceso + parcial 1R · 30%    59   47.5%     -2.3R  -0.04R  0.93    9.3R
+L EMA30/150 cruce · 70%               18   38.9%      2.6R   0.15R  1.23    4.1R
+L EMA30/150 cruce · 30%                3  100.0%      5.9R   1.96R 99.00    0.0R
+M EMA retroceso, SL 2 ATR · 70%      111   43.2%     19.1R   0.17R  1.30   13.4R
+M EMA retroceso, SL 2 ATR · 30%       49   44.9%     14.8R   0.30R  1.54    7.1R
+N Alex Ruiz estructura 1:3 · 70%     172   38.4%     47.2R   0.27R  1.45   17.9R
+N Alex Ruiz estructura 1:3 · 30%      82   25.6%    -17.5R  -0.21R  0.71   27.5R
+O Alex Ruiz estructura 1:2 · 70%     182   41.8%     26.4R   0.15R  1.25   21.0R
+O Alex Ruiz estructura 1:2 · 30%      87   31.0%    -12.7R  -0.15R  0.79   25.3R
+P Alex Ruiz estructura 1:3, giros 3 · 70%   112   33.9%     10.9R   0.10R  1.16   15.0R
+P Alex Ruiz estructura 1:3, giros 3 · 30%    61   26.2%     -6.4R  -0.10R  0.85   16.5R
+Q Connors RSI(2) solo LONG · 70%     317   68.8%     14.6R   0.05R  1.29    7.9R
+Q Connors RSI(2) solo LONG · 30%     173   75.1%     25.4R   0.15R  2.77    2.4R
+R Connors RSI(2) LONG+SHORT · 70%    500   65.2%      9.8R   0.02R  1.12   11.1R
+R Connors RSI(2) LONG+SHORT · 30%    261   71.6%     22.1R   0.08R  1.71    6.8R
+S Donchian 20/10 Tortugas · 70%      321   38.9%     78.5R   0.24R  1.53   14.0R
+S Donchian 20/10 Tortugas · 30%      151   39.1%     19.0R   0.13R  1.28   14.7R
+S2 Donchian solo LONG · 70%          200   43.5%     98.3R   0.49R  2.24    8.9R
+S2 Donchian solo LONG · 30%          101   43.6%     24.5R   0.24R  1.60   11.2R
+T Williams ruptura volatilidad 0.6 · 70%  1485   61.0%     63.2R   0.04R  1.11   52.2R
+T Williams ruptura volatilidad 0.6 · 30%   771   62.1%      8.1R   0.01R  1.03   34.3R
+U Williams ruptura volatilidad L+S · 70%  2315   60.1%      6.0R   0.00R  1.01   66.0R
+U Williams ruptura volatilidad L+S · 30%  1140   61.1%     -1.3R  -0.00R  1.00   35.8R
+V Williams Smash Day · 70%           309   60.8%    -31.7R  -0.10R  0.74   37.2R
+V Williams Smash Day · 30%           175   65.1%     -9.3R  -0.05R  0.85   19.8R
+W Williams Oops · 70%               1128   37.1%    -55.2R  -0.05R  0.93   93.8R
+W Williams Oops · 30%                526   36.5%      6.6R   0.01R  1.02   64.4R
+X Williams %R en tendencia · 70%     154   57.8%     15.3R   0.10R  1.39    7.4R
+X Williams %R en tendencia · 30%     110   70.0%     28.1R   0.26R  2.39    3.9R
+SA SHORT Donchian bajista, stop móvil · 70%    62   40.3%      6.8R   0.11R  1.23   10.1R
+SA SHORT Donchian bajista, stop móvil · 30%    28   39.3%      6.1R   0.22R  1.50    7.6R
+SB SHORT Donchian bajista, TP 1:2 · 70%    64   42.2%      7.9R   0.12R  1.21   13.2R
+SB SHORT Donchian bajista, TP 1:2 · 30%    31   32.3%     -4.1R  -0.13R  0.80    8.5R
+SC SHORT Donchian bajista, TP 1:1.5 · 70%    72   41.7%     -1.3R  -0.02R  0.97   16.2R
+SC SHORT Donchian bajista, TP 1:1.5 · 30%    32   46.9%      3.4R   0.11R  1.20    7.1R
+SD SHORT RSI(2) rebote fallido · 70%   175   58.3%     -6.3R  -0.04R  0.80   10.4R
+SD SHORT RSI(2) rebote fallido · 30%    81   64.2%     -2.2R  -0.03R  0.85    5.6R
+SE SHORT rebote a EMA20, TP 1:2 · 70%    72   23.6%    -22.0R  -0.31R  0.59   26.4R
+SE SHORT rebote a EMA20, TP 1:2 · 30%    34   29.4%     -8.6R  -0.25R  0.63   11.5R
 
 ═══ CRIPTO vs ACCIONES ═══
                                      ops acierto     total   media    PF   maxDD
 A actual (3 filtros, SL 1.5 ATR) · cripto  1652   35.0%    -52.7R  -0.03R  0.95   99.9R
-A actual (3 filtros, SL 1.5 ATR) · acciones  1420   35.8%      1.6R   0.00R  1.00   89.1R
+A actual (3 filtros, SL 1.5 ATR) · acciones   971   37.2%     31.5R   0.03R  1.05   59.6R
 B 4 filtros · cripto                 653   33.8%    -48.4R  -0.07R  0.90   88.8R
-B 4 filtros · acciones               459   35.3%     -7.2R  -0.02R  0.98   41.3R
+B 4 filtros · acciones               298   38.9%     25.6R   0.09R  1.13   30.0R
 C + tendencia mayor · cripto         976   33.6%    -76.2R  -0.08R  0.89  100.8R
-C + tendencia mayor · acciones       740   33.8%    -56.8R  -0.08R  0.89   79.7R
+C + tendencia mayor · acciones       509   35.2%    -23.6R  -0.05R  0.94   57.0R
 D + tendencia mayor, 4 filtros · cripto   390   32.1%    -53.8R  -0.14R  0.81   76.6R
-D + tendencia mayor, 4 filtros · acciones   261   33.7%    -18.9R  -0.07R  0.90   31.2R
+D + tendencia mayor, 4 filtros · acciones   172   36.0%     -1.6R  -0.01R  0.99   24.1R
 E + tendencia mayor, SL 2 ATR · cripto   811   34.2%    -64.8R  -0.08R  0.88   81.3R
-E + tendencia mayor, SL 2 ATR · acciones   625   33.0%    -54.8R  -0.09R  0.88   77.1R
+E + tendencia mayor, SL 2 ATR · acciones   432   33.8%    -31.9R  -0.07R  0.89   54.5R
 F + tendencia mayor, ADX 25 · cripto   868   34.2%    -53.1R  -0.06R  0.91   86.3R
-F + tendencia mayor, ADX 25 · acciones   623   33.1%    -60.9R  -0.10R  0.87   79.8R
+F + tendencia mayor, ADX 25 · acciones   427   33.7%    -37.8R  -0.09R  0.88   51.9R
 G artículo (S/R + vela, 1:2) · cripto  1997   33.8%   -216.1R  -0.11R  0.85  246.6R
-G artículo (S/R + vela, 1:2) · acciones  1115   35.9%    -52.0R  -0.05R  0.93   92.0R
+G artículo (S/R + vela, 1:2) · acciones   724   37.3%    -12.0R  -0.02R  0.98   63.2R
 H artículo + breakeven en 1R · cripto  2162   25.9%   -237.8R  -0.11R  0.81  266.1R
-H artículo + breakeven en 1R · acciones  1172   29.1%    -49.6R  -0.04R  0.93   91.1R
+H artículo + breakeven en 1R · acciones   760   30.5%    -12.0R  -0.02R  0.97   59.4R
 I artículo + tendencia propia · cripto  1092   32.5%   -145.3R  -0.13R  0.82  170.3R
-I artículo + tendencia propia · acciones   726   36.4%    -17.2R  -0.02R  0.97   61.4R
+I artículo + tendencia propia · acciones   476   38.9%     18.2R   0.04R  1.06   33.1R
 J EMA30/150/200 retroceso · cripto   520   33.7%    -41.1R  -0.08R  0.89   68.4R
-J EMA30/150/200 retroceso · acciones   424   34.9%     -6.9R  -0.02R  0.98   38.8R
+J EMA30/150/200 retroceso · acciones   277   37.2%     12.6R   0.05R  1.07   28.8R
 K EMA retroceso + parcial 1R · cripto   559   47.6%    -60.5R  -0.11R  0.81   66.6R
-K EMA retroceso + parcial 1R · acciones   436   50.5%    -17.5R  -0.04R  0.92   48.6R
+K EMA retroceso + parcial 1R · acciones   287   51.2%    -11.4R  -0.04R  0.92   36.7R
 L EMA30/150 cruce · cripto            48   33.3%     -3.4R  -0.07R  0.90   14.6R
-L EMA30/150 cruce · acciones          45   37.8%      4.5R   0.10R  1.16    7.3R
+L EMA30/150 cruce · acciones          27   44.4%      8.3R   0.31R  1.55    5.4R
 M EMA retroceso, SL 2 ATR · cripto   441   36.1%    -20.4R  -0.05R  0.93   53.7R
-M EMA retroceso, SL 2 ATR · acciones   374   36.1%      3.3R   0.01R  1.01   37.5R
+M EMA retroceso, SL 2 ATR · acciones   246   39.4%     22.9R   0.09R  1.15   20.7R
 N Alex Ruiz estructura 1:3 · cripto   588   35.0%     79.5R   0.14R  1.21   35.9R
-N Alex Ruiz estructura 1:3 · acciones   535   28.6%    -59.5R  -0.11R  0.85   91.3R
+N Alex Ruiz estructura 1:3 · acciones   356   31.2%    -13.2R  -0.04R  0.95   50.1R
 O Alex Ruiz estructura 1:2 · cripto   614   40.4%     64.9R   0.11R  1.18   24.0R
-O Alex Ruiz estructura 1:2 · acciones   569   34.1%    -49.1R  -0.09R  0.87   80.6R
+O Alex Ruiz estructura 1:2 · acciones   381   36.5%    -12.3R  -0.03R  0.95   48.0R
 P Alex Ruiz estructura 1:3, giros 3 · cripto   437   34.3%     35.3R   0.08R  1.13   32.9R
-P Alex Ruiz estructura 1:3, giros 3 · acciones   367   29.7%    -43.8R  -0.12R  0.83   62.6R
+P Alex Ruiz estructura 1:3, giros 3 · acciones   255   30.6%    -21.8R  -0.09R  0.88   44.6R
 Q Connors RSI(2) solo LONG · cripto  1332   60.6%    -41.4R  -0.03R  0.80   46.7R
-Q Connors RSI(2) solo LONG · acciones  1522   63.5%     42.2R   0.03R  1.16   24.1R
+Q Connors RSI(2) solo LONG · acciones  1053   64.3%     42.2R   0.04R  1.25   20.0R
 R Connors RSI(2) LONG+SHORT · cripto  2788   61.8%    -63.8R  -0.02R  0.85   69.8R
-R Connors RSI(2) LONG+SHORT · acciones  2339   61.2%      8.0R   0.00R  1.02   48.1R
+R Connors RSI(2) LONG+SHORT · acciones  1553   61.4%     15.3R   0.01R  1.05   36.2R
 S Donchian 20/10 Tortugas · cripto  1646   33.0%    197.8R   0.12R  1.23   86.4R
-S Donchian 20/10 Tortugas · acciones  1486   34.7%     70.0R   0.05R  1.09   89.0R
+S Donchian 20/10 Tortugas · acciones  1000   34.5%     -8.6R  -0.01R  0.98   77.3R
 S2 Donchian solo LONG · cripto       816   34.3%    227.8R   0.28R  1.55   39.2R
-S2 Donchian solo LONG · acciones     920   39.7%    211.2R   0.23R  1.52   52.1R
+S2 Donchian solo LONG · acciones     643   38.9%     89.5R   0.14R  1.32   31.0R
 T Williams ruptura volatilidad 0.6 · cripto  6234   49.1%  -1020.9R  -0.16R  0.65 1029.6R
-T Williams ruptura volatilidad 0.6 · acciones  6873   48.6%   -774.5R  -0.11R  0.79  903.2R
+T Williams ruptura volatilidad 0.6 · acciones  4685   47.5%   -697.3R  -0.15R  0.73  776.9R
 U Williams ruptura volatilidad L+S · cripto 12842   48.3%  -2143.0R  -0.17R  0.65 2156.8R
-U Williams ruptura volatilidad L+S · acciones 10516   48.2%  -1314.8R  -0.13R  0.77 1431.2R
+U Williams ruptura volatilidad L+S · acciones  6985   46.8%  -1136.6R  -0.16R  0.71 1212.7R
 V Williams Smash Day · cripto       1196   47.2%   -249.1R  -0.21R  0.50  252.9R
-V Williams Smash Day · acciones     1391   54.7%   -180.1R  -0.13R  0.71  208.7R
+V Williams Smash Day · acciones      940   52.6%   -172.1R  -0.18R  0.61  180.3R
 W Williams Oops · cripto              38   21.1%    -20.7R  -0.54R  0.42   27.9R
-W Williams Oops · acciones          5219   41.2%    362.3R   0.07R  1.11  120.7R
+W Williams Oops · acciones          3520   39.0%     31.1R   0.01R  1.01  119.3R
 X Williams %R en tendencia · cripto   728   50.1%    -32.1R  -0.04R  0.84   42.4R
-X Williams %R en tendencia · acciones   865   54.0%     16.5R   0.02R  1.06   21.1R
+X Williams %R en tendencia · acciones   594   54.4%     20.9R   0.04R  1.11   19.3R
 SA SHORT Donchian bajista, stop móvil · cripto   589   34.0%      6.2R   0.01R  1.02   56.3R
-SA SHORT Donchian bajista, stop móvil · acciones   154   35.1%     -7.7R  -0.05R  0.90   22.6R
+SA SHORT Donchian bajista, stop móvil · acciones    75   41.3%      6.0R   0.08R  1.18    8.0R
 SB SHORT Donchian bajista, TP 1:2 · cripto   599   35.6%    -30.1R  -0.05R  0.92   73.9R
-SB SHORT Donchian bajista, TP 1:2 · acciones   161   33.5%     -7.5R  -0.05R  0.93   22.5R
+SB SHORT Donchian bajista, TP 1:2 · acciones    80   43.8%     19.4R   0.24R  1.43    9.4R
 SC SHORT Donchian bajista, TP 1:1.5 · cripto   659   41.4%    -24.2R  -0.04R  0.94   62.3R
-SC SHORT Donchian bajista, TP 1:1.5 · acciones   178   37.6%    -16.3R  -0.09R  0.86   25.0R
+SC SHORT Donchian bajista, TP 1:1.5 · acciones    90   45.6%      9.4R   0.10R  1.19   10.5R
 SD SHORT RSI(2) rebote fallido · cripto  1915   61.5%    -83.3R  -0.04R  0.76   87.2R
-SD SHORT RSI(2) rebote fallido · acciones   485   51.1%    -42.8R  -0.09R  0.62   49.1R
+SD SHORT RSI(2) rebote fallido · acciones   234   50.4%    -18.0R  -0.08R  0.66   19.6R
 SE SHORT rebote a EMA20, TP 1:2 · cripto   539   31.7%    -71.1R  -0.13R  0.81   76.3R
-SE SHORT rebote a EMA20, TP 1:2 · acciones   144   24.3%    -45.0R  -0.31R  0.60   45.0R
+SE SHORT rebote a EMA20, TP 1:2 · acciones    80   23.8%    -25.4R  -0.32R  0.59   25.4R
 
 ═══ LONG vs SHORT ═══
                                      ops acierto     total   media    PF   maxDD
-A actual (3 filtros, SL 1.5 ATR) · LONG  1784   36.1%      7.3R   0.00R  1.01  104.5R
-A actual (3 filtros, SL 1.5 ATR) · SHORT  1288   34.4%    -58.4R  -0.05R  0.94  114.3R
-B 4 filtros · LONG                   624   36.1%     -3.6R  -0.01R  0.99   39.7R
-B 4 filtros · SHORT                  488   32.4%    -52.0R  -0.11R  0.85   95.0R
-C + tendencia mayor · LONG          1040   34.1%    -75.2R  -0.07R  0.90   99.3R
-C + tendencia mayor · SHORT          676   33.0%    -57.8R  -0.09R  0.88   97.7R
-D + tendencia mayor, 4 filtros · LONG   392   36.0%     -9.7R  -0.02R  0.96   37.9R
-D + tendencia mayor, 4 filtros · SHORT   259   27.8%    -63.0R  -0.24R  0.69   84.2R
-E + tendencia mayor, SL 2 ATR · LONG   872   33.7%    -75.6R  -0.09R  0.88  100.7R
-E + tendencia mayor, SL 2 ATR · SHORT   564   33.5%    -44.0R  -0.08R  0.89   77.7R
-F + tendencia mayor, ADX 25 · LONG   896   33.9%    -70.8R  -0.08R  0.89   90.7R
-F + tendencia mayor, ADX 25 · SHORT   595   33.4%    -43.3R  -0.07R  0.90   81.7R
-G artículo (S/R + vela, 1:2) · LONG  1695   34.7%   -135.5R  -0.08R  0.89  174.0R
-G artículo (S/R + vela, 1:2) · SHORT  1417   34.2%   -132.6R  -0.09R  0.87  151.7R
-H artículo + breakeven en 1R · LONG  1801   27.7%   -137.9R  -0.08R  0.87  179.4R
-H artículo + breakeven en 1R · SHORT  1533   26.3%   -149.5R  -0.10R  0.83  178.3R
-I artículo + tendencia propia · LONG  1009   35.5%    -47.9R  -0.05R  0.93   89.9R
-I artículo + tendencia propia · SHORT   809   32.3%   -114.6R  -0.14R  0.81  123.2R
-J EMA30/150/200 retroceso · LONG     553   36.2%      7.3R   0.01R  1.02   43.1R
-J EMA30/150/200 retroceso · SHORT    391   31.5%    -55.4R  -0.14R  0.81   72.7R
-K EMA retroceso + parcial 1R · LONG   584   50.0%    -26.4R  -0.05R  0.92   52.3R
-K EMA retroceso + parcial 1R · SHORT   411   47.2%    -51.7R  -0.13R  0.78   69.5R
-L EMA30/150 cruce · LONG              55   36.4%      2.5R   0.05R  1.07    7.6R
-L EMA30/150 cruce · SHORT             38   34.2%     -1.4R  -0.04R  0.95    9.6R
-M EMA retroceso, SL 2 ATR · LONG     485   38.6%     37.4R   0.08R  1.12   38.0R
-M EMA retroceso, SL 2 ATR · SHORT    330   32.4%    -54.4R  -0.16R  0.77   67.5R
-N Alex Ruiz estructura 1:3 · LONG    651   35.3%     78.1R   0.12R  1.18   56.2R
-N Alex Ruiz estructura 1:3 · SHORT   472   27.3%    -58.1R  -0.12R  0.83   67.5R
-O Alex Ruiz estructura 1:2 · LONG    693   41.7%     88.7R   0.13R  1.21   42.0R
-O Alex Ruiz estructura 1:2 · SHORT   490   31.2%    -72.9R  -0.15R  0.78   83.0R
-P Alex Ruiz estructura 1:3, giros 3 · LONG   470   34.5%     35.0R   0.07R  1.11   37.7R
-P Alex Ruiz estructura 1:3, giros 3 · SHORT   334   29.0%    -43.5R  -0.13R  0.81   55.2R
-Q Connors RSI(2) solo LONG · LONG   2854   62.2%      0.8R   0.00R  1.00   63.9R
+A actual (3 filtros, SL 1.5 ATR) · LONG  1485   36.5%     17.2R   0.01R  1.02   83.3R
+A actual (3 filtros, SL 1.5 ATR) · SHORT  1138   34.9%    -38.4R  -0.03R  0.95  101.7R
+B 4 filtros · LONG                   514   37.7%     20.2R   0.04R  1.06   35.4R
+B 4 filtros · SHORT                  437   32.7%    -43.0R  -0.10R  0.86   89.6R
+C + tendencia mayor · LONG           857   34.7%    -53.5R  -0.06R  0.91   82.2R
+C + tendencia mayor · SHORT          628   33.4%    -46.3R  -0.07R  0.90   94.2R
+D + tendencia mayor, 4 filtros · LONG   318   37.7%      6.7R   0.02R  1.03   31.5R
+D + tendencia mayor, 4 filtros · SHORT   244   27.5%    -62.2R  -0.25R  0.67   80.4R
+E + tendencia mayor, SL 2 ATR · LONG   720   33.8%    -67.4R  -0.09R  0.87   85.5R
+E + tendencia mayor, SL 2 ATR · SHORT   523   34.4%    -29.4R  -0.06R  0.92   72.7R
+F + tendencia mayor, ADX 25 · LONG   736   34.4%    -52.5R  -0.07R  0.90   67.0R
+F + tendencia mayor, ADX 25 · SHORT   559   33.6%    -38.4R  -0.07R  0.90   83.9R
+G artículo (S/R + vela, 1:2) · LONG  1437   34.8%   -120.2R  -0.08R  0.88  194.4R
+G artículo (S/R + vela, 1:2) · SHORT  1284   34.6%   -107.8R  -0.08R  0.88  133.6R
+H artículo + breakeven en 1R · LONG  1535   27.6%   -122.6R  -0.08R  0.87  191.3R
+H artículo + breakeven en 1R · SHORT  1387   26.6%   -127.2R  -0.09R  0.84  159.9R
+I artículo + tendencia propia · LONG   839   35.9%    -33.8R  -0.04R  0.94  105.1R
+I artículo + tendencia propia · SHORT   729   32.8%    -93.3R  -0.13R  0.83  103.3R
+J EMA30/150/200 retroceso · LONG     448   36.6%      9.8R   0.02R  1.03   35.0R
+J EMA30/150/200 retroceso · SHORT    349   32.7%    -38.3R  -0.11R  0.85   65.5R
+K EMA retroceso + parcial 1R · LONG   477   49.9%    -26.8R  -0.06R  0.90   45.6R
+K EMA retroceso + parcial 1R · SHORT   369   47.4%    -45.1R  -0.12R  0.78   63.3R
+L EMA30/150 cruce · LONG              42   40.5%      7.2R   0.17R  1.28    8.5R
+L EMA30/150 cruce · SHORT             33   33.3%     -2.2R  -0.07R  0.91    8.4R
+M EMA retroceso, SL 2 ATR · LONG     392   39.0%     33.9R   0.09R  1.14   27.3R
+M EMA retroceso, SL 2 ATR · SHORT    295   34.9%    -31.4R  -0.11R  0.84   52.6R
+N Alex Ruiz estructura 1:3 · LONG    553   36.2%     80.7R   0.15R  1.22   54.4R
+N Alex Ruiz estructura 1:3 · SHORT   391   29.9%    -14.4R  -0.04R  0.95   40.1R
+O Alex Ruiz estructura 1:2 · LONG    589   42.4%     85.1R   0.14R  1.24   36.4R
+O Alex Ruiz estructura 1:2 · SHORT   406   33.7%    -32.5R  -0.08R  0.88   42.7R
+P Alex Ruiz estructura 1:3, giros 3 · LONG   411   34.1%     30.7R   0.07R  1.11   43.2R
+P Alex Ruiz estructura 1:3, giros 3 · SHORT   281   31.3%    -17.2R  -0.06R  0.91   42.2R
+Q Connors RSI(2) solo LONG · LONG   2385   62.2%      0.9R   0.00R  1.00   60.8R
 Q Connors RSI(2) solo LONG · SHORT     0    0.0%      0.0R   0.00R  0.00    0.0R
-R Connors RSI(2) LONG+SHORT · LONG  2854   62.2%      0.8R   0.00R  1.00   63.9R
-R Connors RSI(2) LONG+SHORT · SHORT  2273   60.7%    -56.7R  -0.02R  0.85   72.1R
-S Donchian 20/10 Tortugas · LONG    1725   37.2%    438.2R   0.25R  1.53   65.7R
-S Donchian 20/10 Tortugas · SHORT   1407   29.7%   -170.5R  -0.12R  0.78  170.5R
-S2 Donchian solo LONG · LONG        1736   37.2%    439.0R   0.25R  1.53   67.3R
+R Connors RSI(2) LONG+SHORT · LONG  2385   62.2%      0.9R   0.00R  1.00   60.8R
+R Connors RSI(2) LONG+SHORT · SHORT  1956   60.9%    -49.4R  -0.03R  0.85   61.7R
+S Donchian 20/10 Tortugas · LONG    1448   36.4%    319.1R   0.22R  1.46   53.1R
+S Donchian 20/10 Tortugas · SHORT   1198   30.2%   -129.9R  -0.11R  0.80  135.8R
+S2 Donchian solo LONG · LONG        1459   36.3%    317.3R   0.22R  1.45   53.6R
 S2 Donchian solo LONG · SHORT          0    0.0%      0.0R   0.00R  0.00    0.0R
-T Williams ruptura volatilidad 0.6 · LONG 13107   48.9%  -1795.4R  -0.14R  0.73 1921.2R
+T Williams ruptura volatilidad 0.6 · LONG 10919   48.4%  -1718.2R  -0.16R  0.68 1798.1R
 T Williams ruptura volatilidad 0.6 · SHORT     0    0.0%      0.0R   0.00R  0.00    0.0R
-U Williams ruptura volatilidad L+S · LONG 13045   48.8%  -1784.0R  -0.14R  0.73 1905.3R
-U Williams ruptura volatilidad L+S · SHORT 10313   47.4%  -1673.8R  -0.16R  0.68 1719.0R
-V Williams Smash Day · LONG         1406   52.3%   -221.8R  -0.16R  0.61  241.6R
-V Williams Smash Day · SHORT        1181   50.0%   -207.5R  -0.18R  0.62  216.7R
-W Williams Oops · LONG              2107   42.9%    135.4R   0.06R  1.10   66.5R
-W Williams Oops · SHORT             3150   39.8%    206.2R   0.07R  1.10  126.1R
-X Williams %R en tendencia · LONG   1593   52.2%    -15.6R  -0.01R  0.97   49.1R
+U Williams ruptura volatilidad L+S · LONG 10863   48.4%  -1704.9R  -0.16R  0.69 1780.8R
+U Williams ruptura volatilidad L+S · SHORT  8964   46.9%  -1574.8R  -0.18R  0.66 1620.6R
+V Williams Smash Day · LONG         1125   50.1%   -222.5R  -0.20R  0.52  224.4R
+V Williams Smash Day · SHORT        1011   48.9%   -198.7R  -0.20R  0.58  214.1R
+W Williams Oops · LONG              1386   41.1%     18.9R   0.01R  1.02  100.2R
+W Williams Oops · SHORT             2172   37.4%     -8.5R  -0.00R  0.99  170.4R
+X Williams %R en tendencia · LONG   1322   52.0%    -11.2R  -0.01R  0.97   55.2R
 X Williams %R en tendencia · SHORT     0    0.0%      0.0R   0.00R  0.00    0.0R
 SA SHORT Donchian bajista, stop móvil · LONG     0    0.0%      0.0R   0.00R  0.00    0.0R
-SA SHORT Donchian bajista, stop móvil · SHORT   743   34.2%     -1.5R  -0.00R  1.00   74.1R
+SA SHORT Donchian bajista, stop móvil · SHORT   664   34.8%     12.2R   0.02R  1.04   59.9R
 SB SHORT Donchian bajista, TP 1:2 · LONG     0    0.0%      0.0R   0.00R  0.00    0.0R
-SB SHORT Donchian bajista, TP 1:2 · SHORT   760   35.1%    -37.6R  -0.05R  0.93   84.5R
+SB SHORT Donchian bajista, TP 1:2 · SHORT   679   36.5%    -10.7R  -0.02R  0.98   74.3R
 SC SHORT Donchian bajista, TP 1:1.5 · LONG     0    0.0%      0.0R   0.00R  0.00    0.0R
-SC SHORT Donchian bajista, TP 1:1.5 · SHORT   837   40.6%    -40.5R  -0.05R  0.92   75.5R
+SC SHORT Donchian bajista, TP 1:1.5 · SHORT   749   41.9%    -14.8R  -0.02R  0.97   65.8R
 SD SHORT RSI(2) rebote fallido · LONG     0    0.0%      0.0R   0.00R  0.00    0.0R
-SD SHORT RSI(2) rebote fallido · SHORT  2400   59.4%   -126.1R  -0.05R  0.72  135.3R
+SD SHORT RSI(2) rebote fallido · SHORT  2149   60.3%   -101.3R  -0.05R  0.74  106.2R
 SE SHORT rebote a EMA20, TP 1:2 · LONG     0    0.0%      0.0R   0.00R  0.00    0.0R
-SE SHORT rebote a EMA20, TP 1:2 · SHORT   683   30.2%   -116.1R  -0.17R  0.76  116.1R
+SE SHORT rebote a EMA20, TP 1:2 · SHORT   619   30.7%    -96.5R  -0.16R  0.78  100.6R
 
 ═══ DETALLE: A actual (3 filtros, SL 1.5 ATR) ═══
                                      ops acierto     total   media    PF   maxDD
@@ -491,12 +485,12 @@ HYPEUSDT 1d                           14   28.6%     -2.1R  -0.15R  0.79    4.1R
 BNBUSDT 1h                           206   32.5%    -31.2R  -0.15R  0.80   42.4R
 BNBUSDT 4h                           103   37.9%      7.7R   0.07R  1.11   11.0R
 BNBUSDT 1d                            42   31.0%     -4.7R  -0.11R  0.84    7.2R
-AAPL 1h                              129   32.6%    -16.6R  -0.13R  0.83   24.1R
-AAPL 4h                               37   29.7%     -5.7R  -0.15R  0.79   12.4R
-AAPL 1d                               57   38.6%      7.3R   0.13R  1.20   14.8R
-TSLA 1h                              139   35.3%      1.7R   0.01R  1.02   15.3R
-TSLA 4h                               33   18.2%    -15.8R  -0.48R  0.43   16.6R
-TSLA 1d                               54   33.3%     -0.8R  -0.02R  0.98   12.3R
+AAPL 1h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+AAPL 4h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+AAPL 1d                                0    0.0%      0.0R   0.00R  0.00    0.0R
+TSLA 1h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+TSLA 4h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+TSLA 1d                                0    0.0%      0.0R   0.00R  0.00    0.0R
 NVDA 1h                              125   40.0%     16.9R   0.14R  1.21   11.9R
 NVDA 4h                               39   33.3%     -1.1R  -0.03R  0.96   13.6R
 NVDA 1d                               64   45.3%     20.1R   0.31R  1.57    4.2R
@@ -527,12 +521,12 @@ HYPEUSDT 1d                            4    0.0%     -4.0R  -1.01R  0.00    4.0R
 BNBUSDT 1h                            86   36.0%     -3.7R  -0.04R  0.94   16.2R
 BNBUSDT 4h                            37   32.4%     -3.7R  -0.10R  0.86    7.6R
 BNBUSDT 1d                            17   35.3%     -0.5R  -0.03R  0.95    7.2R
-AAPL 1h                               53   26.4%    -16.7R  -0.31R  0.61   19.4R
-AAPL 4h                               15   26.7%     -3.7R  -0.25R  0.68    8.5R
-AAPL 1d                               13   46.2%      4.6R   0.35R  1.63    4.1R
-TSLA 1h                               54   27.8%    -11.5R  -0.21R  0.72   13.0R
-TSLA 4h                               11   18.2%     -5.3R  -0.48R  0.43    6.2R
-TSLA 1d                               15   33.3%     -0.2R  -0.01R  0.98    4.1R
+AAPL 1h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+AAPL 4h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+AAPL 1d                                0    0.0%      0.0R   0.00R  0.00    0.0R
+TSLA 1h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+TSLA 4h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+TSLA 1d                                0    0.0%      0.0R   0.00R  0.00    0.0R
 NVDA 1h                               47   40.4%      7.4R   0.16R  1.25   12.2R
 NVDA 4h                               15   26.7%     -3.4R  -0.23R  0.70    8.3R
 NVDA 1d                               17   58.8%     12.7R   0.75R  2.79    2.0R
@@ -563,11 +557,11 @@ HYPEUSDT 1d                            0    0.0%      0.0R   0.00R  0.00    0.0R
 BNBUSDT 1h                           138   33.3%    -17.1R  -0.12R  0.83   31.4R
 BNBUSDT 4h                            64   40.6%     10.5R   0.16R  1.26    8.4R
 BNBUSDT 1d                             0    0.0%      0.0R   0.00R  0.00    0.0R
-AAPL 1h                               87   29.9%    -18.4R  -0.21R  0.72   23.8R
-AAPL 4h                               36   30.6%     -4.7R  -0.13R  0.82   11.3R
+AAPL 1h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+AAPL 4h                                0    0.0%      0.0R   0.00R  0.00    0.0R
 AAPL 1d                                0    0.0%      0.0R   0.00R  0.00    0.0R
-TSLA 1h                               82   35.4%      1.5R   0.02R  1.03    9.6R
-TSLA 4h                               26   19.2%    -11.6R  -0.45R  0.46   13.5R
+TSLA 1h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+TSLA 4h                                0    0.0%      0.0R   0.00R  0.00    0.0R
 TSLA 1d                                0    0.0%      0.0R   0.00R  0.00    0.0R
 NVDA 1h                               84   41.7%     15.1R   0.18R  1.29   12.8R
 NVDA 4h                               37   32.4%     -2.1R  -0.06R  0.92   12.6R
@@ -599,11 +593,11 @@ HYPEUSDT 1d                            0    0.0%      0.0R   0.00R  0.00    0.0R
 BNBUSDT 1h                            59   39.0%      2.7R   0.05R  1.07   11.4R
 BNBUSDT 4h                            20   35.0%     -0.1R  -0.01R  0.99    6.2R
 BNBUSDT 1d                             0    0.0%      0.0R   0.00R  0.00    0.0R
-AAPL 1h                               37   27.0%    -11.1R  -0.30R  0.62   14.9R
-AAPL 4h                               15   26.7%     -3.7R  -0.25R  0.68    8.5R
+AAPL 1h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+AAPL 4h                                0    0.0%      0.0R   0.00R  0.00    0.0R
 AAPL 1d                                0    0.0%      0.0R   0.00R  0.00    0.0R
-TSLA 1h                               27   37.0%      1.8R   0.07R  1.10    4.2R
-TSLA 4h                               10   20.0%     -4.2R  -0.42R  0.48    5.2R
+TSLA 1h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+TSLA 4h                                0    0.0%      0.0R   0.00R  0.00    0.0R
 TSLA 1d                                0    0.0%      0.0R   0.00R  0.00    0.0R
 NVDA 1h                               35   42.9%      8.0R   0.23R  1.38    9.7R
 NVDA 4h                               15   26.7%     -3.4R  -0.23R  0.70    8.3R
@@ -635,11 +629,11 @@ HYPEUSDT 1d                            0    0.0%      0.0R   0.00R  0.00    0.0R
 BNBUSDT 1h                           119   32.8%    -13.0R  -0.11R  0.85   29.0R
 BNBUSDT 4h                            53   35.8%      1.2R   0.02R  1.04    5.5R
 BNBUSDT 1d                             0    0.0%      0.0R   0.00R  0.00    0.0R
-AAPL 1h                               72   29.2%    -13.5R  -0.19R  0.75   22.1R
-AAPL 4h                               29   44.8%      5.7R   0.20R  1.35    4.5R
+AAPL 1h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+AAPL 4h                                0    0.0%      0.0R   0.00R  0.00    0.0R
 AAPL 1d                                0    0.0%      0.0R   0.00R  0.00    0.0R
-TSLA 1h                               68   32.4%     -2.8R  -0.04R  0.94    7.5R
-TSLA 4h                               24   16.7%    -12.4R  -0.52R  0.39   15.3R
+TSLA 1h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+TSLA 4h                                0    0.0%      0.0R   0.00R  0.00    0.0R
 TSLA 1d                                0    0.0%      0.0R   0.00R  0.00    0.0R
 NVDA 1h                               74   39.2%      8.5R   0.11R  1.18   16.9R
 NVDA 4h                               32   28.1%     -6.7R  -0.21R  0.72   10.5R
@@ -671,11 +665,11 @@ HYPEUSDT 1d                            0    0.0%      0.0R   0.00R  0.00    0.0R
 BNBUSDT 1h                           122   36.1%     -4.9R  -0.04R  0.94   25.7R
 BNBUSDT 4h                            61   41.0%     10.6R   0.17R  1.28    7.3R
 BNBUSDT 1d                             0    0.0%      0.0R   0.00R  0.00    0.0R
-AAPL 1h                               74   31.1%    -13.2R  -0.18R  0.76   18.6R
-AAPL 4h                               32   31.3%     -3.5R  -0.11R  0.85    9.2R
+AAPL 1h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+AAPL 4h                                0    0.0%      0.0R   0.00R  0.00    0.0R
 AAPL 1d                                0    0.0%      0.0R   0.00R  0.00    0.0R
-TSLA 1h                               67   35.8%      2.1R   0.03R  1.05    7.7R
-TSLA 4h                               23   21.7%     -8.5R  -0.37R  0.54   10.4R
+TSLA 1h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+TSLA 4h                                0    0.0%      0.0R   0.00R  0.00    0.0R
 TSLA 1d                                0    0.0%      0.0R   0.00R  0.00    0.0R
 NVDA 1h                               71   38.0%      5.0R   0.07R  1.11   15.4R
 NVDA 4h                               35   31.4%     -3.0R  -0.09R  0.88   11.8R
@@ -707,12 +701,12 @@ HYPEUSDT 1d                           12   50.0%      5.8R   0.49R  1.96    3.0R
 BNBUSDT 1h                           255   34.1%    -42.9R  -0.17R  0.78   53.5R
 BNBUSDT 4h                           116   41.4%     17.9R   0.15R  1.25   12.7R
 BNBUSDT 1d                            54   31.5%     -4.5R  -0.08R  0.88   14.7R
-AAPL 1h                              145   33.1%    -23.4R  -0.16R  0.79   39.4R
-AAPL 4h                               17   41.2%      2.1R   0.13R  1.20    4.1R
-AAPL 1d                               39   30.8%     -4.6R  -0.12R  0.84    7.5R
-TSLA 1h                              109   36.7%      0.1R   0.00R  1.00   12.8R
-TSLA 4h                               28   28.6%     -5.1R  -0.18R  0.75    8.3R
-TSLA 1d                               53   28.3%     -9.1R  -0.17R  0.77   12.8R
+AAPL 1h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+AAPL 4h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+AAPL 1d                                0    0.0%      0.0R   0.00R  0.00    0.0R
+TSLA 1h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+TSLA 4h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+TSLA 1d                                0    0.0%      0.0R   0.00R  0.00    0.0R
 NVDA 1h                              109   30.3%    -21.4R  -0.20R  0.74   26.5R
 NVDA 4h                               18   22.2%     -7.3R  -0.40R  0.50    9.1R
 NVDA 1d                               29   27.6%     -5.9R  -0.20R  0.73   10.7R
@@ -743,12 +737,12 @@ HYPEUSDT 1d                           12   50.0%      7.8R   0.65R  2.91    2.0R
 BNBUSDT 1h                           274   25.5%    -53.1R  -0.19R  0.70   56.9R
 BNBUSDT 4h                           139   27.3%      0.7R   0.00R  1.01   13.0R
 BNBUSDT 1d                            59   23.7%     -4.6R  -0.08R  0.86   13.5R
-AAPL 1h                              152   26.3%    -20.0R  -0.13R  0.79   33.6R
-AAPL 4h                               20   25.0%      0.9R   0.05R  1.11    4.3R
-AAPL 1d                               42   26.2%     -0.8R  -0.02R  0.97    5.3R
-TSLA 1h                              114   29.8%     -1.4R  -0.01R  0.98   11.1R
-TSLA 4h                               28   21.4%     -6.1R  -0.22R  0.66    8.7R
-TSLA 1d                               56   23.2%    -10.2R  -0.18R  0.72   12.9R
+AAPL 1h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+AAPL 4h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+AAPL 1d                                0    0.0%      0.0R   0.00R  0.00    0.0R
+TSLA 1h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+TSLA 4h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+TSLA 1d                                0    0.0%      0.0R   0.00R  0.00    0.0R
 NVDA 1h                              120   24.2%    -19.7R  -0.16R  0.74   25.8R
 NVDA 4h                               19   10.5%     -8.3R  -0.44R  0.28    8.3R
 NVDA 1d                               29   20.7%     -5.9R  -0.20R  0.67    9.8R
@@ -779,12 +773,12 @@ HYPEUSDT 1d                           12   50.0%      5.8R   0.49R  1.96    3.0R
 BNBUSDT 1h                           109   29.4%    -31.0R  -0.28R  0.66   32.9R
 BNBUSDT 4h                            68   38.2%      3.5R   0.05R  1.08   10.3R
 BNBUSDT 1d                            54   31.5%     -4.5R  -0.08R  0.88   14.7R
-AAPL 1h                               78   33.3%    -12.5R  -0.16R  0.79   28.0R
-AAPL 4h                               15   26.7%     -3.8R  -0.26R  0.67    6.3R
-AAPL 1d                               39   30.8%     -4.6R  -0.12R  0.84    7.5R
-TSLA 1h                               56   37.5%      1.0R   0.02R  1.03    9.2R
-TSLA 4h                                9   11.1%     -6.3R  -0.70R  0.24    8.2R
-TSLA 1d                               53   28.3%     -9.1R  -0.17R  0.77   12.8R
+AAPL 1h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+AAPL 4h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+AAPL 1d                                0    0.0%      0.0R   0.00R  0.00    0.0R
+TSLA 1h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+TSLA 4h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+TSLA 1d                                0    0.0%      0.0R   0.00R  0.00    0.0R
 NVDA 1h                               58   36.2%     -0.9R  -0.02R  0.98   12.6R
 NVDA 4h                               14   21.4%     -6.1R  -0.44R  0.46    7.0R
 NVDA 1d                               29   27.6%     -5.9R  -0.20R  0.73   10.7R
@@ -815,12 +809,12 @@ HYPEUSDT 1d                            6   50.0%      2.9R   0.49R  1.97    2.0R
 BNBUSDT 1h                            50   36.0%     -4.5R  -0.09R  0.88   11.0R
 BNBUSDT 4h                            40   32.5%     -6.5R  -0.16R  0.77   12.2R
 BNBUSDT 1d                            17   23.5%     -5.8R  -0.34R  0.54    5.8R
-AAPL 1h                               41   29.3%     -8.9R  -0.22R  0.72   14.5R
-AAPL 4h                               12   41.7%      2.4R   0.20R  1.33    3.2R
-AAPL 1d                               23   56.5%     15.3R   0.67R  2.49    5.1R
-TSLA 1h                               36   30.6%     -4.7R  -0.13R  0.82    5.9R
-TSLA 4h                               18   11.1%    -12.4R  -0.69R  0.24   12.4R
-TSLA 1d                               17   11.8%    -11.3R  -0.66R  0.26   11.3R
+AAPL 1h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+AAPL 4h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+AAPL 1d                                0    0.0%      0.0R   0.00R  0.00    0.0R
+TSLA 1h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+TSLA 4h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+TSLA 1d                                0    0.0%      0.0R   0.00R  0.00    0.0R
 NVDA 1h                               25   40.0%      3.6R   0.14R  1.23    4.3R
 NVDA 4h                               12   33.3%     -0.3R  -0.03R  0.96    7.2R
 NVDA 1d                               29   34.5%      0.4R   0.02R  1.02    7.1R
@@ -851,12 +845,12 @@ HYPEUSDT 1d                            7   42.9%     -0.6R  -0.08R  0.86    3.0R
 BNBUSDT 1h                            51   51.0%     -4.7R  -0.09R  0.83   10.3R
 BNBUSDT 4h                            45   44.4%     -5.6R  -0.12R  0.79    9.7R
 BNBUSDT 1d                            18   33.3%     -6.3R  -0.35R  0.48    6.3R
-AAPL 1h                               41   43.9%     -5.9R  -0.14R  0.76   11.0R
-AAPL 4h                               12   41.7%     -1.1R  -0.09R  0.86    3.2R
-AAPL 1d                               23   78.3%     14.3R   0.62R  3.79    1.6R
-TSLA 1h                               37   43.2%     -4.7R  -0.13R  0.79    6.9R
-TSLA 4h                               18   38.9%     -5.9R  -0.33R  0.47    6.2R
-TSLA 1d                               18   50.0%     -2.8R  -0.16R  0.69    3.3R
+AAPL 1h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+AAPL 4h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+AAPL 1d                                0    0.0%      0.0R   0.00R  0.00    0.0R
+TSLA 1h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+TSLA 4h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+TSLA 1d                                0    0.0%      0.0R   0.00R  0.00    0.0R
 NVDA 1h                               26   50.0%     -1.0R  -0.04R  0.93    6.3R
 NVDA 4h                               13   61.5%      1.7R   0.13R  1.32    3.2R
 NVDA 1d                               30   53.3%      2.4R   0.08R  1.17    6.1R
@@ -887,12 +881,12 @@ HYPEUSDT 1d                            0    0.0%      0.0R   0.00R  0.00    0.0R
 BNBUSDT 1h                             3   33.3%     -0.4R  -0.14R  0.82    2.3R
 BNBUSDT 4h                             3    0.0%     -3.2R  -1.05R  0.00    3.2R
 BNBUSDT 1d                             5   40.0%      0.9R   0.18R  1.30    3.0R
-AAPL 1h                                5   60.0%      3.5R   0.69R  2.54    2.2R
+AAPL 1h                                0    0.0%      0.0R   0.00R  0.00    0.0R
 AAPL 4h                                0    0.0%      0.0R   0.00R  0.00    0.0R
-AAPL 1d                                1    0.0%     -1.0R  -1.01R  0.00    1.0R
-TSLA 1h                                3    0.0%     -3.1R  -1.04R  0.00    3.1R
-TSLA 4h                                1    0.0%     -1.0R  -1.03R  0.00    1.0R
-TSLA 1d                                8   25.0%     -2.1R  -0.27R  0.65    5.1R
+AAPL 1d                                0    0.0%      0.0R   0.00R  0.00    0.0R
+TSLA 1h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+TSLA 4h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+TSLA 1d                                0    0.0%      0.0R   0.00R  0.00    0.0R
 NVDA 1h                                2   50.0%      0.9R   0.45R  1.83    1.1R
 NVDA 4h                                2   50.0%      0.9R   0.47R  1.90    1.0R
 NVDA 1d                                2    0.0%     -2.0R  -1.01R  0.00    2.0R
@@ -923,12 +917,12 @@ HYPEUSDT 1d                            6   50.0%      3.0R   0.49R  1.98    2.0R
 BNBUSDT 1h                            45   33.3%     -5.7R  -0.13R  0.83   10.7R
 BNBUSDT 4h                            32   37.5%     -2.5R  -0.08R  0.88    8.9R
 BNBUSDT 1d                            14   35.7%     -2.4R  -0.17R  0.73    3.6R
-AAPL 1h                               35   31.4%     -3.7R  -0.10R  0.85   12.2R
-AAPL 4h                                9   44.4%      1.7R   0.19R  1.33    3.1R
-AAPL 1d                               21   52.4%     11.2R   0.53R  2.09    5.1R
-TSLA 1h                               34   23.5%    -10.8R  -0.32R  0.59   11.3R
-TSLA 4h                               15   20.0%     -6.8R  -0.46R  0.44    6.8R
-TSLA 1d                               14    7.1%    -11.2R  -0.80R  0.15   11.2R
+AAPL 1h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+AAPL 4h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+AAPL 1d                                0    0.0%      0.0R   0.00R  0.00    0.0R
+TSLA 1h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+TSLA 4h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+TSLA 1d                                0    0.0%      0.0R   0.00R  0.00    0.0R
 NVDA 1h                               23   39.1%      3.0R   0.13R  1.21    5.5R
 NVDA 4h                               10   20.0%     -5.1R  -0.51R  0.37    8.2R
 NVDA 1d                               24   45.8%      8.7R   0.36R  1.66    3.0R
@@ -959,12 +953,12 @@ HYPEUSDT 1d                           11   18.2%     -4.5R  -0.41R  0.50    6.5R
 BNBUSDT 1h                            67   37.3%     17.2R   0.26R  1.37   14.1R
 BNBUSDT 4h                            40   30.0%     -2.6R  -0.06R  0.91    9.2R
 BNBUSDT 1d                            24   29.2%      0.2R   0.01R  1.01    9.6R
-AAPL 1h                               28   17.9%    -17.0R  -0.61R  0.29   17.0R
-AAPL 4h                               16   18.8%     -6.5R  -0.41R  0.52    9.4R
-AAPL 1d                               39   23.1%     -6.1R  -0.16R  0.79   19.1R
-TSLA 1h                               39   25.6%     -8.8R  -0.23R  0.71   15.2R
-TSLA 4h                               13   38.5%     -0.5R  -0.04R  0.94    6.6R
-TSLA 1d                               44   22.7%     -7.4R  -0.17R  0.78   13.0R
+AAPL 1h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+AAPL 4h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+AAPL 1d                                0    0.0%      0.0R   0.00R  0.00    0.0R
+TSLA 1h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+TSLA 4h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+TSLA 1d                                0    0.0%      0.0R   0.00R  0.00    0.0R
 NVDA 1h                               28   42.9%      8.0R   0.29R  1.48    6.2R
 NVDA 4h                               15   40.0%      4.2R   0.28R  1.46    3.1R
 NVDA 1d                               34   35.3%      7.3R   0.21R  1.33    8.1R
@@ -995,12 +989,12 @@ HYPEUSDT 1d                           11   18.2%     -5.1R  -0.46R  0.44    6.1R
 BNBUSDT 1h                            71   42.3%      8.0R   0.11R  1.18   12.1R
 BNBUSDT 4h                            40   35.0%     -2.3R  -0.06R  0.91    7.5R
 BNBUSDT 1d                            25   40.0%      6.1R   0.24R  1.44    7.1R
-AAPL 1h                               29   17.2%    -18.6R  -0.64R  0.25   18.6R
-AAPL 4h                               16   18.8%     -7.6R  -0.48R  0.44    9.5R
-AAPL 1d                               40   35.0%      2.1R   0.05R  1.08   12.5R
-TSLA 1h                               42   31.0%     -8.0R  -0.19R  0.73   14.2R
-TSLA 4h                               13   38.5%      0.3R   0.03R  1.04    6.1R
-TSLA 1d                               48   31.3%     -5.0R  -0.10R  0.85   12.3R
+AAPL 1h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+AAPL 4h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+AAPL 1d                                0    0.0%      0.0R   0.00R  0.00    0.0R
+TSLA 1h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+TSLA 4h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+TSLA 1d                                0    0.0%      0.0R   0.00R  0.00    0.0R
 NVDA 1h                               31   48.4%      9.8R   0.32R  1.59    6.2R
 NVDA 4h                               16   43.8%      4.7R   0.30R  1.52    3.1R
 NVDA 1d                               39   41.0%      5.5R   0.14R  1.23    8.1R
@@ -1031,12 +1025,12 @@ HYPEUSDT 1d                            8   25.0%     -3.6R  -0.45R  0.41    3.6R
 BNBUSDT 1h                            50   40.0%     13.0R   0.26R  1.43    5.4R
 BNBUSDT 4h                            27   29.6%     -4.2R  -0.16R  0.77    9.6R
 BNBUSDT 1d                            16   37.5%      3.8R   0.24R  1.41    7.1R
-AAPL 1h                               21   14.3%    -16.9R  -0.80R  0.09   16.9R
-AAPL 4h                               13   23.1%     -3.3R  -0.26R  0.68    8.2R
-AAPL 1d                               23   21.7%     -3.4R  -0.15R  0.79    8.9R
-TSLA 1h                               25   40.0%      1.1R   0.04R  1.07    6.6R
-TSLA 4h                               10   40.0%      0.6R   0.06R  1.09    3.1R
-TSLA 1d                               20   30.0%     -0.1R  -0.00R  1.00    6.2R
+AAPL 1h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+AAPL 4h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+AAPL 1d                                0    0.0%      0.0R   0.00R  0.00    0.0R
+TSLA 1h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+TSLA 4h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+TSLA 1d                                0    0.0%      0.0R   0.00R  0.00    0.0R
 NVDA 1h                               24   33.3%      4.2R   0.18R  1.26    7.2R
 NVDA 4h                                7   42.9%      2.0R   0.29R  1.50    3.1R
 NVDA 1d                               31   32.3%      4.6R   0.15R  1.23    5.9R
@@ -1067,12 +1061,12 @@ HYPEUSDT 1d                           23   78.3%      1.6R   0.07R  1.61    2.0R
 BNBUSDT 1h                           180   61.1%     -8.4R  -0.05R  0.73    9.2R
 BNBUSDT 4h                            80   58.8%     -6.6R  -0.08R  0.57    7.3R
 BNBUSDT 1d                            43   67.4%      0.3R   0.01R  1.04    2.7R
-AAPL 1h                              134   55.2%     -4.6R  -0.03R  0.83    8.6R
-AAPL 4h                               37   67.6%      2.0R   0.05R  1.31    3.9R
-AAPL 1d                               85   70.6%      4.2R   0.05R  1.30    3.8R
-TSLA 1h                              126   58.7%     -4.4R  -0.04R  0.82    5.9R
-TSLA 4h                               33   69.7%      3.3R   0.10R  1.68    1.7R
-TSLA 1d                               54   63.0%     -0.5R  -0.01R  0.95    3.0R
+AAPL 1h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+AAPL 4h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+AAPL 1d                                0    0.0%      0.0R   0.00R  0.00    0.0R
+TSLA 1h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+TSLA 4h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+TSLA 1d                                0    0.0%      0.0R   0.00R  0.00    0.0R
 NVDA 1h                              144   63.9%      8.2R   0.06R  1.40    4.2R
 NVDA 4h                               41   65.9%      1.0R   0.02R  1.14    2.9R
 NVDA 1d                               82   76.8%     11.1R   0.14R  2.09    2.0R
@@ -1103,12 +1097,12 @@ HYPEUSDT 1d                           27   74.1%      0.9R   0.03R  1.25    2.5R
 BNBUSDT 1h                           352   61.6%    -14.5R  -0.04R  0.76   16.4R
 BNBUSDT 4h                           156   62.2%     -6.5R  -0.04R  0.73    8.8R
 BNBUSDT 1d                            85   64.7%     -2.3R  -0.03R  0.83    5.0R
-AAPL 1h                              230   57.8%     -4.7R  -0.02R  0.89   12.5R
-AAPL 4h                               50   60.0%      2.9R   0.06R  1.35    3.3R
-AAPL 1d                              107   69.2%      3.0R   0.03R  1.16    5.1R
-TSLA 1h                              240   58.3%     -6.5R  -0.03R  0.86   11.3R
-TSLA 4h                               57   61.4%      0.3R   0.01R  1.03    4.1R
-TSLA 1d                              102   64.7%     -2.3R  -0.02R  0.90    6.7R
+AAPL 1h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+AAPL 4h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+AAPL 1d                                0    0.0%      0.0R   0.00R  0.00    0.0R
+TSLA 1h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+TSLA 4h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+TSLA 1d                                0    0.0%      0.0R   0.00R  0.00    0.0R
 NVDA 1h                              230   59.1%      1.0R   0.00R  1.03    8.7R
 NVDA 4h                               52   61.5%     -0.8R  -0.02R  0.93    5.4R
 NVDA 1d                              104   71.2%      8.8R   0.08R  1.57    3.3R
@@ -1139,12 +1133,12 @@ HYPEUSDT 1d                           14   28.6%     -0.4R  -0.03R  0.95    4.5R
 BNBUSDT 1h                           204   32.8%     16.2R   0.08R  1.15   20.1R
 BNBUSDT 4h                            99   32.3%      9.9R   0.10R  1.20    9.7R
 BNBUSDT 1d                            50   28.0%     -8.3R  -0.17R  0.71   11.0R
-AAPL 1h                              138   35.5%      0.8R   0.01R  1.01   11.2R
-AAPL 4h                               39   38.5%     -5.6R  -0.14R  0.71    8.1R
-AAPL 1d                               65   44.6%     24.8R   0.38R  1.85    5.9R
-TSLA 1h                              134   31.3%     27.3R   0.20R  1.38   16.0R
-TSLA 4h                               44   22.7%     -6.6R  -0.15R  0.77   13.8R
-TSLA 1d                               66   37.9%     37.9R   0.57R  2.31    7.6R
+AAPL 1h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+AAPL 4h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+AAPL 1d                                0    0.0%      0.0R   0.00R  0.00    0.0R
+TSLA 1h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+TSLA 4h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+TSLA 1d                                0    0.0%      0.0R   0.00R  0.00    0.0R
 NVDA 1h                              137   35.0%     10.4R   0.08R  1.16   14.5R
 NVDA 4h                               41   19.5%     -7.4R  -0.18R  0.67   11.7R
 NVDA 1d                               64   37.5%     27.2R   0.42R  1.91    7.3R
@@ -1175,12 +1169,12 @@ HYPEUSDT 1d                           10   30.0%      1.0R   0.10R  1.18    3.2R
 BNBUSDT 1h                           100   35.0%     29.5R   0.29R  1.65    8.8R
 BNBUSDT 4h                            49   34.7%     21.9R   0.45R  1.97    6.0R
 BNBUSDT 1d                            25   32.0%      0.9R   0.04R  1.07    4.8R
-AAPL 1h                               82   40.2%      5.5R   0.07R  1.14    7.7R
-AAPL 4h                               29   37.9%     -1.6R  -0.06R  0.89    4.4R
-AAPL 1d                               43   55.8%     35.3R   0.82R  3.39    2.5R
-TSLA 1h                               66   34.8%     33.8R   0.51R  2.04    9.4R
-TSLA 4h                               23   34.8%      5.0R   0.22R  1.42    4.7R
-TSLA 1d                               34   47.1%     43.7R   1.29R  4.39    3.3R
+AAPL 1h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+AAPL 4h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+AAPL 1d                                0    0.0%      0.0R   0.00R  0.00    0.0R
+TSLA 1h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+TSLA 4h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+TSLA 1d                                0    0.0%      0.0R   0.00R  0.00    0.0R
 NVDA 1h                               80   40.0%     23.3R   0.29R  1.72    5.9R
 NVDA 4h                               28   21.4%     -0.5R  -0.02R  0.97    5.7R
 NVDA 1d                               48   41.7%     29.1R   0.61R  2.48    5.5R
@@ -1211,12 +1205,12 @@ HYPEUSDT 1d                           77   63.6%      3.5R   0.05R  1.13    4.8R
 BNBUSDT 1h                           781   40.3%   -204.5R  -0.26R  0.46  204.7R
 BNBUSDT 4h                           437   49.9%    -87.3R  -0.20R  0.57   90.9R
 BNBUSDT 1d                           191   58.6%     -5.4R  -0.03R  0.93   10.1R
-AAPL 1h                              586   41.3%    -99.1R  -0.17R  0.69  106.0R
-AAPL 4h                              222   49.5%     -5.0R  -0.02R  0.96   17.0R
-AAPL 1d                              403   60.0%    -10.9R  -0.03R  0.93   23.6R
-TSLA 1h                              503   47.9%    -34.4R  -0.07R  0.88   52.9R
-TSLA 4h                              193   51.8%     18.4R   0.10R  1.19   20.6R
-TSLA 1d                              281   64.8%     53.9R   0.19R  1.54    9.1R
+AAPL 1h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+AAPL 4h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+AAPL 1d                                0    0.0%      0.0R   0.00R  0.00    0.0R
+TSLA 1h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+TSLA 4h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+TSLA 1d                                0    0.0%      0.0R   0.00R  0.00    0.0R
 NVDA 1h                              602   46.7%    -33.0R  -0.05R  0.91   97.9R
 NVDA 4h                              228   51.8%     22.5R   0.10R  1.19   14.2R
 NVDA 1d                              387   64.1%     51.3R   0.13R  1.40   13.0R
@@ -1247,14 +1241,14 @@ HYPEUSDT 1d                          101   64.4%      0.1R   0.00R  1.00    8.2R
 BNBUSDT 1h                          1567   38.8%   -437.7R  -0.28R  0.46  439.1R
 BNBUSDT 4h                           789   48.4%   -131.8R  -0.17R  0.65  145.3R
 BNBUSDT 1d                           369   56.1%    -29.2R  -0.08R  0.81   34.1R
-AAPL 1h                              997   42.9%   -208.6R  -0.21R  0.64  218.6R
-AAPL 4h                              289   49.8%    -12.8R  -0.04R  0.91   22.7R
-AAPL 1d                              493   59.4%    -20.9R  -0.04R  0.90   30.7R
-TSLA 1h                              976   50.5%      0.7R   0.00R  1.00   48.7R
-TSLA 4h                              301   49.2%     23.0R   0.08R  1.15   22.8R
-TSLA 1d                              476   61.3%     39.3R   0.08R  1.21   17.2R
+AAPL 1h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+AAPL 4h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+AAPL 1d                                0    0.0%      0.0R   0.00R  0.00    0.0R
+TSLA 1h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+TSLA 4h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+TSLA 1d                                0    0.0%      0.0R   0.00R  0.00    0.0R
 NVDA 1h                              988   47.1%   -115.1R  -0.12R  0.80  166.6R
-NVDA 4h                              301   51.5%     27.8R   0.09R  1.18   15.4R
+NVDA 4h                              302   51.3%     26.7R   0.09R  1.18   15.4R
 NVDA 1d                              485   62.9%     46.3R   0.10R  1.26   21.3R
 MSFT 1h                             1014   39.1%   -260.2R  -0.26R  0.60  263.5R
 MSFT 4h                              285   47.4%    -21.9R  -0.08R  0.86   32.6R
@@ -1283,12 +1277,12 @@ HYPEUSDT 1d                           16   68.8%     -0.9R  -0.06R  0.82    3.4R
 BNBUSDT 1h                           161   37.9%    -44.7R  -0.28R  0.43   47.2R
 BNBUSDT 4h                            78   47.4%    -22.9R  -0.29R  0.31   26.1R
 BNBUSDT 1d                            35   45.7%    -11.3R  -0.32R  0.32   13.4R
-AAPL 1h                              128   46.1%    -11.3R  -0.09R  0.81   25.3R
-AAPL 4h                               24   54.2%     -8.8R  -0.37R  0.42   13.2R
-AAPL 1d                               77   77.9%     20.3R   0.26R  2.29    3.3R
-TSLA 1h                              115   57.4%     -2.8R  -0.02R  0.94   12.8R
-TSLA 4h                               30   60.0%     -4.2R  -0.14R  0.68    7.2R
-TSLA 1d                               77   66.2%     -1.2R  -0.02R  0.96   10.5R
+AAPL 1h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+AAPL 4h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+AAPL 1d                                0    0.0%      0.0R   0.00R  0.00    0.0R
+TSLA 1h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+TSLA 4h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+TSLA 1d                                0    0.0%      0.0R   0.00R  0.00    0.0R
 NVDA 1h                              114   60.5%    -14.2R  -0.12R  0.68   18.8R
 NVDA 4h                               30   56.7%     -2.3R  -0.08R  0.79    4.9R
 NVDA 1d                               98   70.4%      3.5R   0.04R  1.11    9.0R
@@ -1319,12 +1313,12 @@ HYPEUSDT 1d                            1  100.0%      0.3R   0.25R 99.00    0.0R
 BNBUSDT 1h                            11   18.2%     -9.6R  -0.87R  0.32    9.6R
 BNBUSDT 4h                             0    0.0%      0.0R   0.00R  0.00    0.0R
 BNBUSDT 1d                             0    0.0%      0.0R   0.00R  0.00    0.0R
-AAPL 1h                              292   49.3%     50.7R   0.17R  1.31   18.1R
-AAPL 4h                              179   49.2%     41.2R   0.23R  1.43   13.1R
-AAPL 1d                              368   44.0%     67.6R   0.18R  1.29   37.3R
-TSLA 1h                              296   44.6%     33.4R   0.11R  1.20   20.2R
-TSLA 4h                              191   50.3%     81.8R   0.43R  1.85   12.1R
-TSLA 1d                              373   41.3%     56.5R   0.15R  1.25   26.1R
+AAPL 1h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+AAPL 4h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+AAPL 1d                                0    0.0%      0.0R   0.00R  0.00    0.0R
+TSLA 1h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+TSLA 4h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+TSLA 1d                                0    0.0%      0.0R   0.00R  0.00    0.0R
 NVDA 1h                              271   48.0%     98.6R   0.36R  1.68   13.3R
 NVDA 4h                              192   49.0%     75.0R   0.39R  1.76   11.7R
 NVDA 1d                              395   41.3%     19.4R   0.05R  1.07   49.9R
@@ -1355,12 +1349,12 @@ HYPEUSDT 1d                           13   61.5%      1.2R   0.09R  1.49    1.0R
 BNBUSDT 1h                            99   54.5%     -9.9R  -0.10R  0.66   10.4R
 BNBUSDT 4h                            48   52.1%     -1.9R  -0.04R  0.84    5.7R
 BNBUSDT 1d                            13   46.2%     -1.7R  -0.13R  0.60    2.5R
-AAPL 1h                               80   58.8%      2.2R   0.03R  1.09    6.6R
-AAPL 4h                               24   58.3%      0.2R   0.01R  1.03    5.0R
-AAPL 1d                               48   52.1%     -1.2R  -0.03R  0.93    7.3R
-TSLA 1h                               62   46.8%     -2.6R  -0.04R  0.87    5.9R
-TSLA 4h                               20   55.0%     -0.4R  -0.02R  0.92    1.8R
-TSLA 1d                               37   48.6%     -2.5R  -0.07R  0.79    4.3R
+AAPL 1h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+AAPL 4h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+AAPL 1d                                0    0.0%      0.0R   0.00R  0.00    0.0R
+TSLA 1h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+TSLA 4h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+TSLA 1d                                0    0.0%      0.0R   0.00R  0.00    0.0R
 NVDA 1h                               64   40.6%     -5.8R  -0.09R  0.78   13.7R
 NVDA 4h                               27   48.1%      1.0R   0.04R  1.15    3.2R
 NVDA 1d                               56   69.6%     14.5R   0.26R  2.65    2.3R
@@ -1391,12 +1385,12 @@ HYPEUSDT 1d                            3   33.3%     -0.8R  -0.28R  0.55    1.9R
 BNBUSDT 1h                            91   34.1%     -8.7R  -0.10R  0.83   22.1R
 BNBUSDT 4h                            29   34.5%     -3.8R  -0.13R  0.74    5.2R
 BNBUSDT 1d                            14   35.7%     -3.1R  -0.22R  0.63    4.4R
-AAPL 1h                               15   26.7%     -4.6R  -0.31R  0.47    5.3R
-AAPL 4h                                5    0.0%     -4.9R  -0.99R  0.00    4.9R
-AAPL 1d                                8   37.5%     -3.0R  -0.38R  0.40    4.1R
-TSLA 1h                               28   32.1%      1.7R   0.06R  1.11    6.1R
-TSLA 4h                                6   16.7%     -1.6R  -0.26R  0.69    3.1R
-TSLA 1d                               17   35.3%     -1.3R  -0.08R  0.82    3.0R
+AAPL 1h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+AAPL 4h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+AAPL 1d                                0    0.0%      0.0R   0.00R  0.00    0.0R
+TSLA 1h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+TSLA 4h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+TSLA 1d                                0    0.0%      0.0R   0.00R  0.00    0.0R
 NVDA 1h                                4   75.0%      2.0R   0.50R  2.94    1.0R
 NVDA 4h                                1  100.0%      0.0R   0.05R 99.00    0.0R
 NVDA 1d                               10   30.0%      0.0R   0.00R  1.01    2.3R
@@ -1427,12 +1421,12 @@ HYPEUSDT 1d                            2   50.0%      0.8R   0.39R  1.78    1.0R
 BNBUSDT 1h                            96   30.2%    -17.3R  -0.18R  0.76   25.2R
 BNBUSDT 4h                            27   33.3%     -2.0R  -0.07R  0.89    7.6R
 BNBUSDT 1d                            13   38.5%      0.4R   0.03R  1.05    4.1R
-AAPL 1h                               13   23.1%     -5.6R  -0.43R  0.47    6.5R
-AAPL 4h                                5    0.0%     -5.1R  -1.03R  0.00    5.1R
-AAPL 1d                                9   11.1%     -6.2R  -0.69R  0.24    6.2R
-TSLA 1h                               29   27.6%     -5.6R  -0.19R  0.74    9.2R
-TSLA 4h                                7   14.3%     -4.1R  -0.59R  0.32    4.1R
-TSLA 1d                               18   33.3%     -0.2R  -0.01R  0.99    3.1R
+AAPL 1h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+AAPL 4h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+AAPL 1d                                0    0.0%      0.0R   0.00R  0.00    0.0R
+TSLA 1h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+TSLA 4h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+TSLA 1d                                0    0.0%      0.0R   0.00R  0.00    0.0R
 NVDA 1h                                5   60.0%      3.9R   0.77R  2.88    2.1R
 NVDA 4h                                1  100.0%      2.0R   1.98R 99.00    0.0R
 NVDA 1d                                9   44.4%      1.2R   0.13R  1.23    3.0R
@@ -1463,12 +1457,12 @@ HYPEUSDT 1d                            3   33.3%     -0.5R  -0.17R  0.74    2.0R
 BNBUSDT 1h                           107   42.1%     -4.2R  -0.04R  0.94   16.1R
 BNBUSDT 4h                            28   42.9%     -0.4R  -0.01R  0.98    5.7R
 BNBUSDT 1d                            15   33.3%     -3.6R  -0.24R  0.64    5.6R
-AAPL 1h                               15   33.3%     -3.4R  -0.23R  0.67    4.1R
-AAPL 4h                                5    0.0%     -5.1R  -1.03R  0.00    5.1R
-AAPL 1d                                9   11.1%     -6.7R  -0.74R  0.18    6.7R
-TSLA 1h                               31   38.7%     -2.1R  -0.07R  0.89    7.2R
-TSLA 4h                                7   14.3%     -4.6R  -0.66R  0.24    4.6R
-TSLA 1d                               21   33.3%     -3.7R  -0.18R  0.74    4.6R
+AAPL 1h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+AAPL 4h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+AAPL 1d                                0    0.0%      0.0R   0.00R  0.00    0.0R
+TSLA 1h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+TSLA 4h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+TSLA 1d                                0    0.0%      0.0R   0.00R  0.00    0.0R
 NVDA 1h                                6   50.0%      1.3R   0.22R  1.43    2.1R
 NVDA 4h                                1  100.0%      1.5R   1.48R 99.00    0.0R
 NVDA 1d                               10   50.0%      1.2R   0.12R  1.23    3.0R
@@ -1499,12 +1493,12 @@ HYPEUSDT 1d                            4   50.0%     -0.7R  -0.17R  0.33    1.0R
 BNBUSDT 1h                           279   57.3%    -22.4R  -0.08R  0.60   24.5R
 BNBUSDT 4h                            98   66.3%     -1.1R  -0.01R  0.93    4.3R
 BNBUSDT 1d                            42   61.9%     -2.6R  -0.06R  0.68    4.3R
-AAPL 1h                               45   44.4%     -5.4R  -0.12R  0.52    6.6R
-AAPL 4h                               10   30.0%     -1.4R  -0.14R  0.26    1.7R
-AAPL 1d                               19   63.2%     -1.1R  -0.06R  0.71    1.3R
-TSLA 1h                              109   54.1%     -8.3R  -0.08R  0.64   13.4R
-TSLA 4h                               25   36.0%     -5.6R  -0.22R  0.40    8.3R
-TSLA 1d                               43   62.8%     -3.1R  -0.07R  0.71    6.5R
+AAPL 1h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+AAPL 4h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+AAPL 1d                                0    0.0%      0.0R   0.00R  0.00    0.0R
+TSLA 1h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+TSLA 4h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+TSLA 1d                                0    0.0%      0.0R   0.00R  0.00    0.0R
 NVDA 1h                               16   37.5%     -2.1R  -0.13R  0.34    2.1R
 NVDA 4h                                5   60.0%      0.1R   0.03R  1.11    1.1R
 NVDA 1d                               20   50.0%     -1.6R  -0.08R  0.61    2.1R
@@ -1535,12 +1529,12 @@ HYPEUSDT 1d                            1  100.0%      2.0R   1.99R 99.00    0.0R
 BNBUSDT 1h                            80   35.0%     -9.4R  -0.12R  0.83   13.1R
 BNBUSDT 4h                            19   26.3%     -3.8R  -0.20R  0.72    8.5R
 BNBUSDT 1d                            15   33.3%     -1.0R  -0.07R  0.88    6.8R
-AAPL 1h                                9   11.1%     -7.0R  -0.77R  0.18    7.4R
-AAPL 4h                                2    0.0%     -2.0R  -1.02R  0.00    2.0R
-AAPL 1d                                7   28.6%     -2.4R  -0.34R  0.46    2.4R
-TSLA 1h                               23   26.1%     -5.9R  -0.26R  0.67    7.7R
-TSLA 4h                                4   25.0%     -1.1R  -0.27R  0.65    2.0R
-TSLA 1d                               19   31.6%     -1.2R  -0.06R  0.91    4.0R
+AAPL 1h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+AAPL 4h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+AAPL 1d                                0    0.0%      0.0R   0.00R  0.00    0.0R
+TSLA 1h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+TSLA 4h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+TSLA 1d                                0    0.0%      0.0R   0.00R  0.00    0.0R
 NVDA 1h                                4   25.0%     -1.1R  -0.27R  0.64    3.1R
 NVDA 4h                                3   33.3%     -0.0R  -0.01R  0.98    2.0R
 NVDA 1d                                5   20.0%     -2.0R  -0.41R  0.49    2.0R

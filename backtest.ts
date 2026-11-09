@@ -376,7 +376,7 @@ function backtestAR(k: Candle[], dDir: number[], p: ARParams): Trade[] {
 // (vender si > 90 en bajista). Salida: cierre cruza la SMA5. Stop de protección 3 ATR. R = pnl / riesgo.
 // R · Donchian ("Tortugas"): cierre rompe máximo/mínimo de 20 velas a favor de la EMA200.
 // Stop inicial 2 ATR; salida por mínimo/máximo de 10 velas (stop que persigue al precio).
-type ExitParams = { name: string; kind: "rsi2" | "donchian"; shorts: boolean; n?: number; trail?: number; sl?: number; th?: number; ex?: number; gate?: number[] };
+type ExitParams = { name: string; kind: "rsi2" | "donchian"; shorts: boolean; n?: number; trail?: number; sl?: number; th?: number; ex?: number; gate?: number[]; tp?: number };
 const EXIT_VARIANTS: ExitParams[] = [
   { name: "Q Connors RSI(2) solo LONG", kind: "rsi2", shorts: false },
   { name: "R Connors RSI(2) LONG+SHORT", kind: "rsi2", shorts: true },
@@ -402,6 +402,7 @@ function backtestExit(k: Candle[], p: ExitParams): Trade[] {
     for (n = 1; n <= MAX_HOLD * 2 && i + n < k.length; n++) {
       const x = k[i + n], m = i + n;
       if (L ? x.l <= stop : x.h >= stop) { res = (L ? stop - entry : entry - stop) / risk; break; }
+      if (p.tp && (L ? x.h >= entry + p.tp * risk : x.l <= entry - p.tp * risk)) { res = p.tp; break; }
       if (p.kind === "rsi2" && (L ? x.c > s5[m] : x.c < s5[m])) { res = (L ? x.c - entry : entry - x.c) / risk; break; }
       if (p.kind === "donchian" && m >= (p.trail ?? 10)) {
         const t10 = L ? Math.min(...k.slice(m - (p.trail ?? 10) + 1, m + 1).map((y) => y.l)) : Math.max(...k.slice(m - (p.trail ?? 10) + 1, m + 1).map((y) => y.h));
@@ -603,6 +604,8 @@ if (process.env.STRESS) {
   const ALL = [...CRYPTO, ...STOCKS];
   const dailyBull = (k: Candle[], tf: TF, d: Candle[]) => { const c = d.map((x) => x.c), s = sma(c, 200); return alignHtf(k, tf, d, d.map((_, i) => (c[i] > s[i] ? 1 : 0)), "1d"); };
   const specs: Spec[] = [
+    ...[1.5, 2, 3].map((tp): Spec => ({ name: `Donchian LONG 1d TP fijo ${tp}R`, tfs: ["1d"], syms: ALL, params: { n: 20, sl: 2 }, run: (k, _t, _s, P) => backtestExit(k, { name: "", kind: "donchian", shorts: false, n: P.n, sl: P.sl, trail: 9999, tp }) })),
+    ...[1, 1.5, 2].map((tp): Spec => ({ name: `RSI(2) LONG 1d TP fijo ${tp}R`, tfs: ["1d"], syms: STOCKS, params: { th: 10, sl: 1.5 }, run: (k, _t, _s, P) => backtestExit(k, { name: "", kind: "rsi2", shorts: false, th: P.th, sl: P.sl, ex: 99999, tp }) })),
     ...(["1h", "4h"] as TF[]).map((tf): Spec => ({
       name: `Donchian LONG ${tf} + diario alcista`, tfs: [tf], syms: ALL, params: { n: 20, trail: 10, sl: 2 },
       run: (k, t, s, P) => backtestExit(k, { name: "", kind: "donchian", shorts: false, n: P.n, trail: P.trail, sl: P.sl, gate: dailyBull(k, t, DATA[s]["1d"]) }),
