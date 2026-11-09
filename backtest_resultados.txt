@@ -1,0 +1,705 @@
+HISTORIAL USADO
+BTCUSDT 1h: 7999 velas desde 2025-12-11
+BTCUSDT 4h: 3999 velas desde 2025-01-12
+BTCUSDT 1d: 1999 velas desde 2021-05-20
+ETHUSDT 1h: 7999 velas desde 2025-12-11
+ETHUSDT 4h: 3999 velas desde 2025-01-12
+ETHUSDT 1d: 1999 velas desde 2021-05-20
+SOLUSDT 1h: 7999 velas desde 2025-12-11
+SOLUSDT 4h: 3999 velas desde 2025-01-12
+SOLUSDT 1d: 1999 velas desde 2021-05-20
+BNBUSDT 1h: 7999 velas desde 2025-12-11
+BNBUSDT 4h: 3999 velas desde 2025-01-12
+BNBUSDT 1d: 1999 velas desde 2021-05-20
+XRPUSDT 1h: 7999 velas desde 2025-12-11
+XRPUSDT 4h: 3999 velas desde 2025-01-12
+XRPUSDT 1d: 1999 velas desde 2021-05-20
+AAPL 1h: 5086 velas desde 2023-12-12
+AAPL 4h: 1453 velas desde 2023-12-12
+AAPL 1d: 2512 velas desde 2016-11-09
+TSLA 1h: 5086 velas desde 2023-12-12
+TSLA 4h: 1453 velas desde 2023-12-12
+TSLA 1d: 2512 velas desde 2016-11-09
+NVDA 1h: 5086 velas desde 2023-12-12
+NVDA 4h: 1453 velas desde 2023-12-12
+NVDA 1d: 2512 velas desde 2016-11-09
+MSFT 1h: 5086 velas desde 2023-12-12
+MSFT 4h: 1453 velas desde 2023-12-12
+MSFT 1d: 2512 velas desde 2016-11-09
+AMZN 1h: 5086 velas desde 2023-12-12
+AMZN 4h: 1453 velas desde 2023-12-12
+AMZN 1d: 2512 velas desde 2016-11-09
+SPY 1h: 5086 velas desde 2023-12-12
+SPY 4h: 1453 velas desde 2023-12-12
+SPY 1d: 2512 velas desde 2016-11-09
+
+═══ RESUMEN POR VARIANTE (todos los activos y temporalidades) ═══
+                                     ops acierto     total   media    PF   maxDD
+A actual (3 filtros, SL 1.5 ATR)    3177   35.3%    -74.8R  -0.02R  0.97  193.5R
+B 4 filtros                         1147   34.5%    -56.3R  -0.05R  0.93  122.4R
+C + tendencia mayor                 1799   33.5%   -150.8R  -0.08R  0.88  185.0R
+D + tendencia mayor, 4 filtros       681   32.6%    -78.3R  -0.11R  0.84  112.6R
+E + tendencia mayor, SL 2 ATR       1507   33.4%   -138.2R  -0.09R  0.87  170.3R
+F + tendencia mayor, ADX 25         1563   33.6%   -128.7R  -0.08R  0.89  157.8R
+G artículo (S/R + vela, 1:2)        3232   34.6%   -277.3R  -0.09R  0.88  313.9R
+H artículo + breakeven en 1R        3459   27.1%   -286.2R  -0.08R  0.86  334.7R
+I artículo + tendencia propia       1904   33.8%   -191.4R  -0.10R  0.86  215.6R
+J EMA30/150/200 retroceso           1003   33.7%    -68.0R  -0.07R  0.90  105.9R
+K EMA retroceso + parcial 1R        1056   48.9%    -85.5R  -0.08R  0.85  119.2R
+L EMA30/150 cruce                     98   36.7%      5.4R   0.05R  1.08    8.7R
+M EMA retroceso, SL 2 ATR            863   35.8%    -24.6R  -0.03R  0.96   71.4R
+
+═══ 1H ═══
+                                     ops acierto     total   media    PF   maxDD
+A actual (3 filtros, SL 1.5 ATR)    1847   34.9%   -109.3R  -0.06R  0.92  132.0R
+B 4 filtros                          714   32.4%    -96.0R  -0.13R  0.82   97.5R
+C + tendencia mayor                 1308   33.6%   -123.8R  -0.09R  0.87  145.1R
+D + tendencia mayor, 4 filtros       515   31.7%    -80.4R  -0.16R  0.79   90.8R
+E + tendencia mayor, SL 2 ATR       1095   33.9%    -88.4R  -0.08R  0.88  111.8R
+F + tendencia mayor, ADX 25         1137   33.3%   -118.5R  -0.10R  0.86  136.7R
+G artículo (S/R + vela, 1:2)        2000   35.1%   -218.6R  -0.11R  0.85  257.7R
+H artículo + breakeven en 1R        2135   27.6%   -242.6R  -0.11R  0.82  285.5R
+I artículo + tendencia propia        973   34.7%   -117.0R  -0.12R  0.84  137.7R
+J EMA30/150/200 retroceso            524   32.6%    -69.9R  -0.13R  0.82   76.2R
+K EMA retroceso + parcial 1R         554   47.3%    -82.1R  -0.15R  0.75   86.4R
+L EMA30/150 cruce                     48   33.3%     -4.1R  -0.08R  0.88    9.4R
+M EMA retroceso, SL 2 ATR            446   34.5%    -33.9R  -0.08R  0.89   45.3R
+  — validación: 70% inicial vs 30% final (datos no vistos) —
+A actual (3 filtros, SL 1.5 ATR) · 70%  1272   34.2%    -96.2R  -0.08R  0.90  112.1R
+A actual (3 filtros, SL 1.5 ATR) · 30%   575   36.3%    -13.1R  -0.02R  0.97   51.0R
+B 4 filtros · 70%                    509   32.0%    -69.9R  -0.14R  0.82   76.4R
+B 4 filtros · 30%                    205   33.2%    -26.1R  -0.13R  0.83   35.8R
+C + tendencia mayor · 70%            897   32.6%   -110.4R  -0.12R  0.83  124.4R
+C + tendencia mayor · 30%            411   36.0%    -13.4R  -0.03R  0.95   47.9R
+D + tendencia mayor, 4 filtros · 70%   363   30.6%    -64.9R  -0.18R  0.76   76.6R
+D + tendencia mayor, 4 filtros · 30%   152   34.2%    -15.4R  -0.10R  0.86   23.4R
+E + tendencia mayor, SL 2 ATR · 70%   746   33.8%    -62.5R  -0.08R  0.88   80.9R
+E + tendencia mayor, SL 2 ATR · 30%   349   34.1%    -25.9R  -0.07R  0.89   43.2R
+F + tendencia mayor, ADX 25 · 70%    777   31.4%   -121.9R  -0.16R  0.79  133.0R
+F + tendencia mayor, ADX 25 · 30%    360   37.5%      3.3R   0.01R  1.01   34.2R
+G artículo (S/R + vela, 1:2) · 70%  1393   34.5%   -169.5R  -0.12R  0.84  209.5R
+G artículo (S/R + vela, 1:2) · 30%   607   36.4%    -49.1R  -0.08R  0.89   71.3R
+H artículo + breakeven en 1R · 70%  1482   27.4%   -177.0R  -0.12R  0.81  211.7R
+H artículo + breakeven en 1R · 30%   653   28.2%    -65.5R  -0.10R  0.83   88.1R
+I artículo + tendencia propia · 70%   692   32.9%   -119.7R  -0.17R  0.77  142.5R
+I artículo + tendencia propia · 30%   281   39.1%      2.7R   0.01R  1.01   21.5R
+J EMA30/150/200 retroceso · 70%      365   32.3%    -49.4R  -0.14R  0.82   59.4R
+J EMA30/150/200 retroceso · 30%      159   33.3%    -20.5R  -0.13R  0.83   20.5R
+K EMA retroceso + parcial 1R · 70%   383   47.3%    -53.0R  -0.14R  0.76   59.7R
+K EMA retroceso + parcial 1R · 30%   171   47.4%    -29.1R  -0.17R  0.71   29.5R
+L EMA30/150 cruce · 70%               35   34.3%     -1.7R  -0.05R  0.93    8.0R
+L EMA30/150 cruce · 30%               13   30.8%     -2.4R  -0.18R  0.76    6.0R
+M EMA retroceso, SL 2 ATR · 70%      314   34.4%    -24.6R  -0.08R  0.89   33.4R
+M EMA retroceso, SL 2 ATR · 30%      132   34.8%     -9.4R  -0.07R  0.90   20.5R
+
+═══ 4H ═══
+                                     ops acierto     total   media    PF   maxDD
+A actual (3 filtros, SL 1.5 ATR)     721   34.4%    -16.6R  -0.02R  0.97   73.3R
+B 4 filtros                          254   35.4%      2.7R   0.01R  1.02   37.2R
+C + tendencia mayor                  491   33.2%    -27.1R  -0.06R  0.92   63.3R
+D + tendencia mayor, 4 filtros       166   35.5%      2.1R   0.01R  1.02   27.4R
+E + tendencia mayor, SL 2 ATR        412   32.3%    -49.8R  -0.12R  0.82   71.5R
+F + tendencia mayor, ADX 25          426   34.3%    -10.2R  -0.02R  0.97   46.7R
+G artículo (S/R + vela, 1:2)         733   35.2%    -18.0R  -0.02R  0.96   53.0R
+H artículo + breakeven en 1R         803   26.2%    -38.5R  -0.05R  0.91   58.0R
+I artículo + tendencia propia        432   33.8%    -33.7R  -0.08R  0.89   53.0R
+J EMA30/150/200 retroceso            238   32.4%    -20.7R  -0.09R  0.88   32.8R
+K EMA retroceso + parcial 1R         252   46.4%    -25.6R  -0.10R  0.82   29.8R
+L EMA30/150 cruce                     18   38.9%      2.3R   0.13R  1.20    5.2R
+M EMA retroceso, SL 2 ATR            208   33.7%    -19.8R  -0.10R  0.86   36.9R
+  — validación: 70% inicial vs 30% final (datos no vistos) —
+A actual (3 filtros, SL 1.5 ATR) · 70%   473   36.8%     26.0R   0.06R  1.08   27.6R
+A actual (3 filtros, SL 1.5 ATR) · 30%   248   29.8%    -42.6R  -0.17R  0.77   46.6R
+B 4 filtros · 70%                    163   39.3%     20.5R   0.13R  1.20   15.0R
+B 4 filtros · 30%                     91   28.6%    -17.9R  -0.20R  0.74   23.9R
+C + tendencia mayor · 70%            335   34.9%      0.4R   0.00R  1.00   30.2R
+C + tendencia mayor · 30%            156   29.5%    -27.4R  -0.18R  0.76   33.1R
+D + tendencia mayor, 4 filtros · 70%   115   36.5%      4.3R   0.04R  1.06   18.0R
+D + tendencia mayor, 4 filtros · 30%    51   33.3%     -2.2R  -0.04R  0.94    9.5R
+E + tendencia mayor, SL 2 ATR · 70%   279   33.3%    -22.6R  -0.08R  0.88   42.3R
+E + tendencia mayor, SL 2 ATR · 30%   133   30.1%    -27.2R  -0.20R  0.72   29.2R
+F + tendencia mayor, ADX 25 · 70%    289   36.0%      9.3R   0.03R  1.05   22.0R
+F + tendencia mayor, ADX 25 · 30%    137   30.7%    -19.5R  -0.14R  0.80   24.7R
+G artículo (S/R + vela, 1:2) · 70%   518   36.5%     11.0R   0.02R  1.03   48.4R
+G artículo (S/R + vela, 1:2) · 30%   215   32.1%    -29.0R  -0.13R  0.81   37.3R
+H artículo + breakeven en 1R · 70%   567   26.6%    -15.8R  -0.03R  0.95   46.0R
+H artículo + breakeven en 1R · 30%   236   25.0%    -22.7R  -0.10R  0.83   33.9R
+I artículo + tendencia propia · 70%   309   34.3%    -17.3R  -0.06R  0.92   45.1R
+I artículo + tendencia propia · 30%   123   32.5%    -16.4R  -0.13R  0.82   26.9R
+J EMA30/150/200 retroceso · 70%      160   31.9%    -16.8R  -0.10R  0.85   21.2R
+J EMA30/150/200 retroceso · 30%       78   33.3%     -3.9R  -0.05R  0.93   11.7R
+K EMA retroceso + parcial 1R · 70%   170   48.8%    -13.5R  -0.08R  0.85   16.3R
+K EMA retroceso + parcial 1R · 30%    82   41.5%    -12.1R  -0.15R  0.76   13.5R
+L EMA30/150 cruce · 70%               14   35.7%      0.4R   0.03R  1.04    5.2R
+L EMA30/150 cruce · 30%                4   50.0%      1.8R   0.46R  1.88    1.1R
+M EMA retroceso, SL 2 ATR · 70%      140   32.9%    -18.6R  -0.13R  0.81   26.3R
+M EMA retroceso, SL 2 ATR · 30%       68   35.3%     -1.2R  -0.02R  0.97   10.6R
+
+═══ 1D ═══
+                                     ops acierto     total   media    PF   maxDD
+A actual (3 filtros, SL 1.5 ATR)     609   37.4%     51.1R   0.08R  1.13   32.8R
+B 4 filtros                          179   41.9%     37.0R   0.21R  1.35    9.4R
+C + tendencia mayor                    0    0.0%      0.0R   0.00R  0.00    0.0R
+D + tendencia mayor, 4 filtros         0    0.0%      0.0R   0.00R  0.00    0.0R
+E + tendencia mayor, SL 2 ATR          0    0.0%      0.0R   0.00R  0.00    0.0R
+F + tendencia mayor, ADX 25            0    0.0%      0.0R   0.00R  0.00    0.0R
+G artículo (S/R + vela, 1:2)         499   31.9%    -40.7R  -0.08R  0.88   59.4R
+H artículo + breakeven en 1R         521   26.7%     -5.1R  -0.01R  0.98   36.0R
+I artículo + tendencia propia        499   31.9%    -40.7R  -0.08R  0.88   59.4R
+J EMA30/150/200 retroceso            241   37.3%     22.6R   0.09R  1.15   19.2R
+K EMA retroceso + parcial 1R         250   54.8%     22.1R   0.09R  1.19   13.2R
+L EMA30/150 cruce                     32   40.6%      7.2R   0.22R  1.39    7.5R
+M EMA retroceso, SL 2 ATR            209   40.7%     29.1R   0.14R  1.23   19.5R
+  — validación: 70% inicial vs 30% final (datos no vistos) —
+A actual (3 filtros, SL 1.5 ATR) · 70%   430   39.3%     61.0R   0.14R  1.23   25.5R
+A actual (3 filtros, SL 1.5 ATR) · 30%   179   33.0%     -9.9R  -0.06R  0.92   22.8R
+B 4 filtros · 70%                    128   44.5%     37.7R   0.29R  1.52    9.3R
+B 4 filtros · 30%                     51   35.3%     -0.7R  -0.01R  0.98    8.3R
+C + tendencia mayor · 70%              0    0.0%      0.0R   0.00R  0.00    0.0R
+C + tendencia mayor · 30%              0    0.0%      0.0R   0.00R  0.00    0.0R
+D + tendencia mayor, 4 filtros · 70%     0    0.0%      0.0R   0.00R  0.00    0.0R
+D + tendencia mayor, 4 filtros · 30%     0    0.0%      0.0R   0.00R  0.00    0.0R
+E + tendencia mayor, SL 2 ATR · 70%     0    0.0%      0.0R   0.00R  0.00    0.0R
+E + tendencia mayor, SL 2 ATR · 30%     0    0.0%      0.0R   0.00R  0.00    0.0R
+F + tendencia mayor, ADX 25 · 70%      0    0.0%      0.0R   0.00R  0.00    0.0R
+F + tendencia mayor, ADX 25 · 30%      0    0.0%      0.0R   0.00R  0.00    0.0R
+G artículo (S/R + vela, 1:2) · 70%   326   32.8%    -17.7R  -0.05R  0.92   55.8R
+G artículo (S/R + vela, 1:2) · 30%   173   30.1%    -23.0R  -0.13R  0.82   29.0R
+H artículo + breakeven en 1R · 70%   338   27.2%      1.2R   0.00R  1.01   36.0R
+H artículo + breakeven en 1R · 30%   183   25.7%     -6.4R  -0.03R  0.94   17.9R
+I artículo + tendencia propia · 70%   326   32.8%    -17.7R  -0.05R  0.92   55.8R
+I artículo + tendencia propia · 30%   173   30.1%    -23.0R  -0.13R  0.82   29.0R
+J EMA30/150/200 retroceso · 70%      161   39.1%     24.6R   0.15R  1.25   13.2R
+J EMA30/150/200 retroceso · 30%       80   33.8%     -2.0R  -0.02R  0.96    9.6R
+K EMA retroceso + parcial 1R · 70%   168   56.5%     20.9R   0.12R  1.28   11.2R
+K EMA retroceso + parcial 1R · 30%    82   51.2%      1.2R   0.01R  1.03    8.7R
+L EMA30/150 cruce · 70%               26   30.8%     -1.7R  -0.06R  0.90    7.5R
+L EMA30/150 cruce · 30%                6   83.3%      8.8R   1.47R  9.69    1.0R
+M EMA retroceso, SL 2 ATR · 70%      141   40.4%     15.2R   0.11R  1.18   20.6R
+M EMA retroceso, SL 2 ATR · 30%       68   41.2%     13.9R   0.20R  1.35    8.7R
+
+═══ CRIPTO vs ACCIONES ═══
+                                     ops acierto     total   media    PF   maxDD
+A actual (3 filtros, SL 1.5 ATR) · cripto  1757   34.8%    -76.4R  -0.04R  0.94  133.1R
+A actual (3 filtros, SL 1.5 ATR) · acciones  1420   35.8%      1.6R   0.00R  1.00   89.1R
+B 4 filtros · cripto                 688   34.0%    -49.1R  -0.07R  0.90   92.4R
+B 4 filtros · acciones               459   35.3%     -7.2R  -0.02R  0.98   41.3R
+C + tendencia mayor · cripto        1059   33.3%    -94.1R  -0.09R  0.88  124.5R
+C + tendencia mayor · acciones       740   33.8%    -56.8R  -0.08R  0.89   79.7R
+D + tendencia mayor, 4 filtros · cripto   420   31.9%    -59.4R  -0.14R  0.81   83.5R
+D + tendencia mayor, 4 filtros · acciones   261   33.7%    -18.9R  -0.07R  0.90   31.2R
+E + tendencia mayor, SL 2 ATR · cripto   882   33.8%    -83.4R  -0.09R  0.86  105.6R
+E + tendencia mayor, SL 2 ATR · acciones   625   33.0%    -54.8R  -0.09R  0.88   77.1R
+F + tendencia mayor, ADX 25 · cripto   940   33.9%    -67.8R  -0.07R  0.90  104.3R
+F + tendencia mayor, ADX 25 · acciones   623   33.1%    -60.9R  -0.10R  0.87   79.8R
+G artículo (S/R + vela, 1:2) · cripto  2117   34.0%   -225.3R  -0.11R  0.85  251.6R
+G artículo (S/R + vela, 1:2) · acciones  1115   35.9%    -52.0R  -0.05R  0.93   92.0R
+H artículo + breakeven en 1R · cripto  2287   26.1%   -236.6R  -0.10R  0.82  266.6R
+H artículo + breakeven en 1R · acciones  1172   29.1%    -49.6R  -0.04R  0.93   91.1R
+I artículo + tendencia propia · cripto  1178   32.2%   -174.2R  -0.15R  0.80  190.0R
+I artículo + tendencia propia · acciones   726   36.4%    -17.2R  -0.02R  0.97   61.4R
+J EMA30/150/200 retroceso · cripto   579   32.8%    -61.0R  -0.11R  0.85   80.9R
+J EMA30/150/200 retroceso · acciones   424   34.9%     -6.9R  -0.02R  0.98   38.8R
+K EMA retroceso + parcial 1R · cripto   620   47.7%    -68.0R  -0.11R  0.80   74.2R
+K EMA retroceso + parcial 1R · acciones   436   50.5%    -17.5R  -0.04R  0.92   48.6R
+L EMA30/150 cruce · cripto            53   35.8%      0.9R   0.02R  1.02   12.4R
+L EMA30/150 cruce · acciones          45   37.8%      4.5R   0.10R  1.16    7.3R
+M EMA retroceso, SL 2 ATR · cripto   489   35.6%    -27.9R  -0.06R  0.92   54.9R
+M EMA retroceso, SL 2 ATR · acciones   374   36.1%      3.3R   0.01R  1.01   37.5R
+
+═══ LONG vs SHORT ═══
+                                     ops acierto     total   media    PF   maxDD
+A actual (3 filtros, SL 1.5 ATR) · LONG  1761   35.8%    -11.3R  -0.01R  0.99  119.6R
+A actual (3 filtros, SL 1.5 ATR) · SHORT  1416   34.5%    -63.5R  -0.04R  0.94  122.6R
+B 4 filtros · LONG                   611   35.7%    -10.9R  -0.02R  0.97   52.5R
+B 4 filtros · SHORT                  536   33.2%    -45.4R  -0.08R  0.88   84.3R
+C + tendencia mayor · LONG          1006   33.6%    -91.9R  -0.09R  0.87  116.0R
+C + tendencia mayor · SHORT          793   33.4%    -59.0R  -0.07R  0.90  102.9R
+D + tendencia mayor, 4 filtros · LONG   379   35.1%    -20.0R  -0.05R  0.93   45.3R
+D + tendencia mayor, 4 filtros · SHORT   302   29.5%    -58.3R  -0.19R  0.75   80.4R
+E + tendencia mayor, SL 2 ATR · LONG   844   33.1%    -88.8R  -0.11R  0.85  113.9R
+E + tendencia mayor, SL 2 ATR · SHORT   663   33.9%    -49.4R  -0.07R  0.89   88.0R
+F + tendencia mayor, ADX 25 · LONG   864   33.3%    -86.3R  -0.10R  0.86  106.2R
+F + tendencia mayor, ADX 25 · SHORT   699   33.9%    -42.5R  -0.06R  0.91   86.4R
+G artículo (S/R + vela, 1:2) · LONG  1572   34.7%   -137.4R  -0.09R  0.88  162.7R
+G artículo (S/R + vela, 1:2) · SHORT  1660   34.6%   -140.0R  -0.08R  0.88  160.4R
+H artículo + breakeven en 1R · LONG  1670   27.4%   -140.0R  -0.08R  0.86  174.2R
+H artículo + breakeven en 1R · SHORT  1789   26.9%   -146.3R  -0.08R  0.86  183.6R
+I artículo + tendencia propia · LONG   949   35.1%    -59.4R  -0.06R  0.91   98.6R
+I artículo + tendencia propia · SHORT   955   32.5%   -132.0R  -0.14R  0.81  137.5R
+J EMA30/150/200 retroceso · LONG     528   34.8%    -14.4R  -0.03R  0.96   51.6R
+J EMA30/150/200 retroceso · SHORT    475   32.4%    -53.6R  -0.11R  0.84   71.3R
+K EMA retroceso + parcial 1R · LONG   552   48.9%    -35.8R  -0.06R  0.88   60.6R
+K EMA retroceso + parcial 1R · SHORT   504   48.8%    -49.8R  -0.10R  0.82   70.1R
+L EMA30/150 cruce · LONG              48   37.5%      4.0R   0.08R  1.13    7.1R
+L EMA30/150 cruce · SHORT             50   36.0%      1.3R   0.03R  1.04   10.0R
+M EMA retroceso, SL 2 ATR · LONG     465   37.0%     16.0R   0.03R  1.05   36.8R
+M EMA retroceso, SL 2 ATR · SHORT    398   34.4%    -40.6R  -0.10R  0.85   56.3R
+
+═══ DETALLE: A actual (3 filtros, SL 1.5 ATR) ═══
+                                     ops acierto     total   media    PF   maxDD
+BTCUSDT 1h                           209   34.9%    -14.7R  -0.07R  0.90   22.7R
+BTCUSDT 4h                           109   29.4%    -19.4R  -0.18R  0.76   24.8R
+BTCUSDT 1d                            56   32.1%     -3.1R  -0.05R  0.92    9.5R
+ETHUSDT 1h                           205   33.7%    -20.5R  -0.10R  0.86   29.5R
+ETHUSDT 4h                           106   37.7%      4.3R   0.04R  1.06   14.8R
+ETHUSDT 1d                            48   31.3%     -5.2R  -0.11R  0.84   12.6R
+SOLUSDT 1h                           203   37.9%     10.2R   0.05R  1.07   20.0R
+SOLUSDT 4h                            99   37.4%      6.8R   0.07R  1.11   16.6R
+SOLUSDT 1d                            38   39.5%      6.6R   0.17R  1.29    4.0R
+BNBUSDT 1h                           206   32.5%    -31.2R  -0.15R  0.80   42.4R
+BNBUSDT 4h                           103   37.9%      7.7R   0.07R  1.11   11.0R
+BNBUSDT 1d                            42   31.0%     -4.7R  -0.11R  0.84    7.2R
+XRPUSDT 1h                           198   32.8%    -23.7R  -0.12R  0.84   36.8R
+XRPUSDT 4h                            96   37.5%      9.5R   0.10R  1.15    9.5R
+XRPUSDT 1d                            39   38.5%      1.0R   0.03R  1.04    5.4R
+AAPL 1h                              129   32.6%    -16.6R  -0.13R  0.83   24.1R
+AAPL 4h                               37   29.7%     -5.7R  -0.15R  0.79   12.4R
+AAPL 1d                               57   38.6%      7.3R   0.13R  1.20   14.8R
+TSLA 1h                              139   35.3%      1.7R   0.01R  1.02   15.3R
+TSLA 4h                               33   18.2%    -15.8R  -0.48R  0.43   16.6R
+TSLA 1d                               54   33.3%     -0.8R  -0.02R  0.98   12.3R
+NVDA 1h                              125   40.0%     16.9R   0.14R  1.21   11.9R
+NVDA 4h                               39   33.3%     -1.1R  -0.03R  0.96   13.6R
+NVDA 1d                               64   45.3%     20.1R   0.31R  1.57    4.2R
+MSFT 1h                              137   35.8%     -4.8R  -0.04R  0.95   13.0R
+MSFT 4h                               28   35.7%      0.7R   0.02R  1.03    8.8R
+MSFT 1d                               72   40.3%     12.6R   0.18R  1.29    8.6R
+AMZN 1h                              143   36.4%      1.3R   0.01R  1.01   13.7R
+AMZN 4h                               34   32.4%     -2.3R  -0.07R  0.90   11.7R
+AMZN 1d                               69   30.4%     -7.9R  -0.11R  0.84   15.6R
+SPY 1h                               153   33.3%    -27.9R  -0.18R  0.77   30.3R
+SPY 4h                                37   35.1%     -1.1R  -0.03R  0.96    9.2R
+SPY 1d                                70   47.1%     25.1R   0.36R  1.64    6.8R
+
+═══ DETALLE: B 4 filtros ═══
+                                     ops acierto     total   media    PF   maxDD
+BTCUSDT 1h                            89   28.1%    -24.9R  -0.28R  0.65   26.7R
+BTCUSDT 4h                            36   36.1%      1.0R   0.03R  1.04   10.7R
+BTCUSDT 1d                            24   33.3%     -0.4R  -0.02R  0.97    8.3R
+ETHUSDT 1h                            86   33.7%    -10.5R  -0.12R  0.83   17.0R
+ETHUSDT 4h                            38   39.5%      5.6R   0.15R  1.23    9.7R
+ETHUSDT 1d                            21   38.1%      1.2R   0.06R  1.09    7.2R
+SOLUSDT 1h                            81   30.9%    -14.8R  -0.18R  0.75   17.3R
+SOLUSDT 4h                            38   31.6%     -5.2R  -0.14R  0.81   14.9R
+SOLUSDT 1d                            14   50.0%      6.8R   0.49R  1.97    3.0R
+BNBUSDT 1h                            86   36.0%     -3.7R  -0.04R  0.94   16.2R
+BNBUSDT 4h                            37   32.4%     -3.7R  -0.10R  0.86    7.6R
+BNBUSDT 1d                            17   35.3%     -0.5R  -0.03R  0.95    7.2R
+XRPUSDT 1h                            68   30.9%    -10.3R  -0.15R  0.80   14.7R
+XRPUSDT 4h                            39   43.6%     10.7R   0.27R  1.47    4.3R
+XRPUSDT 1d                            14   35.7%     -0.4R  -0.03R  0.95    3.3R
+AAPL 1h                               53   26.4%    -16.7R  -0.31R  0.61   19.4R
+AAPL 4h                               15   26.7%     -3.7R  -0.25R  0.68    8.5R
+AAPL 1d                               13   46.2%      4.6R   0.35R  1.63    4.1R
+TSLA 1h                               54   27.8%    -11.5R  -0.21R  0.72   13.0R
+TSLA 4h                               11   18.2%     -5.3R  -0.48R  0.43    6.2R
+TSLA 1d                               15   33.3%     -0.2R  -0.01R  0.98    4.1R
+NVDA 1h                               47   40.4%      7.4R   0.16R  1.25   12.2R
+NVDA 4h                               15   26.7%     -3.4R  -0.23R  0.70    8.3R
+NVDA 1d                               17   58.8%     12.7R   0.75R  2.79    2.0R
+MSFT 1h                               43   37.2%      0.5R   0.01R  1.02   10.6R
+MSFT 4h                                8   37.5%      0.6R   0.08R  1.12    3.2R
+MSFT 1d                               14   50.0%      6.6R   0.47R  1.92    3.1R
+AMZN 1h                               66   30.3%    -11.5R  -0.17R  0.77   14.3R
+AMZN 4h                                5   40.0%      0.8R   0.16R  1.26    2.1R
+AMZN 1d                               18   33.3%     -0.5R  -0.03R  0.96    6.3R
+SPY 1h                                41   39.0%      0.0R   0.00R  1.00    8.1R
+SPY 4h                                12   50.0%      5.2R   0.43R  1.81    4.2R
+SPY 1d                                12   58.3%      7.2R   0.60R  2.37    3.1R
+
+═══ DETALLE: C + tendencia mayor ═══
+                                     ops acierto     total   media    PF   maxDD
+BTCUSDT 1h                           149   31.5%    -25.9R  -0.17R  0.77   28.4R
+BTCUSDT 4h                            68   25.0%    -21.1R  -0.31R  0.61   27.7R
+BTCUSDT 1d                             0    0.0%      0.0R   0.00R  0.00    0.0R
+ETHUSDT 1h                           161   34.2%    -11.6R  -0.07R  0.90   19.3R
+ETHUSDT 4h                            60   35.0%     -0.9R  -0.02R  0.98   14.3R
+ETHUSDT 1d                             0    0.0%      0.0R   0.00R  0.00    0.0R
+SOLUSDT 1h                           151   33.1%    -14.3R  -0.09R  0.87   21.4R
+SOLUSDT 4h                            60   36.7%      2.2R   0.04R  1.06   11.7R
+SOLUSDT 1d                             0    0.0%      0.0R   0.00R  0.00    0.0R
+BNBUSDT 1h                           138   33.3%    -17.1R  -0.12R  0.83   31.4R
+BNBUSDT 4h                            64   40.6%     10.5R   0.16R  1.26    8.4R
+BNBUSDT 1d                             0    0.0%      0.0R   0.00R  0.00    0.0R
+XRPUSDT 1h                           155   31.6%    -21.7R  -0.14R  0.81   31.0R
+XRPUSDT 4h                            53   37.7%      5.8R   0.11R  1.17    5.5R
+XRPUSDT 1d                             0    0.0%      0.0R   0.00R  0.00    0.0R
+AAPL 1h                               87   29.9%    -18.4R  -0.21R  0.72   23.8R
+AAPL 4h                               36   30.6%     -4.7R  -0.13R  0.82   11.3R
+AAPL 1d                                0    0.0%      0.0R   0.00R  0.00    0.0R
+TSLA 1h                               82   35.4%      1.5R   0.02R  1.03    9.6R
+TSLA 4h                               26   19.2%    -11.6R  -0.45R  0.46   13.5R
+TSLA 1d                                0    0.0%      0.0R   0.00R  0.00    0.0R
+NVDA 1h                               84   41.7%     15.1R   0.18R  1.29   12.8R
+NVDA 4h                               37   32.4%     -2.1R  -0.06R  0.92   12.6R
+NVDA 1d                                0    0.0%      0.0R   0.00R  0.00    0.0R
+MSFT 1h                              101   33.7%    -10.2R  -0.10R  0.86   16.6R
+MSFT 4h                               21   33.3%     -1.0R  -0.05R  0.93    8.7R
+MSFT 1d                                0    0.0%      0.0R   0.00R  0.00    0.0R
+AMZN 1h                               90   35.6%     -1.3R  -0.01R  0.98   12.0R
+AMZN 4h                               32   31.3%     -3.3R  -0.10R  0.86   11.0R
+AMZN 1d                                0    0.0%      0.0R   0.00R  0.00    0.0R
+SPY 1h                               110   33.6%    -19.8R  -0.18R  0.77   22.5R
+SPY 4h                                34   35.3%     -0.9R  -0.03R  0.96    8.2R
+SPY 1d                                 0    0.0%      0.0R   0.00R  0.00    0.0R
+
+═══ DETALLE: D + tendencia mayor, 4 filtros ═══
+                                     ops acierto     total   media    PF   maxDD
+BTCUSDT 1h                            70   24.3%    -27.3R  -0.39R  0.54   29.2R
+BTCUSDT 4h                            19   31.6%     -2.1R  -0.11R  0.85    7.7R
+BTCUSDT 1d                             0    0.0%      0.0R   0.00R  0.00    0.0R
+ETHUSDT 1h                            70   32.9%    -10.7R  -0.15R  0.79   12.9R
+ETHUSDT 4h                            21   47.6%      8.3R   0.40R  1.73    5.2R
+ETHUSDT 1d                             0    0.0%      0.0R   0.00R  0.00    0.0R
+SOLUSDT 1h                            60   23.3%    -23.5R  -0.39R  0.52   24.3R
+SOLUSDT 4h                            24   29.2%     -5.7R  -0.24R  0.68   11.6R
+SOLUSDT 1d                             0    0.0%      0.0R   0.00R  0.00    0.0R
+BNBUSDT 1h                            59   39.0%      2.7R   0.05R  1.07   11.4R
+BNBUSDT 4h                            20   35.0%     -0.1R  -0.01R  0.99    6.2R
+BNBUSDT 1d                             0    0.0%      0.0R   0.00R  0.00    0.0R
+XRPUSDT 1h                            56   30.4%     -9.3R  -0.17R  0.78   13.8R
+XRPUSDT 4h                            21   47.6%      8.2R   0.39R  1.72    3.1R
+XRPUSDT 1d                             0    0.0%      0.0R   0.00R  0.00    0.0R
+AAPL 1h                               37   27.0%    -11.1R  -0.30R  0.62   14.9R
+AAPL 4h                               15   26.7%     -3.7R  -0.25R  0.68    8.5R
+AAPL 1d                                0    0.0%      0.0R   0.00R  0.00    0.0R
+TSLA 1h                               27   37.0%      1.8R   0.07R  1.10    4.2R
+TSLA 4h                               10   20.0%     -4.2R  -0.42R  0.48    5.2R
+TSLA 1d                                0    0.0%      0.0R   0.00R  0.00    0.0R
+NVDA 1h                               35   42.9%      8.0R   0.23R  1.38    9.7R
+NVDA 4h                               15   26.7%     -3.4R  -0.23R  0.70    8.3R
+NVDA 1d                                0    0.0%      0.0R   0.00R  0.00    0.0R
+MSFT 1h                               27   29.6%     -6.0R  -0.22R  0.72   10.0R
+MSFT 4h                                7   28.6%     -1.3R  -0.19R  0.74    3.3R
+MSFT 1d                                0    0.0%      0.0R   0.00R  0.00    0.0R
+AMZN 1h                               45   33.3%     -3.8R  -0.08R  0.88    7.6R
+AMZN 4h                                5   40.0%      0.8R   0.16R  1.26    2.1R
+AMZN 1d                                0    0.0%      0.0R   0.00R  0.00    0.0R
+SPY 1h                                29   37.9%     -1.3R  -0.04R  0.94    6.6R
+SPY 4h                                 9   55.6%      5.3R   0.59R  2.23    3.2R
+SPY 1d                                 0    0.0%      0.0R   0.00R  0.00    0.0R
+
+═══ DETALLE: E + tendencia mayor, SL 2 ATR ═══
+                                     ops acierto     total   media    PF   maxDD
+BTCUSDT 1h                           122   32.8%    -18.9R  -0.16R  0.78   22.9R
+BTCUSDT 4h                            59   25.4%    -22.0R  -0.37R  0.52   24.9R
+BTCUSDT 1d                             0    0.0%      0.0R   0.00R  0.00    0.0R
+ETHUSDT 1h                           128   35.9%     -7.4R  -0.06R  0.92   17.9R
+ETHUSDT 4h                            49   36.7%      1.4R   0.03R  1.05   10.2R
+ETHUSDT 1d                             0    0.0%      0.0R   0.00R  0.00    0.0R
+SOLUSDT 1h                           125   34.4%     -8.7R  -0.07R  0.90   17.0R
+SOLUSDT 4h                            53   34.0%     -5.9R  -0.11R  0.84   13.7R
+SOLUSDT 1d                             0    0.0%      0.0R   0.00R  0.00    0.0R
+BNBUSDT 1h                           119   32.8%    -13.0R  -0.11R  0.85   29.0R
+BNBUSDT 4h                            53   35.8%      1.2R   0.02R  1.04    5.5R
+BNBUSDT 1d                             0    0.0%      0.0R   0.00R  0.00    0.0R
+XRPUSDT 1h                           131   33.6%     -9.8R  -0.07R  0.89   20.2R
+XRPUSDT 4h                            43   37.2%     -0.3R  -0.01R  0.99    7.8R
+XRPUSDT 1d                             0    0.0%      0.0R   0.00R  0.00    0.0R
+AAPL 1h                               72   29.2%    -13.5R  -0.19R  0.75   22.1R
+AAPL 4h                               29   44.8%      5.7R   0.20R  1.35    4.5R
+AAPL 1d                                0    0.0%      0.0R   0.00R  0.00    0.0R
+TSLA 1h                               68   32.4%     -2.8R  -0.04R  0.94    7.5R
+TSLA 4h                               24   16.7%    -12.4R  -0.52R  0.39   15.3R
+TSLA 1d                                0    0.0%      0.0R   0.00R  0.00    0.0R
+NVDA 1h                               74   39.2%      8.5R   0.11R  1.18   16.9R
+NVDA 4h                               32   28.1%     -6.7R  -0.21R  0.72   10.5R
+NVDA 1d                                0    0.0%      0.0R   0.00R  0.00    0.0R
+MSFT 1h                               87   39.1%      6.1R   0.07R  1.11   13.6R
+MSFT 4h                               19   26.3%     -5.5R  -0.29R  0.62    9.4R
+MSFT 1d                                0    0.0%      0.0R   0.00R  0.00    0.0R
+AMZN 1h                               76   34.2%     -5.6R  -0.07R  0.89   11.1R
+AMZN 4h                               25   28.0%     -4.8R  -0.19R  0.74   10.6R
+AMZN 1d                                0    0.0%      0.0R   0.00R  0.00    0.0R
+SPY 1h                                93   29.0%    -23.3R  -0.25R  0.68   25.1R
+SPY 4h                                26   34.6%     -0.5R  -0.02R  0.97    6.8R
+SPY 1d                                 0    0.0%      0.0R   0.00R  0.00    0.0R
+
+═══ DETALLE: F + tendencia mayor, ADX 25 ═══
+                                     ops acierto     total   media    PF   maxDD
+BTCUSDT 1h                           133   31.6%    -23.4R  -0.18R  0.77   25.9R
+BTCUSDT 4h                            58   25.9%    -16.5R  -0.28R  0.64   23.7R
+BTCUSDT 1d                             0    0.0%      0.0R   0.00R  0.00    0.0R
+ETHUSDT 1h                           150   32.0%    -20.6R  -0.14R  0.81   26.6R
+ETHUSDT 4h                            51   41.2%      8.4R   0.16R  1.27    7.8R
+ETHUSDT 1d                             0    0.0%      0.0R   0.00R  0.00    0.0R
+SOLUSDT 1h                           134   33.6%    -10.9R  -0.08R  0.89   17.7R
+SOLUSDT 4h                            50   36.0%      0.5R   0.01R  1.02   12.9R
+SOLUSDT 1d                             0    0.0%      0.0R   0.00R  0.00    0.0R
+BNBUSDT 1h                           122   36.1%     -4.9R  -0.04R  0.94   25.7R
+BNBUSDT 4h                            61   41.0%     10.6R   0.17R  1.28    7.3R
+BNBUSDT 1d                             0    0.0%      0.0R   0.00R  0.00    0.0R
+XRPUSDT 1h                           133   32.3%    -16.0R  -0.12R  0.84   23.5R
+XRPUSDT 4h                            48   37.5%      5.0R   0.10R  1.16    6.3R
+XRPUSDT 1d                             0    0.0%      0.0R   0.00R  0.00    0.0R
+AAPL 1h                               74   31.1%    -13.2R  -0.18R  0.76   18.6R
+AAPL 4h                               32   31.3%     -3.5R  -0.11R  0.85    9.2R
+AAPL 1d                                0    0.0%      0.0R   0.00R  0.00    0.0R
+TSLA 1h                               67   35.8%      2.1R   0.03R  1.05    7.7R
+TSLA 4h                               23   21.7%     -8.5R  -0.37R  0.54   10.4R
+TSLA 1d                                0    0.0%      0.0R   0.00R  0.00    0.0R
+NVDA 1h                               71   38.0%      5.0R   0.07R  1.11   15.4R
+NVDA 4h                               35   31.4%     -3.0R  -0.09R  0.88   11.8R
+NVDA 1d                                0    0.0%      0.0R   0.00R  0.00    0.0R
+MSFT 1h                               87   28.7%    -21.7R  -0.25R  0.68   26.2R
+MSFT 4h                               17   35.3%      0.2R   0.01R  1.01    5.5R
+MSFT 1d                                0    0.0%      0.0R   0.00R  0.00    0.0R
+AMZN 1h                               78   34.6%     -3.3R  -0.04R  0.94   10.2R
+AMZN 4h                               26   34.6%     -0.1R  -0.00R  1.00    7.5R
+AMZN 1d                                0    0.0%      0.0R   0.00R  0.00    0.0R
+SPY 1h                                88   35.2%    -11.6R  -0.13R  0.83   13.4R
+SPY 4h                                25   32.0%     -3.2R  -0.13R  0.83    7.6R
+SPY 1d                                 0    0.0%      0.0R   0.00R  0.00    0.0R
+
+═══ DETALLE: G artículo (S/R + vela, 1:2) ═══
+                                     ops acierto     total   media    PF   maxDD
+BTCUSDT 1h                           258   33.3%    -50.8R  -0.20R  0.75   61.0R
+BTCUSDT 4h                           133   33.8%    -11.3R  -0.08R  0.88   28.4R
+BTCUSDT 1d                            51   23.5%    -16.5R  -0.32R  0.59   16.5R
+ETHUSDT 1h                           236   37.7%    -15.0R  -0.06R  0.91   42.0R
+ETHUSDT 4h                           107   41.1%     17.4R   0.16R  1.27   16.0R
+ETHUSDT 1d                            46   32.6%     -1.9R  -0.04R  0.94    7.5R
+SOLUSDT 1h                           266   30.5%    -54.7R  -0.21R  0.73   61.2R
+SOLUSDT 4h                           132   33.3%     -9.0R  -0.07R  0.90   18.3R
+SOLUSDT 1d                            54   37.0%      4.1R   0.08R  1.12    6.1R
+BNBUSDT 1h                           255   34.1%    -42.9R  -0.17R  0.78   53.5R
+BNBUSDT 4h                           116   41.4%     17.9R   0.15R  1.25   12.7R
+BNBUSDT 1d                            54   31.5%     -4.5R  -0.08R  0.88   14.7R
+XRPUSDT 1h                           235   34.9%    -20.7R  -0.09R  0.88   37.9R
+XRPUSDT 4h                           114   33.3%     -9.3R  -0.08R  0.88   18.9R
+XRPUSDT 1d                            60   18.3%    -28.2R  -0.47R  0.44   31.1R
+AAPL 1h                              145   33.1%    -23.4R  -0.16R  0.79   39.4R
+AAPL 4h                               17   41.2%      2.1R   0.13R  1.20    4.1R
+AAPL 1d                               39   30.8%     -4.6R  -0.12R  0.84    7.5R
+TSLA 1h                              109   36.7%      0.1R   0.00R  1.00   12.8R
+TSLA 4h                               28   28.6%     -5.1R  -0.18R  0.75    8.3R
+TSLA 1d                               53   28.3%     -9.1R  -0.17R  0.77   12.8R
+NVDA 1h                              109   30.3%    -21.4R  -0.20R  0.74   26.5R
+NVDA 4h                               18   22.2%     -7.3R  -0.40R  0.50    9.1R
+NVDA 1d                               29   27.6%     -5.9R  -0.20R  0.73   10.7R
+MSFT 1h                              127   40.2%      6.6R   0.05R  1.08   21.0R
+MSFT 4h                               17   23.5%     -6.5R  -0.38R  0.54    9.8R
+MSFT 1d                               49   46.9%     17.8R   0.36R  1.66    4.3R
+AMZN 1h                              134   39.6%      7.1R   0.05R  1.08   13.9R
+AMZN 4h                               31   25.8%     -9.0R  -0.29R  0.63   11.7R
+AMZN 1d                               33   48.5%     13.3R   0.40R  1.75    5.2R
+SPY 1h                               126   41.3%     -3.6R  -0.03R  0.96   17.2R
+SPY 4h                                20   40.0%      2.1R   0.10R  1.16    2.9R
+SPY 1d                                31   32.3%     -5.3R  -0.17R  0.77    8.3R
+
+═══ DETALLE: H artículo + breakeven en 1R ═══
+                                     ops acierto     total   media    PF   maxDD
+BTCUSDT 1h                           277   26.7%    -49.8R  -0.18R  0.72   60.3R
+BTCUSDT 4h                           140   27.9%    -12.9R  -0.09R  0.85   28.1R
+BTCUSDT 1d                            52   21.2%     -8.5R  -0.16R  0.72   10.1R
+ETHUSDT 1h                           256   28.1%    -23.4R  -0.09R  0.84   50.3R
+ETHUSDT 4h                           121   28.9%     14.1R   0.12R  1.26   11.5R
+ETHUSDT 1d                            48   29.2%      4.1R   0.09R  1.17    5.3R
+SOLUSDT 1h                           287   23.0%    -60.6R  -0.21R  0.67   69.3R
+SOLUSDT 4h                           146   24.0%    -17.4R  -0.12R  0.80   22.4R
+SOLUSDT 1d                            56   30.4%      6.0R   0.11R  1.23    6.1R
+BNBUSDT 1h                           274   25.5%    -53.1R  -0.19R  0.70   56.9R
+BNBUSDT 4h                           139   27.3%      0.7R   0.00R  1.01   13.0R
+BNBUSDT 1d                            59   23.7%     -4.6R  -0.08R  0.86   13.5R
+XRPUSDT 1h                           251   27.5%    -20.5R  -0.08R  0.86   32.7R
+XRPUSDT 4h                           119   27.7%      1.5R   0.01R  1.02   18.0R
+XRPUSDT 1d                            62   17.7%    -12.2R  -0.20R  0.64   18.9R
+AAPL 1h                              152   26.3%    -20.0R  -0.13R  0.79   33.6R
+AAPL 4h                               20   25.0%      0.9R   0.05R  1.11    4.3R
+AAPL 1d                               42   26.2%     -0.8R  -0.02R  0.97    5.3R
+TSLA 1h                              114   29.8%     -1.4R  -0.01R  0.98   11.1R
+TSLA 4h                               28   21.4%     -6.1R  -0.22R  0.66    8.7R
+TSLA 1d                               56   23.2%    -10.2R  -0.18R  0.72   12.9R
+NVDA 1h                              120   24.2%    -19.7R  -0.16R  0.74   25.8R
+NVDA 4h                               19   10.5%     -8.3R  -0.44R  0.28    8.3R
+NVDA 1d                               29   20.7%     -5.9R  -0.20R  0.67    9.8R
+MSFT 1h                              129   33.3%      4.4R   0.03R  1.06   16.6R
+MSFT 4h                               18   22.2%     -5.6R  -0.31R  0.58    9.8R
+MSFT 1d                               52   36.5%     13.7R   0.26R  1.58    4.4R
+AMZN 1h                              142   33.8%      8.4R   0.06R  1.10   17.9R
+AMZN 4h                               32   21.9%     -6.1R  -0.19R  0.69    6.7R
+AMZN 1d                               34   41.2%     14.6R   0.43R  2.16    3.2R
+SPY 1h                               133   33.8%     -6.8R  -0.05R  0.92   19.0R
+SPY 4h                                21   28.6%      0.6R   0.03R  1.06    2.4R
+SPY 1d                                31   29.0%     -1.5R  -0.05R  0.92    5.3R
+
+═══ DETALLE: I artículo + tendencia propia ═══
+                                     ops acierto     total   media    PF   maxDD
+BTCUSDT 1h                           118   36.4%    -13.7R  -0.12R  0.85   29.1R
+BTCUSDT 4h                            81   35.8%     -3.0R  -0.04R  0.95   21.7R
+BTCUSDT 1d                            51   23.5%    -16.5R  -0.32R  0.59   16.5R
+ETHUSDT 1h                           117   33.3%    -21.0R  -0.18R  0.77   30.5R
+ETHUSDT 4h                            63   39.7%      5.8R   0.09R  1.14   16.4R
+ETHUSDT 1d                            46   32.6%     -1.9R  -0.04R  0.94    7.5R
+SOLUSDT 1h                           118   27.1%    -35.5R  -0.30R  0.63   43.1R
+SOLUSDT 4h                            71   35.2%     -2.3R  -0.03R  0.95   15.2R
+SOLUSDT 1d                            54   37.0%      4.1R   0.08R  1.12    6.1R
+BNBUSDT 1h                           109   29.4%    -31.0R  -0.28R  0.66   32.9R
+BNBUSDT 4h                            68   38.2%      3.5R   0.05R  1.08   10.3R
+BNBUSDT 1d                            54   31.5%     -4.5R  -0.08R  0.88   14.7R
+XRPUSDT 1h                           111   34.2%    -13.3R  -0.12R  0.84   22.6R
+XRPUSDT 4h                            57   26.3%    -16.7R  -0.29R  0.62   16.7R
+XRPUSDT 1d                            60   18.3%    -28.2R  -0.47R  0.44   31.1R
+AAPL 1h                               78   33.3%    -12.5R  -0.16R  0.79   28.0R
+AAPL 4h                               15   26.7%     -3.8R  -0.26R  0.67    6.3R
+AAPL 1d                               39   30.8%     -4.6R  -0.12R  0.84    7.5R
+TSLA 1h                               56   37.5%      1.0R   0.02R  1.03    9.2R
+TSLA 4h                                9   11.1%     -6.3R  -0.70R  0.24    8.2R
+TSLA 1d                               53   28.3%     -9.1R  -0.17R  0.77   12.8R
+NVDA 1h                               58   36.2%     -0.9R  -0.02R  0.98   12.6R
+NVDA 4h                               14   21.4%     -6.1R  -0.44R  0.46    7.0R
+NVDA 1d                               29   27.6%     -5.9R  -0.20R  0.73   10.7R
+MSFT 1h                               67   43.3%     10.3R   0.15R  1.24   14.1R
+MSFT 4h                               14   21.4%     -6.3R  -0.45R  0.48    9.0R
+MSFT 1d                               49   46.9%     17.8R   0.36R  1.66    4.3R
+AMZN 1h                               66   33.3%     -8.5R  -0.13R  0.83   15.8R
+AMZN 4h                               23   34.8%     -0.4R  -0.02R  0.98    5.2R
+AMZN 1d                               33   48.5%     13.3R   0.40R  1.75    5.2R
+SPY 1h                                75   46.7%      8.1R   0.11R  1.16   12.1R
+SPY 4h                                17   41.2%      2.0R   0.12R  1.18    3.7R
+SPY 1d                                31   32.3%     -5.3R  -0.17R  0.77    8.3R
+
+═══ DETALLE: J EMA30/150/200 retroceso ═══
+                                     ops acierto     total   media    PF   maxDD
+BTCUSDT 1h                            54   29.6%    -14.2R  -0.26R  0.68   20.4R
+BTCUSDT 4h                            32   37.5%      2.1R   0.07R  1.10    4.2R
+BTCUSDT 1d                            16   43.8%      4.7R   0.29R  1.51    3.1R
+ETHUSDT 1h                            75   26.7%    -24.1R  -0.32R  0.60   28.5R
+ETHUSDT 4h                            32   28.1%     -6.2R  -0.19R  0.74    7.6R
+ETHUSDT 1d                            20   30.0%     -3.8R  -0.19R  0.73    8.2R
+SOLUSDT 1h                            60   33.3%     -4.9R  -0.08R  0.89   12.5R
+SOLUSDT 4h                            33   30.3%     -4.0R  -0.12R  0.83    7.6R
+SOLUSDT 1d                            24   41.7%      5.7R   0.24R  1.41    3.1R
+BNBUSDT 1h                            50   36.0%     -4.5R  -0.09R  0.88   11.0R
+BNBUSDT 4h                            40   32.5%     -6.5R  -0.16R  0.77   12.2R
+BNBUSDT 1d                            17   23.5%     -5.8R  -0.34R  0.54    5.8R
+XRPUSDT 1h                            71   35.2%     -3.2R  -0.04R  0.94   11.9R
+XRPUSDT 4h                            31   38.7%      3.9R   0.13R  1.20    6.2R
+XRPUSDT 1d                            24   33.3%     -0.3R  -0.01R  0.98    4.1R
+AAPL 1h                               41   29.3%     -8.9R  -0.22R  0.72   14.5R
+AAPL 4h                               12   41.7%      2.4R   0.20R  1.33    3.2R
+AAPL 1d                               23   56.5%     15.3R   0.67R  2.49    5.1R
+TSLA 1h                               36   30.6%     -4.7R  -0.13R  0.82    5.9R
+TSLA 4h                               18   11.1%    -12.4R  -0.69R  0.24   12.4R
+TSLA 1d                               17   11.8%    -11.3R  -0.66R  0.26   11.3R
+NVDA 1h                               25   40.0%      3.6R   0.14R  1.23    4.3R
+NVDA 4h                               12   33.3%     -0.3R  -0.03R  0.96    7.2R
+NVDA 1d                               29   34.5%      0.4R   0.02R  1.02    7.1R
+MSFT 1h                               37   24.3%    -13.8R  -0.37R  0.55   13.8R
+MSFT 4h                                9   44.4%      2.6R   0.29R  1.50    4.1R
+MSFT 1d                               27   51.9%     14.2R   0.53R  2.06    4.1R
+AMZN 1h                               35   37.1%      1.1R   0.03R  1.05    8.1R
+AMZN 4h                                9   22.2%     -3.4R  -0.38R  0.53    5.4R
+AMZN 1d                               30   40.0%      6.1R   0.20R  1.34    5.1R
+SPY 1h                                40   42.5%      3.6R   0.09R  1.13    6.0R
+SPY 4h                                10   40.0%      1.2R   0.12R  1.18    4.3R
+SPY 1d                                14   28.6%     -2.6R  -0.19R  0.75    3.4R
+
+═══ DETALLE: K EMA retroceso + parcial 1R ═══
+                                     ops acierto     total   media    PF   maxDD
+BTCUSDT 1h                            60   46.7%    -14.0R  -0.23R  0.62   18.0R
+BTCUSDT 4h                            34   55.9%      2.5R   0.07R  1.16    2.8R
+BTCUSDT 1d                            16   56.3%      4.2R   0.26R  1.58    2.0R
+ETHUSDT 1h                            80   45.0%    -18.2R  -0.23R  0.63   19.7R
+ETHUSDT 4h                            36   38.9%     -9.4R  -0.26R  0.59    9.4R
+ETHUSDT 1d                            22   31.8%     -7.8R  -0.36R  0.49    9.8R
+SOLUSDT 1h                            66   45.5%    -10.4R  -0.16R  0.73   13.2R
+SOLUSDT 4h                            33   54.5%      1.0R   0.03R  1.06    4.8R
+SOLUSDT 1d                            24   54.2%      3.2R   0.14R  1.29    3.0R
+BNBUSDT 1h                            51   51.0%     -4.7R  -0.09R  0.83   10.3R
+BNBUSDT 4h                            45   44.4%     -5.6R  -0.12R  0.79    9.7R
+BNBUSDT 1d                            18   33.3%     -6.3R  -0.35R  0.48    6.3R
+XRPUSDT 1h                            78   53.8%     -3.0R  -0.04R  0.92   11.1R
+XRPUSDT 4h                            32   46.9%     -0.7R  -0.02R  0.96    4.9R
+XRPUSDT 1d                            25   52.0%      1.2R   0.05R  1.10    4.1R
+AAPL 1h                               41   43.9%     -5.9R  -0.14R  0.76   11.0R
+AAPL 4h                               12   41.7%     -1.1R  -0.09R  0.86    3.2R
+AAPL 1d                               23   78.3%     14.3R   0.62R  3.79    1.6R
+TSLA 1h                               37   43.2%     -4.7R  -0.13R  0.79    6.9R
+TSLA 4h                               18   38.9%     -5.9R  -0.33R  0.47    6.2R
+TSLA 1d                               18   50.0%     -2.8R  -0.16R  0.69    3.3R
+NVDA 1h                               26   50.0%     -1.0R  -0.04R  0.93    6.3R
+NVDA 4h                               13   61.5%      1.7R   0.13R  1.32    3.2R
+NVDA 1d                               30   53.3%      2.4R   0.08R  1.17    6.1R
+MSFT 1h                               37   32.4%    -15.8R  -0.43R  0.42   15.8R
+MSFT 4h                                9   44.4%     -1.4R  -0.16R  0.73    4.1R
+MSFT 1d                               28   71.4%      9.2R   0.33R  2.12    2.0R
+AMZN 1h                               36   52.8%      0.5R   0.01R  1.03    4.9R
+AMZN 4h                               10   30.0%     -5.0R  -0.50R  0.32    6.4R
+AMZN 1d                               32   59.4%      5.7R   0.18R  1.43    3.6R
+SPY 1h                                42   52.4%     -4.8R  -0.12R  0.80    7.9R
+SPY 4h                                10   40.0%     -1.7R  -0.17R  0.73    4.3R
+SPY 1d                                14   50.0%     -1.1R  -0.08R  0.85    3.3R
+
+═══ DETALLE: L EMA30/150 cruce ═══
+                                     ops acierto     total   media    PF   maxDD
+BTCUSDT 1h                             7   42.9%      1.1R   0.16R  1.25    2.6R
+BTCUSDT 4h                             3   33.3%     -0.1R  -0.04R  0.94    1.1R
+BTCUSDT 1d                             2   50.0%      1.0R   0.48R  1.95    1.0R
+ETHUSDT 1h                             4   25.0%     -1.4R  -0.35R  0.57    2.2R
+ETHUSDT 4h                             1  100.0%      2.0R   1.97R 99.00    0.0R
+ETHUSDT 1d                             0    0.0%      0.0R   0.00R  0.00    0.0R
+SOLUSDT 1h                             4   25.0%     -1.4R  -0.36R  0.57    3.4R
+SOLUSDT 4h                             1    0.0%     -1.0R  -1.03R  0.00    1.0R
+SOLUSDT 1d                             3   33.3%     -0.0R  -0.01R  0.98    2.0R
+BNBUSDT 1h                             3   33.3%     -0.4R  -0.14R  0.82    2.3R
+BNBUSDT 4h                             3    0.0%     -3.2R  -1.05R  0.00    3.2R
+BNBUSDT 1d                             5   40.0%      0.9R   0.18R  1.30    3.0R
+XRPUSDT 1h                            10   30.0%     -2.2R  -0.22R  0.72    3.3R
+XRPUSDT 4h                             5   60.0%      3.8R   0.77R  2.85    2.1R
+XRPUSDT 1d                             2   50.0%      1.8R   0.91R 11.99    0.2R
+AAPL 1h                                5   60.0%      3.5R   0.69R  2.54    2.2R
+AAPL 4h                                0    0.0%      0.0R   0.00R  0.00    0.0R
+AAPL 1d                                1    0.0%     -1.0R  -1.01R  0.00    1.0R
+TSLA 1h                                3    0.0%     -3.1R  -1.04R  0.00    3.1R
+TSLA 4h                                1    0.0%     -1.0R  -1.03R  0.00    1.0R
+TSLA 1d                                8   25.0%     -2.1R  -0.27R  0.65    5.1R
+NVDA 1h                                2   50.0%      0.9R   0.45R  1.83    1.1R
+NVDA 4h                                2   50.0%      0.9R   0.47R  1.90    1.0R
+NVDA 1d                                2    0.0%     -2.0R  -1.01R  0.00    2.0R
+MSFT 1h                                1    0.0%     -1.1R  -1.13R  0.00    1.1R
+MSFT 4h                                1  100.0%      1.9R   1.95R 99.00    0.0R
+MSFT 1d                                1  100.0%      2.0R   1.98R 99.00    0.0R
+AMZN 1h                                7   42.9%      2.4R   0.34R  1.70    2.3R
+AMZN 4h                                1    0.0%     -1.1R  -1.05R  0.00    1.1R
+AMZN 1d                                4   50.0%      1.9R   0.47R  1.91    2.1R
+SPY 1h                                 2    0.0%     -2.3R  -1.14R  0.00    2.3R
+SPY 4h                                 0    0.0%      0.0R   0.00R  0.00    0.0R
+SPY 1d                                 4   75.0%      4.8R   1.20R  5.63    1.0R
+
+═══ DETALLE: M EMA retroceso, SL 2 ATR ═══
+                                     ops acierto     total   media    PF   maxDD
+BTCUSDT 1h                            44   31.8%     -8.7R  -0.20R  0.73   14.2R
+BTCUSDT 4h                            30   40.0%      2.8R   0.09R  1.15    4.1R
+BTCUSDT 1d                            16   50.0%      6.7R   0.42R  1.83    3.0R
+ETHUSDT 1h                            63   30.2%    -15.0R  -0.24R  0.68   17.6R
+ETHUSDT 4h                            30   30.0%     -5.4R  -0.18R  0.75    9.0R
+ETHUSDT 1d                            17   29.4%     -4.6R  -0.27R  0.62    7.1R
+SOLUSDT 1h                            42   38.1%     -0.5R  -0.01R  0.98    8.9R
+SOLUSDT 4h                            30   30.0%     -3.7R  -0.12R  0.83    7.4R
+SOLUSDT 1d                            19   47.4%      5.7R   0.30R  1.56    2.0R
+BNBUSDT 1h                            45   33.3%     -5.7R  -0.13R  0.83   10.7R
+BNBUSDT 4h                            32   37.5%     -2.5R  -0.08R  0.88    8.9R
+BNBUSDT 1d                            14   35.7%     -2.4R  -0.17R  0.73    3.6R
+XRPUSDT 1h                            60   41.7%      7.8R   0.13R  1.21    9.1R
+XRPUSDT 4h                            27   37.0%     -0.6R  -0.02R  0.97    5.3R
+XRPUSDT 1d                            20   30.0%     -1.8R  -0.09R  0.87    6.6R
+AAPL 1h                               35   31.4%     -3.7R  -0.10R  0.85   12.2R
+AAPL 4h                                9   44.4%      1.7R   0.19R  1.33    3.1R
+AAPL 1d                               21   52.4%     11.2R   0.53R  2.09    5.1R
+TSLA 1h                               34   23.5%    -10.8R  -0.32R  0.59   11.3R
+TSLA 4h                               15   20.0%     -6.8R  -0.46R  0.44    6.8R
+TSLA 1d                               14    7.1%    -11.2R  -0.80R  0.15   11.2R
+NVDA 1h                               23   39.1%      3.0R   0.13R  1.21    5.5R
+NVDA 4h                               10   20.0%     -5.1R  -0.51R  0.37    8.2R
+NVDA 1d                               24   45.8%      8.7R   0.36R  1.66    3.0R
+MSFT 1h                               33   33.3%     -2.6R  -0.08R  0.89    5.8R
+MSFT 4h                                8   37.5%     -0.1R  -0.01R  0.98    4.1R
+MSFT 1d                               24   58.3%     15.7R   0.65R  2.54    2.1R
+AMZN 1h                               30   36.7%     -0.3R  -0.01R  0.99    7.6R
+AMZN 4h                                8   37.5%      0.7R   0.09R  1.14    4.1R
+AMZN 1d                               27   37.0%      0.6R   0.02R  1.03    5.2R
+SPY 1h                                37   40.5%      2.4R   0.06R  1.10    5.5R
+SPY 4h                                 9   33.3%     -0.7R  -0.08R  0.88    3.5R
+SPY 1d                                13   38.5%      0.6R   0.05R  1.07    3.2R

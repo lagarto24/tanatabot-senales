@@ -1,0 +1,39 @@
+# Ejecuta el bot de señales en la nube de GitHub, cada hora, justo después del cierre de vela.
+# Funciona con tu PC apagada. El token y el chat se guardan como secretos del repositorio.
+name: Señales Tanatabot
+
+on:
+  schedule:
+    - cron: "3 * * * *"   # minuto 3 de cada hora (UTC)
+  workflow_dispatch:        # permite lanzarlo a mano desde la pestaña Actions
+
+permissions:
+  contents: write           # para guardar signals_state.json (evita señales repetidas)
+
+concurrency:
+  group: senales
+  cancel-in-progress: false
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.2.21
+
+      - name: Analizar mercado y enviar señales
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_IDS: ${{ secrets.TELEGRAM_CHAT_IDS }}
+        run: bun signals.ts --once
+
+      - name: Guardar estado de señales enviadas
+        run: |
+          git config user.name "tanatabot"
+          git config user.email "tanatabot@users.noreply.github.com"
+          git add signals_state.json
+          git diff --cached --quiet || (git commit -m "estado de señales" && git push)
