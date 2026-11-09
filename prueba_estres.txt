@@ -1,124 +1,264 @@
 
 ════════ PRUEBA DE ESTRÉS ════════
 
-■ Donchian LONG 1d TP fijo 1.5R — base: 408 ops, PF 1.36, neto 77.2R, caída 14.8R
-  ✅ PASA     Fuera de muestra (30% final): 134 ops, PF 1.40, neto 27.8R, caída 11.2R
-  ✅ PASA     Sensibilidad n=20 → 16/18/22/24: PF 1.35 / 1.41 / 1.35 / 1.42 · conserva 104% del beneficio
-  ✅ PASA     Sensibilidad sl=2 → 1.6/1.8/2.2/2.4: PF 1.40 / 1.40 / 1.46 / 1.35 · conserva 110% del beneficio
-  ✅ PASA     Costes dobles (0.2%): 408 ops, PF 1.31, neto 67.3R, caída 15.1R
-  ✅ PASA     Sin el 5% mejores (21 ops): neto 45.8R
-  ✅ PASA     Peor racha (1.000 simulaciones, 1%): ruina 0.0% · caída del peor 5%: 21.2%
-  ⇒ VEREDICTO: PASAR A DEMO
-
-■ Donchian LONG 1d TP fijo 2R — base: 334 ops, PF 1.61, neto 114.2R, caída 15.3R
-  ✅ PASA     Fuera de muestra (30% final): 109 ops, PF 1.58, neto 35.5R, caída 8.8R
-  ✅ PASA     Sensibilidad n=20 → 16/18/22/24: PF 1.60 / 1.65 / 1.60 / 1.69 · conserva 102% del beneficio
-  ✅ PASA     Sensibilidad sl=2 → 1.6/1.8/2.2/2.4: PF 1.40 / 1.40 / 1.51 / 1.53 · conserva 82% del beneficio
-  ✅ PASA     Costes dobles (0.2%): 334 ops, PF 1.56, neto 106.5R, caída 15.7R
-  ✅ PASA     Sin el 5% mejores (17 ops): neto 80.4R
-  ✅ PASA     Peor racha (1.000 simulaciones, 1%): ruina 0.0% · caída del peor 5%: 17.0%
-  ⇒ VEREDICTO: PASAR A DEMO
-
-■ Donchian LONG 1d TP fijo 3R — base: 261 ops, PF 2.07, neto 165.6R, caída 15.4R
-  ✅ PASA     Fuera de muestra (30% final): 81 ops, PF 2.09, neto 52.4R, caída 9.3R
-  ✅ PASA     Sensibilidad n=20 → 16/18/22/24: PF 1.92 / 2.03 / 1.89 / 1.97 · conserva 92% del beneficio
-  ✅ PASA     Sensibilidad sl=2 → 1.6/1.8/2.2/2.4: PF 1.64 / 1.98 / 1.86 / 1.82 · conserva 87% del beneficio
-  ✅ PASA     Costes dobles (0.2%): 261 ops, PF 2.01, neto 159.7R, caída 15.9R
-  ✅ PASA     Sin el 5% mejores (14 ops): neto 123.7R
-  ✅ PASA     Peor racha (1.000 simulaciones, 1%): ruina 0.0% · caída del peor 5%: 15.6%
-  ⇒ VEREDICTO: PASAR A DEMO
-
-■ RSI(2) LONG 1d TP fijo 1R — base: 311 ops, PF 1.26, neto 35.3R, caída 17.9R
-  ✅ PASA     Fuera de muestra (30% final): 120 ops, PF 1.55, neto 25.6R, caída 5.5R
-  ✅ PASA     Sensibilidad th=10 → 8/9/11/12: PF 1.36 / 1.28 / 1.19 / 1.24 · conserva 98% del beneficio
-  ✅ PASA     Sensibilidad sl=1.5 → 1.2/1.35/1.65/1.8: PF 1.13 / 1.21 / 1.29 / 1.41 · conserva 99% del beneficio
-  ✅ PASA     Costes dobles (0.2%): 311 ops, PF 1.17, neto 23.7R, caída 21.5R
-  ✅ PASA     Sin el 5% mejores (16 ops): neto 19.6R
-  ✅ PASA     Peor racha (1.000 simulaciones, 1%): ruina 0.0% · caída del peor 5%: 18.9%
-  ⇒ VEREDICTO: PASAR A DEMO
-
-■ RSI(2) LONG 1d TP fijo 1.5R — base: 294 ops, PF 1.39, neto 59.9R, caída 13.8R
-  ✅ PASA     Fuera de muestra (30% final): 112 ops, PF 1.57, neto 31.4R, caída 6.6R
-  ✅ PASA     Sensibilidad th=10 → 8/9/11/12: PF 1.41 / 1.40 / 1.28 / 1.29 · conserva 86% del beneficio
-  ✅ PASA     Sensibilidad sl=1.5 → 1.2/1.35/1.65/1.8: PF 1.27 / 1.27 / 1.38 / 1.36 · conserva 82% del beneficio
-  ✅ PASA     Costes dobles (0.2%): 294 ops, PF 1.31, neto 48.8R, caída 15.6R
-  ✅ PASA     Sin el 5% mejores (15 ops): neto 37.6R
-  ✅ PASA     Peor racha (1.000 simulaciones, 1%): ruina 0.0% · caída del peor 5%: 18.9%
-  ⇒ VEREDICTO: PASAR A DEMO
-
-■ RSI(2) LONG 1d TP fijo 2R — base: 263 ops, PF 1.34, neto 54.2R, caída 16.0R
-  ✅ PASA     Fuera de muestra (30% final): 97 ops, PF 1.33, neto 19.5R, caída 9.3R
-  ✅ PASA     Sensibilidad th=10 → 8/9/11/12: PF 1.34 / 1.35 / 1.26 / 1.26 · conserva 88% del beneficio
-  ✅ PASA     Sensibilidad sl=1.5 → 1.2/1.35/1.65/1.8: PF 1.39 / 1.30 / 1.34 / 1.52 · conserva 111% del beneficio
-  ✅ PASA     Costes dobles (0.2%): 263 ops, PF 1.27, neto 44.4R, caída 17.0R
-  ✅ PASA     Sin el 5% mejores (14 ops): neto 26.4R
-  ✅ PASA     Peor racha (1.000 simulaciones, 1%): ruina 0.0% · caída del peor 5%: 23.3%
-  ⇒ VEREDICTO: PASAR A DEMO
-
-■ Donchian LONG 1h + diario alcista — base: 490 ops, PF 1.11, neto 25.5R, caída 32.4R
-  ✅ PASA     Fuera de muestra (30% final): 197 ops, PF 1.12, neto 11.9R, caída 32.4R
-  ✅ PASA     Sensibilidad n=20 → 16/18/22/24: PF 1.16 / 1.14 / 1.13 / 1.10 · conserva 122% del beneficio
-  ✅ PASA     Sensibilidad trail=10 → 8/9/11/12: PF 1.07 / 1.11 / 1.10 / 1.09 · conserva 87% del beneficio
-  ✅ PASA     Sensibilidad sl=2 → 1.6/1.8/2.2/2.4: PF 1.12 / 1.12 / 1.16 / 1.17 · conserva 130% del beneficio
-  ❌ NO PASA  Costes dobles (0.2%): 490 ops, PF 0.94, neto -15.3R, caída 39.3R
-  ❌ NO PASA  Sin el 5% mejores (25 ops): neto -87.0R
-  ✅ PASA     Peor racha (1.000 simulaciones, 1%): ruina 0.3% · caída del peor 5%: 40.8%
+■ BAJA VOL Squeeze LONG 1h — base: 228 ops, PF 0.79, neto -35.4R, caída 48.6R
+  ❌ NO PASA  Fuera de muestra (30% final): 65 ops, PF 0.59, neto -21.9R, caída 30.5R
+  ❌ NO PASA  Sensibilidad sl=1.5 → 1.2/1.35/1.65/1.8: PF 0.76 / 0.81 / 0.80 / 0.89 · conserva 88% del beneficio
+  ❌ NO PASA  Sensibilidad sq=6 → 5/5/7/7: PF 0.82 / 0.82 / 0.81 / 0.81 · conserva 88% del beneficio
+  ❌ NO PASA  Costes dobles (0.2%): 228 ops, PF 0.67, neto -61.1R, caída 65.5R
+  ❌ NO PASA  Sin el 5% mejores (12 ops): neto -58.9R
+  ❌ NO PASA  Peor racha (1.000 simulaciones, 1%): ruina 7.1% · caída del peor 5%: 53.3%
   ⇒ VEREDICTO: DESCARTAR
 
-■ Donchian LONG 4h + diario alcista — base: 223 ops, PF 1.52, neto 51.8R, caída 13.4R
-  ✅ PASA     Fuera de muestra (30% final): 75 ops, PF 1.24, neto 9.4R, caída 13.4R
-  ✅ PASA     Sensibilidad n=20 → 16/18/22/24: PF 1.44 / 1.54 / 1.53 / 1.50 · conserva 100% del beneficio
-  ✅ PASA     Sensibilidad trail=10 → 8/9/11/12: PF 1.33 / 1.53 / 1.48 / 1.43 · conserva 87% del beneficio
-  ✅ PASA     Sensibilidad sl=2 → 1.6/1.8/2.2/2.4: PF 1.46 / 1.44 / 1.47 / 1.47 · conserva 93% del beneficio
-  ✅ PASA     Costes dobles (0.2%): 223 ops, PF 1.41, neto 43.2R, caída 14.2R
-  ❌ NO PASA  Sin el 5% mejores (12 ops): neto -8.7R
-  ✅ PASA     Peor racha (1.000 simulaciones, 1%): ruina 0.0% · caída del peor 5%: 19.0%
-  ⇒ VEREDICTO: VOLVER AL PASO 2 (revisar la prueba que falla)
-
-■ Donchian LONG 1h — base: 808 ops, PF 1.24, neto 97.1R, caída 33.8R
-  ✅ PASA     Fuera de muestra (30% final): 243 ops, PF 1.71, neto 92.1R, caída 32.4R
-  ✅ PASA     Sensibilidad n=20 → 16/18/22/24: PF 1.26 / 1.25 / 1.26 / 1.23 · conserva 106% del beneficio
-  ✅ PASA     Sensibilidad trail=10 → 8/9/11/12: PF 1.20 / 1.23 / 1.22 / 1.21 · conserva 93% del beneficio
-  ✅ PASA     Sensibilidad sl=2 → 1.6/1.8/2.2/2.4: PF 1.25 / 1.25 / 1.27 / 1.28 · conserva 111% del beneficio
-  ❌ NO PASA  Costes dobles (0.2%): 808 ops, PF 1.06, neto 28.3R, caída 68.1R
-  ❌ NO PASA  Sin el 5% mejores (41 ops): neto -175.3R
-  ✅ PASA     Peor racha (1.000 simulaciones, 1%): ruina 0.7% · caída del peor 5%: 48.6%
+■ BAJA VOL Squeeze LONG 4h — base: 81 ops, PF 1.21, neto 11.0R, caída 9.7R
+  ❌ NO PASA  Fuera de muestra (30% final): 25 ops, PF 0.72, neto -5.3R, caída 7.3R (menos de 30: no cuenta)
+  ✅ PASA     Sensibilidad sl=1.5 → 1.2/1.35/1.65/1.8: PF 1.66 / 1.33 / 1.32 / 1.43 · conserva 187% del beneficio
+  ❌ NO PASA  Sensibilidad sq=6 → 5/5/7/7: PF 0.95 / 0.95 / 1.23 / 1.23 · conserva 32% del beneficio
+  ✅ PASA     Costes dobles (0.2%): 81 ops, PF 1.13, neto 7.0R, caída 11.0R
+  ✅ PASA     Sin el 5% mejores (5 ops): neto 1.1R
+  ✅ PASA     Peor racha (1.000 simulaciones, 1%): ruina 0.0% · caída del peor 5%: 18.6%
   ⇒ VEREDICTO: DESCARTAR
 
-■ Donchian LONG 4h — base: 350 ops, PF 1.58, neto 97.3R, caída 26.0R
-  ✅ PASA     Fuera de muestra (30% final): 114 ops, PF 1.72, neto 45.4R, caída 18.3R
-  ✅ PASA     Sensibilidad n=20 → 16/18/22/24: PF 1.55 / 1.59 / 1.60 / 1.63 · conserva 103% del beneficio
-  ✅ PASA     Sensibilidad trail=10 → 8/9/11/12: PF 1.36 / 1.54 / 1.55 / 1.50 · conserva 87% del beneficio
-  ✅ PASA     Sensibilidad sl=2 → 1.6/1.8/2.2/2.4: PF 1.56 / 1.56 / 1.54 / 1.53 · conserva 98% del beneficio
-  ✅ PASA     Costes dobles (0.2%): 350 ops, PF 1.48, neto 84.5R, caída 28.8R
-  ❌ NO PASA  Sin el 5% mejores (18 ops): neto -35.1R
-  ✅ PASA     Peor racha (1.000 simulaciones, 1%): ruina 0.0% · caída del peor 5%: 26.3%
+■ BAJA VOL Squeeze SHORT 1h — base: 186 ops, PF 1.18, neto 22.1R, caída 19.3R
+  ✅ PASA     Fuera de muestra (30% final): 54 ops, PF 1.19, neto 6.6R, caída 8.5R
+  ✅ PASA     Sensibilidad sl=1.5 → 1.2/1.35/1.65/1.8: PF 1.15 / 1.18 / 1.12 / 1.07 · conserva 71% del beneficio
+  ✅ PASA     Sensibilidad sq=6 → 5/5/7/7: PF 1.19 / 1.19 / 1.25 / 1.25 · conserva 116% del beneficio
+  ✅ PASA     Costes dobles (0.2%): 186 ops, PF 1.04, neto 5.0R, caída 22.2R
+  ✅ PASA     Sin el 5% mejores (10 ops): neto 2.4R
+  ✅ PASA     Peor racha (1.000 simulaciones, 1%): ruina 0.0% · caída del peor 5%: 25.5%
+  ⇒ VEREDICTO: PASAR A DEMO
+
+■ BAJA VOL Squeeze SHORT 4h — base: 66 ops, PF 0.76, neto -11.5R, caída 26.3R
+  ❌ NO PASA  Fuera de muestra (30% final): 23 ops, PF 0.66, neto -6.1R, caída 7.5R (menos de 30: no cuenta)
+  ❌ NO PASA  Sensibilidad sl=1.5 → 1.2/1.35/1.65/1.8: PF 0.81 / 0.70 / 0.88 / 1.03 · conserva 62% del beneficio
+  ❌ NO PASA  Sensibilidad sq=6 → 5/5/7/7: PF 0.91 / 0.91 / 0.83 / 0.83 · conserva 53% del beneficio
+  ❌ NO PASA  Costes dobles (0.2%): 66 ops, PF 0.72, neto -14.1R, caída 27.6R
+  ❌ NO PASA  Sin el 5% mejores (4 ops): neto -19.5R
+  ✅ PASA     Peor racha (1.000 simulaciones, 1%): ruina 0.0% · caída del peor 5%: 27.5%
+  ⇒ VEREDICTO: DESCARTAR
+
+■ BAJA VOL NR7 LONG 1h — base: 2598 ops, PF 0.56, neto -1046.1R, caída 1049.9R
+  ❌ NO PASA  Fuera de muestra (30% final): 798 ops, PF 0.55, neto -327.7R, caída 327.7R
+  ❌ NO PASA  Sensibilidad sl=1 → 0.8/0.9/1.1/1.2: PF 0.56 / 0.56 / 0.56 / 0.56 · conserva 100% del beneficio
+  ❌ NO PASA  Costes dobles (0.2%): 2598 ops, PF 0.36, neto -1878.3R, caída 1879.0R
+  ❌ NO PASA  Sin el 5% mejores (130 ops): neto -1292.7R
+  ❌ NO PASA  Peor racha (1.000 simulaciones, 1%): ruina 100.0% · caída del peor 5%: 100.0%
+  ⇒ VEREDICTO: DESCARTAR
+
+■ BAJA VOL NR7 LONG 4h — base: 1133 ops, PF 0.90, neto -87.0R, caída 118.3R
+  ✅ PASA     Fuera de muestra (30% final): 395 ops, PF 1.04, neto 12.4R, caída 20.6R
+  ❌ NO PASA  Sensibilidad sl=1 → 0.8/0.9/1.1/1.2: PF 0.90 / 0.90 / 0.90 / 0.90 · conserva 100% del beneficio
+  ❌ NO PASA  Costes dobles (0.2%): 1133 ops, PF 0.73, neto -253.0R, caída 263.8R
+  ❌ NO PASA  Sin el 5% mejores (57 ops): neto -198.4R
+  ❌ NO PASA  Peor racha (1.000 simulaciones, 1%): ruina 80.9% · caída del peor 5%: 84.2%
+  ⇒ VEREDICTO: DESCARTAR
+
+■ BAJA VOL NR7 SHORT 1h — base: 2239 ops, PF 0.61, neto -778.2R, caída 790.4R
+  ❌ NO PASA  Fuera de muestra (30% final): 723 ops, PF 0.57, neto -285.7R, caída 295.6R
+  ❌ NO PASA  Sensibilidad sl=1 → 0.8/0.9/1.1/1.2: PF 0.61 / 0.61 / 0.61 / 0.61 · conserva 100% del beneficio
+  ❌ NO PASA  Costes dobles (0.2%): 2239 ops, PF 0.41, neto -1443.6R, caída 1451.6R
+  ❌ NO PASA  Sin el 5% mejores (112 ops): neto -991.4R
+  ❌ NO PASA  Peor racha (1.000 simulaciones, 1%): ruina 100.0% · caída del peor 5%: 100.0%
+  ⇒ VEREDICTO: DESCARTAR
+
+■ BAJA VOL NR7 SHORT 4h — base: 887 ops, PF 0.78, neto -152.9R, caída 162.3R
+  ❌ NO PASA  Fuera de muestra (30% final): 272 ops, PF 0.71, neto -61.5R, caída 74.3R
+  ❌ NO PASA  Sensibilidad sl=1 → 0.8/0.9/1.1/1.2: PF 0.78 / 0.78 / 0.78 / 0.78 · conserva 100% del beneficio
+  ❌ NO PASA  Costes dobles (0.2%): 887 ops, PF 0.66, neto -258.8R, caída 260.5R
+  ❌ NO PASA  Sin el 5% mejores (45 ops): neto -241.0R
+  ❌ NO PASA  Peor racha (1.000 simulaciones, 1%): ruina 99.1% · caída del peor 5%: 90.6%
+  ⇒ VEREDICTO: DESCARTAR
+
+■ BAJA VOL ATR bajo LONG 1h — base: 456 ops, PF 1.11, neto 33.5R, caída 34.8R
+  ✅ PASA     Fuera de muestra (30% final): 125 ops, PF 1.03, neto 2.7R, caída 30.6R
+  ❌ NO PASA  Sensibilidad sl=1.5 → 1.2/1.35/1.65/1.8: PF 1.01 / 1.05 / 1.07 / 1.12 · conserva 56% del beneficio
+  ✅ PASA     Sensibilidad n=20 → 16/18/22/24: PF 1.16 / 1.11 / 1.12 / 1.12 · conserva 116% del beneficio
+  ✅ PASA     Sensibilidad pct=0.2 → 0.16/0.18/0.22/0.24: PF 1.08 / 1.09 / 1.13 / 1.08 · conserva 86% del beneficio
+  ❌ NO PASA  Costes dobles (0.2%): 456 ops, PF 0.93, neto -23.4R, caída 55.0R
+  ❌ NO PASA  Sin el 5% mejores (23 ops): neto -11.4R
+  ✅ PASA     Peor racha (1.000 simulaciones, 1%): ruina 0.2% · caída del peor 5%: 40.3%
+  ⇒ VEREDICTO: DESCARTAR
+
+■ BAJA VOL ATR bajo LONG 4h — base: 199 ops, PF 0.93, neto -9.7R, caída 32.2R
+  ❌ NO PASA  Fuera de muestra (30% final): 60 ops, PF 0.56, neto -21.6R, caída 25.2R
+  ❌ NO PASA  Sensibilidad sl=1.5 → 1.2/1.35/1.65/1.8: PF 0.97 / 0.95 / 1.00 / 1.01 · conserva 29% del beneficio
+  ❌ NO PASA  Sensibilidad n=20 → 16/18/22/24: PF 0.88 / 0.88 / 0.97 / 0.95 · conserva 118% del beneficio
+  ❌ NO PASA  Sensibilidad pct=0.2 → 0.16/0.18/0.22/0.24: PF 0.85 / 0.87 / 0.88 / 0.91 · conserva 179% del beneficio
+  ❌ NO PASA  Costes dobles (0.2%): 199 ops, PF 0.86, neto -20.5R, caída 36.4R
+  ❌ NO PASA  Sin el 5% mejores (10 ops): neto -29.5R
+  ✅ PASA     Peor racha (1.000 simulaciones, 1%): ruina 0.0% · caída del peor 5%: 40.1%
+  ⇒ VEREDICTO: DESCARTAR
+
+■ BAJA VOL ATR bajo SHORT 1h — base: 360 ops, PF 0.75, neto -68.0R, caída 77.5R
+  ❌ NO PASA  Fuera de muestra (30% final): 105 ops, PF 0.74, neto -20.8R, caída 34.4R
+  ❌ NO PASA  Sensibilidad sl=1.5 → 1.2/1.35/1.65/1.8: PF 0.78 / 0.77 / 0.76 / 0.77 · conserva 93% del beneficio
+  ❌ NO PASA  Sensibilidad n=20 → 16/18/22/24: PF 0.77 / 0.76 / 0.78 / 0.82 · conserva 88% del beneficio
+  ❌ NO PASA  Sensibilidad pct=0.2 → 0.16/0.18/0.22/0.24: PF 0.78 / 0.76 / 0.77 / 0.77 · conserva 93% del beneficio
+  ❌ NO PASA  Costes dobles (0.2%): 360 ops, PF 0.65, neto -104.6R, caída 112.0R
+  ❌ NO PASA  Sin el 5% mejores (18 ops): neto -103.2R
+  ❌ NO PASA  Peor racha (1.000 simulaciones, 1%): ruina 58.4% · caída del peor 5%: 70.1%
+  ⇒ VEREDICTO: DESCARTAR
+
+■ BAJA VOL ATR bajo SHORT 4h — base: 164 ops, PF 0.85, neto -17.9R, caída 33.8R
+  ❌ NO PASA  Fuera de muestra (30% final): 59 ops, PF 0.75, neto -10.9R, caída 15.6R
+  ❌ NO PASA  Sensibilidad sl=1.5 → 1.2/1.35/1.65/1.8: PF 0.79 / 0.77 / 0.86 / 0.91 · conserva 114% del beneficio
+  ❌ NO PASA  Sensibilidad n=20 → 16/18/22/24: PF 0.94 / 0.82 / 0.80 / 0.79 · conserva 106% del beneficio
+  ❌ NO PASA  Sensibilidad pct=0.2 → 0.16/0.18/0.22/0.24: PF 0.83 / 0.81 / 0.88 / 0.89 · conserva 92% del beneficio
+  ❌ NO PASA  Costes dobles (0.2%): 164 ops, PF 0.80, neto -24.9R, caída 37.6R
+  ❌ NO PASA  Sin el 5% mejores (9 ops): neto -35.8R
+  ✅ PASA     Peor racha (1.000 simulaciones, 1%): ruina 0.3% · caída del peor 5%: 42.8%
+  ⇒ VEREDICTO: DESCARTAR
+
+■ BAJA VOL Rango LONG 1h — base: 318 ops, PF 0.83, neto -34.8R, caída 54.9R
+  ❌ NO PASA  Fuera de muestra (30% final): 116 ops, PF 0.64, neto -29.9R, caída 31.4R
+  ❌ NO PASA  Sensibilidad sl=1.5 → 1.2/1.35/1.65/1.8: PF 0.80 / 0.82 / 0.79 / 0.78 · conserva 127% del beneficio
+  ❌ NO PASA  Costes dobles (0.2%): 318 ops, PF 0.69, neto -70.5R, caída 81.3R
+  ❌ NO PASA  Sin el 5% mejores (16 ops): neto -58.1R
+  ❌ NO PASA  Peor racha (1.000 simulaciones, 1%): ruina 9.3% · caída del peor 5%: 55.8%
+  ⇒ VEREDICTO: DESCARTAR
+
+■ BAJA VOL Rango LONG 4h — base: 97 ops, PF 1.65, neto 29.9R, caída 9.4R
+  ✅ PASA     Fuera de muestra (30% final): 44 ops, PF 1.62, neto 13.2R, caída 8.5R
+  ❌ NO PASA  Sensibilidad sl=1.5 → 1.2/1.35/1.65/1.8: PF 1.33 / 1.38 / 1.35 / 1.49 · conserva 64% del beneficio
+  ✅ PASA     Costes dobles (0.2%): 97 ops, PF 1.50, neto 24.4R, caída 10.3R
+  ✅ PASA     Sin el 5% mejores (5 ops): neto 22.6R
+  ✅ PASA     Peor racha (1.000 simulaciones, 1%): ruina 0.0% · caída del peor 5%: 11.6%
   ⇒ VEREDICTO: VOLVER AL PASO 2 (revisar la prueba que falla)
 
-■ Donchian LONG 1d — base: 301 ops, PF 2.03, neto 122.8R, caída 13.5R
-  ✅ PASA     Fuera de muestra (30% final): 101 ops, PF 1.60, neto 24.5R, caída 11.2R
-  ✅ PASA     Sensibilidad n=20 → 16/18/22/24: PF 1.97 / 2.06 / 2.11 / 2.14 · conserva 102% del beneficio
-  ✅ PASA     Sensibilidad trail=10 → 8/9/11/12: PF 2.12 / 2.15 / 1.99 / 1.94 · conserva 101% del beneficio
-  ✅ PASA     Sensibilidad sl=2 → 1.6/1.8/2.2/2.4: PF 1.96 / 1.99 / 2.08 / 2.06 · conserva 102% del beneficio
-  ✅ PASA     Costes dobles (0.2%): 301 ops, PF 1.94, neto 115.9R, caída 14.0R
-  ✅ PASA     Sin el 5% mejores (16 ops): neto 16.2R
-  ✅ PASA     Peor racha (1.000 simulaciones, 1%): ruina 0.0% · caída del peor 5%: 15.5%
+■ BAJA VOL Rango SHORT 1h — base: 352 ops, PF 0.62, neto -99.0R, caída 108.5R
+  ❌ NO PASA  Fuera de muestra (30% final): 104 ops, PF 0.56, neto -35.3R, caída 39.7R
+  ❌ NO PASA  Sensibilidad sl=1.5 → 1.2/1.35/1.65/1.8: PF 0.61 / 0.65 / 0.61 / 0.67 · conserva 97% del beneficio
+  ❌ NO PASA  Costes dobles (0.2%): 352 ops, PF 0.51, neto -142.5R, caída 149.7R
+  ❌ NO PASA  Sin el 5% mejores (18 ops): neto -125.1R
+  ❌ NO PASA  Peor racha (1.000 simulaciones, 1%): ruina 93.1% · caída del peor 5%: 75.8%
+  ⇒ VEREDICTO: DESCARTAR
+
+■ BAJA VOL Rango SHORT 4h — base: 117 ops, PF 0.98, neto -1.5R, caída 14.2R
+  ✅ PASA     Fuera de muestra (30% final): 40 ops, PF 1.11, neto 2.5R, caída 9.8R
+  ❌ NO PASA  Sensibilidad sl=1.5 → 1.2/1.35/1.65/1.8: PF 1.00 / 0.93 / 0.96 / 0.89 · conserva 261% del beneficio
+  ❌ NO PASA  Costes dobles (0.2%): 117 ops, PF 0.89, neto -8.6R, caída 18.6R
+  ❌ NO PASA  Sin el 5% mejores (6 ops): neto -10.3R
+  ✅ PASA     Peor racha (1.000 simulaciones, 1%): ruina 0.0% · caída del peor 5%: 25.4%
+  ⇒ VEREDICTO: DESCARTAR
+
+■ Donchian LONG 1d TP fijo 1.5R — base: 533 ops, PF 1.47, neto 127.2R, caída 18.9R
+  ✅ PASA     Fuera de muestra (30% final): 171 ops, PF 1.46, neto 40.1R, caída 12.2R
+  ✅ PASA     Sensibilidad n=20 → 16/18/22/24: PF 1.44 / 1.50 / 1.52 / 1.54 · conserva 104% del beneficio
+  ✅ PASA     Sensibilidad sl=2 → 1.6/1.8/2.2/2.4: PF 1.52 / 1.50 / 1.53 / 1.42 · conserva 105% del beneficio
+  ✅ PASA     Costes dobles (0.2%): 533 ops, PF 1.42, neto 114.9R, caída 19.3R
+  ✅ PASA     Sin el 5% mejores (27 ops): neto 86.9R
+  ✅ PASA     Peor racha (1.000 simulaciones, 1%): ruina 0.0% · caída del peor 5%: 18.2%
   ⇒ VEREDICTO: PASAR A DEMO
 
-■ RSI(2) LONG 1d acciones — base: 306 ops, PF 1.87, neto 36.0R, caída 6.1R
-  ✅ PASA     Fuera de muestra (30% final): 117 ops, PF 2.53, neto 18.2R, caída 2.4R
-  ✅ PASA     Sensibilidad th=10 → 8/9/11/12: PF 1.93 / 1.80 / 1.78 / 1.77 · conserva 96% del beneficio
-  ✅ PASA     Sensibilidad ex=5 → 4/4/6/6: PF 1.89 / 1.89 / 1.90 / 1.90 · conserva 99% del beneficio
-  ✅ PASA     Sensibilidad sl=3 → 2.4/2.7/3.3/3.6: PF 1.69 / 1.77 / 1.88 / 1.86 · conserva 98% del beneficio
-  ✅ PASA     Costes dobles (0.2%): 306 ops, PF 1.71, neto 30.3R, caída 7.0R
-  ✅ PASA     Sin el 5% mejores (16 ops): neto 22.0R
-  ✅ PASA     Peor racha (1.000 simulaciones, 1%): ruina 0.0% · caída del peor 5%: 6.2%
+■ Donchian LONG 1d TP fijo 2R — base: 441 ops, PF 1.73, neto 173.1R, caída 17.4R
+  ✅ PASA     Fuera de muestra (30% final): 139 ops, PF 1.60, neto 46.9R, caída 12.3R
+  ✅ PASA     Sensibilidad n=20 → 16/18/22/24: PF 1.68 / 1.75 / 1.73 / 1.78 · conserva 100% del beneficio
+  ✅ PASA     Sensibilidad sl=2 → 1.6/1.8/2.2/2.4: PF 1.51 / 1.50 / 1.64 / 1.62 · conserva 85% del beneficio
+  ✅ PASA     Costes dobles (0.2%): 441 ops, PF 1.67, neto 163.3R, caída 17.9R
+  ✅ PASA     Sin el 5% mejores (23 ops): neto 127.3R
+  ✅ PASA     Peor racha (1.000 simulaciones, 1%): ruina 0.0% · caída del peor 5%: 16.4%
   ⇒ VEREDICTO: PASAR A DEMO
 
-■ EMA retroceso LONG 1d — base: 113 ops, PF 1.42, neto 27.3R, caída 15.5R
-  ✅ PASA     Fuera de muestra (30% final): 32 ops, PF 1.72, neto 12.5R, caída 7.1R
-  ✅ PASA     Sensibilidad sl=2 → 1.6/1.8/2.2/2.4: PF 1.19 / 1.32 / 1.42 / 1.38 · conserva 78% del beneficio
-  ✅ PASA     Costes dobles (0.2%): 113 ops, PF 1.38, neto 25.3R, caída 15.9R
-  ✅ PASA     Sin el 5% mejores (6 ops): neto 15.4R
-  ✅ PASA     Peor racha (1.000 simulaciones, 1%): ruina 0.0% · caída del peor 5%: 16.2%
+■ Donchian LONG 1d TP fijo 3R — base: 345 ops, PF 2.12, neto 228.0R, caída 21.4R
+  ✅ PASA     Fuera de muestra (30% final): 104 ops, PF 1.96, neto 60.9R, caída 11.3R
+  ✅ PASA     Sensibilidad n=20 → 16/18/22/24: PF 1.97 / 2.08 / 2.02 / 2.08 · conserva 94% del beneficio
+  ✅ PASA     Sensibilidad sl=2 → 1.6/1.8/2.2/2.4: PF 1.73 / 2.01 / 1.87 / 1.81 · conserva 86% del beneficio
+  ✅ PASA     Costes dobles (0.2%): 345 ops, PF 2.06, neto 220.5R, caída 21.8R
+  ✅ PASA     Sin el 5% mejores (18 ops): neto 174.1R
+  ✅ PASA     Peor racha (1.000 simulaciones, 1%): ruina 0.0% · caída del peor 5%: 15.4%
+  ⇒ VEREDICTO: PASAR A DEMO
+
+■ RSI(2) LONG 1d TP fijo 1R — base: 449 ops, PF 1.13, neto 28.0R, caída 31.1R
+  ✅ PASA     Fuera de muestra (30% final): 167 ops, PF 1.23, neto 17.4R, caída 9.4R
+  ✅ PASA     Sensibilidad th=10 → 8/9/11/12: PF 1.15 / 1.11 / 1.14 / 1.17 · conserva 105% del beneficio
+  ✅ PASA     Sensibilidad sl=1.5 → 1.2/1.35/1.65/1.8: PF 1.02 / 1.11 / 1.13 / 1.23 · conserva 90% del beneficio
+  ✅ PASA     Costes dobles (0.2%): 449 ops, PF 1.06, neto 12.9R, caída 36.2R
+  ✅ PASA     Sin el 5% mejores (23 ops): neto 5.2R
+  ✅ PASA     Peor racha (1.000 simulaciones, 1%): ruina 0.0% · caída del peor 5%: 27.0%
+  ⇒ VEREDICTO: PASAR A DEMO
+
+■ RSI(2) LONG 1d TP fijo 1.5R — base: 423 ops, PF 1.27, neto 62.7R, caída 17.7R
+  ✅ PASA     Fuera de muestra (30% final): 154 ops, PF 1.28, neto 23.3R, caída 11.0R
+  ✅ PASA     Sensibilidad th=10 → 8/9/11/12: PF 1.24 / 1.24 / 1.25 / 1.25 · conserva 90% del beneficio
+  ✅ PASA     Sensibilidad sl=1.5 → 1.2/1.35/1.65/1.8: PF 1.15 / 1.19 / 1.27 / 1.26 · conserva 79% del beneficio
+  ✅ PASA     Costes dobles (0.2%): 423 ops, PF 1.20, neto 48.4R, caída 19.2R
+  ✅ PASA     Sin el 5% mejores (22 ops): neto 30.0R
+  ✅ PASA     Peor racha (1.000 simulaciones, 1%): ruina 0.0% · caída del peor 5%: 23.7%
+  ⇒ VEREDICTO: PASAR A DEMO
+
+■ RSI(2) LONG 1d TP fijo 2R — base: 386 ops, PF 1.28, neto 66.2R, caída 18.7R
+  ✅ PASA     Fuera de muestra (30% final): 139 ops, PF 1.21, neto 18.4R, caída 12.6R
+  ✅ PASA     Sensibilidad th=10 → 8/9/11/12: PF 1.25 / 1.27 / 1.27 / 1.25 · conserva 94% del beneficio
+  ✅ PASA     Sensibilidad sl=1.5 → 1.2/1.35/1.65/1.8: PF 1.25 / 1.24 / 1.29 / 1.36 · conserva 102% del beneficio
+  ✅ PASA     Costes dobles (0.2%): 386 ops, PF 1.22, neto 53.4R, caída 19.4R
+  ✅ PASA     Sin el 5% mejores (20 ops): neto 26.4R
+  ✅ PASA     Peor racha (1.000 simulaciones, 1%): ruina 0.0% · caída del peor 5%: 26.2%
+  ⇒ VEREDICTO: PASAR A DEMO
+
+■ Donchian LONG 1h + diario alcista — base: 602 ops, PF 1.19, neto 55.2R, caída 38.7R
+  ✅ PASA     Fuera de muestra (30% final): 232 ops, PF 1.07, neto 8.2R, caída 38.7R
+  ✅ PASA     Sensibilidad n=20 → 16/18/22/24: PF 1.18 / 1.19 / 1.19 / 1.16 · conserva 96% del beneficio
+  ✅ PASA     Sensibilidad trail=10 → 8/9/11/12: PF 1.16 / 1.21 / 1.18 / 1.17 · conserva 94% del beneficio
+  ✅ PASA     Sensibilidad sl=2 → 1.6/1.8/2.2/2.4: PF 1.20 / 1.21 / 1.23 / 1.24 · conserva 115% del beneficio
+  ✅ PASA     Costes dobles (0.2%): 602 ops, PF 1.02, neto 7.8R, caída 46.1R
+  ❌ NO PASA  Sin el 5% mejores (31 ops): neto -96.5R
+  ✅ PASA     Peor racha (1.000 simulaciones, 1%): ruina 0.1% · caída del peor 5%: 39.3%
+  ⇒ VEREDICTO: VOLVER AL PASO 2 (revisar la prueba que falla)
+
+■ Donchian LONG 4h + diario alcista — base: 271 ops, PF 1.41, neto 50.7R, caída 16.8R
+  ✅ PASA     Fuera de muestra (30% final): 90 ops, PF 1.10, neto 4.6R, caída 16.8R
+  ✅ PASA     Sensibilidad n=20 → 16/18/22/24: PF 1.37 / 1.44 / 1.43 / 1.40 · conserva 102% del beneficio
+  ✅ PASA     Sensibilidad trail=10 → 8/9/11/12: PF 1.27 / 1.41 / 1.37 / 1.37 · conserva 88% del beneficio
+  ✅ PASA     Sensibilidad sl=2 → 1.6/1.8/2.2/2.4: PF 1.38 / 1.36 / 1.37 / 1.38 · conserva 95% del beneficio
+  ✅ PASA     Costes dobles (0.2%): 271 ops, PF 1.31, neto 40.8R, caída 17.7R
+  ❌ NO PASA  Sin el 5% mejores (14 ops): neto -17.3R
+  ✅ PASA     Peor racha (1.000 simulaciones, 1%): ruina 0.0% · caída del peor 5%: 23.5%
+  ⇒ VEREDICTO: VOLVER AL PASO 2 (revisar la prueba que falla)
+
+■ Donchian LONG 1h — base: 956 ops, PF 1.28, neto 136.4R, caída 40.7R
+  ✅ PASA     Fuera de muestra (30% final): 292 ops, PF 1.54, neto 84.9R, caída 40.7R
+  ✅ PASA     Sensibilidad n=20 → 16/18/22/24: PF 1.27 / 1.28 / 1.29 / 1.26 · conserva 99% del beneficio
+  ✅ PASA     Sensibilidad trail=10 → 8/9/11/12: PF 1.24 / 1.29 / 1.26 / 1.25 · conserva 93% del beneficio
+  ✅ PASA     Sensibilidad sl=2 → 1.6/1.8/2.2/2.4: PF 1.30 / 1.30 / 1.32 / 1.33 · conserva 111% del beneficio
+  ✅ PASA     Costes dobles (0.2%): 956 ops, PF 1.11, neto 59.3R, caída 49.4R
+  ❌ NO PASA  Sin el 5% mejores (48 ops): neto -193.2R
+  ✅ PASA     Peor racha (1.000 simulaciones, 1%): ruina 0.7% · caída del peor 5%: 45.8%
+  ⇒ VEREDICTO: VOLVER AL PASO 2 (revisar la prueba que falla)
+
+■ Donchian LONG 4h — base: 402 ops, PF 1.52, neto 100.7R, caída 25.9R
+  ✅ PASA     Fuera de muestra (30% final): 132 ops, PF 1.54, neto 39.7R, caída 19.8R
+  ✅ PASA     Sensibilidad n=20 → 16/18/22/24: PF 1.51 / 1.54 / 1.55 / 1.57 · conserva 104% del beneficio
+  ✅ PASA     Sensibilidad trail=10 → 8/9/11/12: PF 1.34 / 1.48 / 1.49 / 1.47 · conserva 88% del beneficio
+  ✅ PASA     Sensibilidad sl=2 → 1.6/1.8/2.2/2.4: PF 1.51 / 1.51 / 1.49 / 1.47 · conserva 99% del beneficio
+  ✅ PASA     Costes dobles (0.2%): 402 ops, PF 1.42, neto 86.5R, caída 28.9R
+  ❌ NO PASA  Sin el 5% mejores (21 ops): neto -44.7R
+  ✅ PASA     Peor racha (1.000 simulaciones, 1%): ruina 0.0% · caída del peor 5%: 27.5%
+  ⇒ VEREDICTO: VOLVER AL PASO 2 (revisar la prueba que falla)
+
+■ Donchian LONG 1d — base: 378 ops, PF 2.37, neto 201.9R, caída 15.8R
+  ✅ PASA     Fuera de muestra (30% final): 127 ops, PF 1.81, neto 40.2R, caída 13.6R
+  ✅ PASA     Sensibilidad n=20 → 16/18/22/24: PF 2.32 / 2.42 / 2.56 / 2.56 · conserva 103% del beneficio
+  ✅ PASA     Sensibilidad trail=10 → 8/9/11/12: PF 2.40 / 2.43 / 2.33 / 2.27 · conserva 99% del beneficio
+  ✅ PASA     Sensibilidad sl=2 → 1.6/1.8/2.2/2.4: PF 2.29 / 2.31 / 2.39 / 2.38 · conserva 101% del beneficio
+  ✅ PASA     Costes dobles (0.2%): 378 ops, PF 2.27, neto 193.5R, caída 16.4R
+  ✅ PASA     Sin el 5% mejores (19 ops): neto 58.4R
+  ✅ PASA     Peor racha (1.000 simulaciones, 1%): ruina 0.0% · caída del peor 5%: 14.0%
+  ⇒ VEREDICTO: PASAR A DEMO
+
+■ RSI(2) LONG 1d acciones — base: 445 ops, PF 1.59, neto 39.7R, caída 7.0R
+  ✅ PASA     Fuera de muestra (30% final): 168 ops, PF 1.84, neto 18.1R, caída 4.1R
+  ✅ PASA     Sensibilidad th=10 → 8/9/11/12: PF 1.52 / 1.50 / 1.61 / 1.55 · conserva 95% del beneficio
+  ✅ PASA     Sensibilidad ex=5 → 4/4/6/6: PF 1.66 / 1.66 / 1.60 / 1.60 · conserva 102% del beneficio
+  ✅ PASA     Sensibilidad sl=3 → 2.4/2.7/3.3/3.6: PF 1.46 / 1.48 / 1.62 / 1.65 · conserva 97% del beneficio
+  ✅ PASA     Costes dobles (0.2%): 445 ops, PF 1.46, neto 32.2R, caída 7.5R
+  ✅ PASA     Sin el 5% mejores (23 ops): neto 19.3R
+  ✅ PASA     Peor racha (1.000 simulaciones, 1%): ruina 0.0% · caída del peor 5%: 8.6%
+  ⇒ VEREDICTO: PASAR A DEMO
+
+■ EMA retroceso LONG 1d — base: 140 ops, PF 1.40, neto 32.4R, caída 21.6R
+  ✅ PASA     Fuera de muestra (30% final): 41 ops, PF 1.86, neto 18.3R, caída 8.1R
+  ✅ PASA     Sensibilidad sl=2 → 1.6/1.8/2.2/2.4: PF 1.21 / 1.30 / 1.43 / 1.41 · conserva 83% del beneficio
+  ✅ PASA     Costes dobles (0.2%): 140 ops, PF 1.36, neto 29.9R, caída 22.1R
+  ✅ PASA     Sin el 5% mejores (7 ops): neto 18.5R
+  ✅ PASA     Peor racha (1.000 simulaciones, 1%): ruina 0.0% · caída del peor 5%: 17.2%
   ⇒ VEREDICTO: PASAR A DEMO

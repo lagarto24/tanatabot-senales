@@ -515,6 +515,58 @@ function backtestShort(k: Candle[], bear: number[], p: ShParams): Trade[] {
   return trades;
 }
 
+// ═════════ Estrategias de BAJA VOLATILIDAD (1h / 4h) ═════════
+type LVParams = { kind: "squeeze" | "nr7" | "lowatr" | "range"; side: "L" | "S" | "LS"; rr: number; sl: number; n?: number; pct?: number; sq?: number };
+function stdev(v: number[], p: number) { const m = sma(v, p); return v.map((_, i) => { if (i < p - 1) return NaN; let s = 0; for (let j = i - p + 1; j <= i; j++) s += (v[j] - m[i]) ** 2; return Math.sqrt(s / p); }); }
+function backtestLV(k: Candle[], p: LVParams): Trade[] {
+  const c = k.map((x) => x.c), e200 = ema(c, 200), mid = sma(c, 20), sd = stdev(c, 20), { atr, adx } = atrAdx(k);
+  const up = c.map((_, i) => mid[i] + 2 * sd[i]), lo = c.map((_, i) => mid[i] - 2 * sd[i]);
+  const kcU = c.map((_, i) => mid[i] + 1.5 * atr[i]), kcL = c.map((_, i) => mid[i] - 1.5 * atr[i]);
+  const sqOn = c.map((_, i) => up[i] < kcU[i] && lo[i] > kcL[i]);
+  const trades: Trade[] = []; const wantL = p.side !== "S", wantS = p.side !== "L";
+  for (let i = 220; i < k.length - 2; i++) {
+    const b = k[i], a = atr[i];
+    let L: boolean | null = null, entry = c[i], stop = NaN, startBar = i;
+    if (p.kind === "squeeze") {
+      const N = p.sq ?? 6; let was = true; for (let j = i - N; j < i; j++) if (!sqOn[j]) { was = false; break; }
+      if (was && !sqOn[i]) {
+        if (wantL && c[i] > up[i] && c[i] > e200[i]) L = true;
+        else if (wantS && c[i] < lo[i] && c[i] < e200[i]) L = false;
+      }
+    } else if (p.kind === "lowatr") {
+      const n = p.n ?? 20, w = atr.slice(i - 100, i).filter((x) => !isNaN(x)).sort((x, y) => x - y);
+      const low = w.length > 50 && atr[i - 1] <= w[Math.floor(w.length * (p.pct ?? 0.2))];
+      if (low) {
+        const hh = Math.max(...k.slice(i - n, i).map((x) => x.h)), ll = Math.min(...k.slice(i - n, i).map((x) => x.l));
+        if (wantL && c[i] > hh && c[i] > e200[i]) L = true;
+        else if (wantS && c[i] < ll && c[i] < e200[i]) L = false;
+      }
+    } else if (p.kind === "range") {
+      if (adx[i] < 20 && (up[i] - lo[i]) / mid[i] < 0.06) {
+        const pv = k[i - 1];
+        if (wantL && pv.c < lo[i - 1] && c[i] > lo[i]) L = true;
+        else if (wantS && pv.c > up[i - 1] && c[i] < up[i]) L = false;
+      }
+    } else if (p.kind === "nr7") {
+      const r = b.h - b.l, n7 = k.slice(i - 6, i + 1).every((x) => x.h - x.l >= r);
+      const nx = k[i + 1];
+      if (n7) {
+        if (wantL && c[i] > e200[i] && nx.h > b.h) { L = true; entry = Math.max(b.h, nx.o); stop = b.l; startBar = i + 1; }
+        else if (wantS && c[i] < e200[i] && nx.l < b.l) { L = false; entry = Math.min(b.l, nx.o); stop = b.h; startBar = i + 1; }
+      }
+    }
+    if (L === null) continue;
+    if (isNaN(stop)) stop = L ? entry - p.sl * a : entry + p.sl * a;
+    const risk = Math.abs(entry - stop); if (!(risk > 0.2 * a)) continue;
+    if (startBar > i) { const nx = k[startBar]; if (L ? nx.l <= stop && nx.c < entry : nx.h >= stop && nx.c > entry) { trades.push({ side: L ? "LONG" : "SHORT", r: -1 - (FEE * entry) / risk, bars: 1, t: b.t }); i = startBar; continue; } }
+    const sim = simulate(k, startBar, L, entry, stop, p.rr, false);
+    if (!sim) break;
+    trades.push({ side: L ? "LONG" : "SHORT", r: sim.r - (FEE * entry) / risk, bars: sim.n, t: b.t });
+    i = startBar + sim.n;
+  }
+  return trades;
+}
+
 function stats(tr: Trade[]) {
   const n = tr.length, wins = tr.filter((t) => t.r > 0).length;
   const total = tr.reduce((s, t) => s + t.r, 0);
@@ -603,7 +655,15 @@ if (process.env.STRESS) {
   type Spec = { name: string; tfs: TF[]; syms: string[]; params: Record<string, number>; run: (k: Candle[], tf: TF, sym: string, P: Record<string, number>) => Trade[] };
   const ALL = [...CRYPTO, ...STOCKS];
   const dailyBull = (k: Candle[], tf: TF, d: Candle[]) => { const c = d.map((x) => x.c), s = sma(c, 200); return alignHtf(k, tf, d, d.map((_, i) => (c[i] > s[i] ? 1 : 0)), "1d"); };
+  const LV: [string, LVParams][] = [
+    ["Squeeze LONG", { kind: "squeeze", side: "L", rr: 2, sl: 1.5, sq: 6 }], ["Squeeze SHORT", { kind: "squeeze", side: "S", rr: 2, sl: 1.5, sq: 6 }],
+    ["NR7 LONG", { kind: "nr7", side: "L", rr: 2, sl: 1 }], ["NR7 SHORT", { kind: "nr7", side: "S", rr: 2, sl: 1 }],
+    ["ATR bajo LONG", { kind: "lowatr", side: "L", rr: 2, sl: 1.5, n: 20, pct: 0.2 }], ["ATR bajo SHORT", { kind: "lowatr", side: "S", rr: 2, sl: 1.5, n: 20, pct: 0.2 }],
+    ["Rango LONG", { kind: "range", side: "L", rr: 1.5, sl: 1.5 }], ["Rango SHORT", { kind: "range", side: "S", rr: 1.5, sl: 1.5 }],
+  ];
+  const numKeys = (P: LVParams) => Object.fromEntries(Object.entries(P).filter(([kk, v]) => typeof v === "number" && kk !== "rr")) as Record<string, number>;
   const specs: Spec[] = [
+    ...LV.flatMap(([nm, P]) => (["1h", "4h"] as TF[]).map((tf): Spec => ({ name: `BAJA VOL ${nm} ${tf}`, tfs: [tf], syms: ALL, params: numKeys(P), run: (k, _t, _s, Q) => backtestLV(k, { ...P, ...Q }) }))),
     ...[1.5, 2, 3].map((tp): Spec => ({ name: `Donchian LONG 1d TP fijo ${tp}R`, tfs: ["1d"], syms: ALL, params: { n: 20, sl: 2 }, run: (k, _t, _s, P) => backtestExit(k, { name: "", kind: "donchian", shorts: false, n: P.n, sl: P.sl, trail: 9999, tp }) })),
     ...[1, 1.5, 2].map((tp): Spec => ({ name: `RSI(2) LONG 1d TP fijo ${tp}R`, tfs: ["1d"], syms: STOCKS, params: { th: 10, sl: 1.5 }, run: (k, _t, _s, P) => backtestExit(k, { name: "", kind: "rsi2", shorts: false, th: P.th, sl: P.sl, ex: 99999, tp }) })),
     ...(["1h", "4h"] as TF[]).map((tf): Spec => ({
@@ -636,7 +696,7 @@ if (process.env.STRESS) {
     res.push(["Fuera de muestra (30% final)", o.n < 30 ? `${fmtS(o)} (menos de 30: no cuenta)` : fmtS(o), o.n >= 30 && o.pf >= 1]);
     // 2. Sensibilidad ±10% ±20% de cada número
     for (const [key, v] of Object.entries(sp.params)) {
-      const vals = [0.8, 0.9, 1.1, 1.2].map((m) => { let x = v * m; if (key !== "sl" && Number.isInteger(v)) { x = Math.round(x); if (x === v) x = m < 1 ? v - 1 : v + 1; } return x; });
+      const vals = [0.8, 0.9, 1.1, 1.2].map((m) => { let x = v * m; if (key !== "sl" && key !== "pct" && Number.isInteger(v)) { x = Math.round(x); if (x === v) x = m < 1 ? v - 1 : v + 1; } return x; });
       const ss = vals.map((x) => stats(runSpec(sp, { ...sp.params, [key]: x })));
       const keep = ss.reduce((a, s) => a + s.total, 0) / ss.length / b.total;
       const ok = ss.every((s) => !fails(s)) && keep >= 0.7;
