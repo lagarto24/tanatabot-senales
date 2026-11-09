@@ -16,7 +16,7 @@ const CRYPTO = ["BTCUSDT", "ETHUSDT", "SOLUSDT", "HYPEUSDT", "BNBUSDT"];
 const HYPERLIQUID: Record<string, string> = { HYPEUSDT: "HYPE" };
 const STOCKS = ["AAPL", "TSLA", "NVDA", "MSFT", "AMZN", "SPY"];
 const TFS: TF[] = ["1h", "4h", "1d"];
-const FEE = 0.001;
+let FEE = 0.001; // let: la prueba de estrés la duplica
 const MAX_HOLD = 60; // velas máximas en una operación; luego cierra a mercado
 
 // ───────── Datos (con paginación para tener historial largo) ─────────
@@ -376,7 +376,7 @@ function backtestAR(k: Candle[], dDir: number[], p: ARParams): Trade[] {
 // (vender si > 90 en bajista). Salida: cierre cruza la SMA5. Stop de protección 3 ATR. R = pnl / riesgo.
 // R · Donchian ("Tortugas"): cierre rompe máximo/mínimo de 20 velas a favor de la EMA200.
 // Stop inicial 2 ATR; salida por mínimo/máximo de 10 velas (stop que persigue al precio).
-type ExitParams = { name: string; kind: "rsi2" | "donchian"; shorts: boolean };
+type ExitParams = { name: string; kind: "rsi2" | "donchian"; shorts: boolean; n?: number; trail?: number; sl?: number; th?: number; ex?: number; gate?: number[] };
 const EXIT_VARIANTS: ExitParams[] = [
   { name: "Q Connors RSI(2) solo LONG", kind: "rsi2", shorts: false },
   { name: "R Connors RSI(2) LONG+SHORT", kind: "rsi2", shorts: true },
@@ -384,27 +384,27 @@ const EXIT_VARIANTS: ExitParams[] = [
   { name: "S2 Donchian solo LONG", kind: "donchian", shorts: false },
 ];
 function backtestExit(k: Candle[], p: ExitParams): Trade[] {
-  const c = k.map((x) => x.c), s200 = sma(c, 200), s5 = sma(c, 5), e200 = ema(c, 200), r2 = rsi(c, 2), { atr } = atrAdx(k);
+  const c = k.map((x) => x.c), s200 = sma(c, 200), s5 = sma(c, p.ex ?? 5), e200 = ema(c, 200), r2 = rsi(c, 2), { atr } = atrAdx(k);
   const trades: Trade[] = [];
   for (let i = 220; i < k.length - 1; i++) {
     let L: boolean | null = null;
     if (p.kind === "rsi2") {
-      if (c[i] > s200[i] && r2[i] < 10) L = true;
-      else if (p.shorts && c[i] < s200[i] && r2[i] > 90) L = false;
+      if (c[i] > s200[i] && r2[i] < (p.th ?? 10)) L = true;
+      else if (p.shorts && c[i] < s200[i] && r2[i] > 100 - (p.th ?? 10)) L = false;
     } else {
-      const hi = Math.max(...k.slice(i - 20, i).map((x) => x.h)), lo = Math.min(...k.slice(i - 20, i).map((x) => x.l));
-      if (c[i] > hi && c[i] > e200[i]) L = true;
+      const hi = Math.max(...k.slice(i - (p.n ?? 20), i).map((x) => x.h)), lo = Math.min(...k.slice(i - (p.n ?? 20), i).map((x) => x.l));
+      if (c[i] > hi && c[i] > e200[i] && (!p.gate || p.gate[i] === 1)) L = true;
       else if (p.shorts && c[i] < lo && c[i] < e200[i]) L = false;
     }
     if (L === null) continue;
-    const entry = c[i], risk = (p.kind === "rsi2" ? 3 : 2) * atr[i];
+    const entry = c[i], risk = (p.sl ?? (p.kind === "rsi2" ? 3 : 2)) * atr[i];
     let stop = L ? entry - risk : entry + risk, res = NaN, n = 0;
     for (n = 1; n <= MAX_HOLD * 2 && i + n < k.length; n++) {
       const x = k[i + n], m = i + n;
       if (L ? x.l <= stop : x.h >= stop) { res = (L ? stop - entry : entry - stop) / risk; break; }
       if (p.kind === "rsi2" && (L ? x.c > s5[m] : x.c < s5[m])) { res = (L ? x.c - entry : entry - x.c) / risk; break; }
-      if (p.kind === "donchian" && m >= 10) {
-        const t10 = L ? Math.min(...k.slice(m - 9, m + 1).map((y) => y.l)) : Math.max(...k.slice(m - 9, m + 1).map((y) => y.h));
+      if (p.kind === "donchian" && m >= (p.trail ?? 10)) {
+        const t10 = L ? Math.min(...k.slice(m - (p.trail ?? 10) + 1, m + 1).map((y) => y.l)) : Math.max(...k.slice(m - (p.trail ?? 10) + 1, m + 1).map((y) => y.h));
         stop = L ? Math.max(stop, t10) : Math.min(stop, t10);
       }
     }
@@ -527,12 +527,13 @@ const row = (label: string, s: ReturnType<typeof stats>) =>
 const HEAD = `${"".padEnd(34)} ${"ops".padStart(5)} ${"acierto".padStart(7)} ${"total".padStart(9)} ${"media".padStart(7)} ${"PF".padStart(5)} ${"maxDD".padStart(7)}`;
 
 // ───────── Ejecutar ─────────
+const DATA: Record<string, Record<TF, Candle[]>> = {};
 const all: Record<string, Trade[]> = {}; // clave: variante|sym|tf
 const cutoff: Record<string, number> = {}; // 70% inicial = "entrenamiento", 30% final = "prueba"
 const ranges: string[] = [];
 for (const [sym, crypto] of [...CRYPTO.map((s) => [s, true] as const), ...STOCKS.map((s) => [s, false] as const)]) {
   let data: Record<TF, Candle[]>;
-  try { data = await load(sym, crypto); } catch (e) { console.error(sym, "error de datos:", (e as Error).message); continue; }
+  try { data = await load(sym, crypto); DATA[sym] = data; } catch (e) { console.error(sym, "error de datos:", (e as Error).message); continue; }
   for (const tf of TFS) {
     const k = data[tf];
     if (k.length < 300) continue;
@@ -594,3 +595,71 @@ for (const p of VARIANTS_ALL) {
 const text = out.join("\n");
 writeFileSync("backtest_resultados.txt", text);
 console.log(text.split("\n═══ DETALLE")[0]);
+
+// ═════════ PRUEBA DE ESTRÉS (paso 6 del kit "Tu estrategia con IA en 7 prompts") ═════════
+// Se ejecuta con: STRESS=1 bun backtest.ts
+if (process.env.STRESS) {
+  type Spec = { name: string; tfs: TF[]; syms: string[]; params: Record<string, number>; run: (k: Candle[], tf: TF, sym: string, P: Record<string, number>) => Trade[] };
+  const ALL = [...CRYPTO, ...STOCKS];
+  const dailyBull = (k: Candle[], tf: TF, d: Candle[]) => { const c = d.map((x) => x.c), s = sma(c, 200); return alignHtf(k, tf, d, d.map((_, i) => (c[i] > s[i] ? 1 : 0)), "1d"); };
+  const specs: Spec[] = [
+    ...(["1h", "4h"] as TF[]).map((tf): Spec => ({
+      name: `Donchian LONG ${tf} + diario alcista`, tfs: [tf], syms: ALL, params: { n: 20, trail: 10, sl: 2 },
+      run: (k, t, s, P) => backtestExit(k, { name: "", kind: "donchian", shorts: false, n: P.n, trail: P.trail, sl: P.sl, gate: dailyBull(k, t, DATA[s]["1d"]) }),
+    })),
+    ...(["1h", "4h", "1d"] as TF[]).map((tf): Spec => ({
+      name: `Donchian LONG ${tf}`, tfs: [tf], syms: ALL, params: { n: 20, trail: 10, sl: 2 },
+      run: (k, _t, _s, P) => backtestExit(k, { name: "", kind: "donchian", shorts: false, n: P.n, trail: P.trail, sl: P.sl }),
+    })),
+    { name: "RSI(2) LONG 1d acciones", tfs: ["1d"], syms: STOCKS, params: { th: 10, ex: 5, sl: 3 },
+      run: (k, _t, _s, P) => backtestExit(k, { name: "", kind: "rsi2", shorts: false, th: P.th, ex: P.ex, sl: P.sl }) },
+    { name: "EMA retroceso LONG 1d", tfs: ["1d"], syms: ALL, params: { sl: 2 },
+      run: (k, tf, s, P) => backtestEMA(k, dailyTrendEMA(k, tf, DATA[s]["1d"]), { name: "", entry: "pullback", partial: false, slAtr: P.sl }).filter((t) => t.side === "LONG") },
+  ];
+  const runSpec = (sp: Spec, P: Record<string, number>, part?: "is" | "oos") => sp.syms.flatMap((s) => sp.tfs.flatMap((tf) => {
+    const k = DATA[s]?.[tf]; if (!k || k.length < 300) return [];
+    const tr = sp.run(k, tf, s, P), cut = k[Math.floor(k.length * 0.7)].t;
+    return part ? tr.filter((t) => (part === "oos" ? t.t >= cut : t.t < cut)) : tr;
+  }));
+  const fmtS = (s: ReturnType<typeof stats>) => `${s.n} ops, PF ${s.pf.toFixed(2)}, neto ${s.total.toFixed(1)}R, caída ${s.dd.toFixed(1)}R`;
+  const rep: string[] = ["", "════════ PRUEBA DE ESTRÉS ════════"];
+  for (const sp of specs) {
+    const base = runSpec(sp, sp.params), b = stats(base);
+    const fails = (s: ReturnType<typeof stats>) => s.pf < 1 || s.dd > 2 * b.dd;
+    rep.push("", `■ ${sp.name} — base: ${fmtS(b)}`);
+    const res: [string, string, boolean][] = [];
+    // 1. Fuera de muestra
+    const o = stats(runSpec(sp, sp.params, "oos"));
+    res.push(["Fuera de muestra (30% final)", o.n < 30 ? `${fmtS(o)} (menos de 30: no cuenta)` : fmtS(o), o.n >= 30 && o.pf >= 1]);
+    // 2. Sensibilidad ±10% ±20% de cada número
+    for (const [key, v] of Object.entries(sp.params)) {
+      const vals = [0.8, 0.9, 1.1, 1.2].map((m) => { let x = v * m; if (key !== "sl" && Number.isInteger(v)) { x = Math.round(x); if (x === v) x = m < 1 ? v - 1 : v + 1; } return x; });
+      const ss = vals.map((x) => stats(runSpec(sp, { ...sp.params, [key]: x })));
+      const keep = ss.reduce((a, s) => a + s.total, 0) / ss.length / b.total;
+      const ok = ss.every((s) => !fails(s)) && keep >= 0.7;
+      res.push([`Sensibilidad ${key}=${v} → ${vals.map((x) => +x.toFixed(2)).join("/")}`, `PF ${ss.map((s) => s.pf.toFixed(2)).join(" / ")} · conserva ${(keep * 100).toFixed(0)}% del beneficio`, ok]);
+    }
+    // 3. Costes dobles
+    FEE = 0.002; const d = stats(runSpec(sp, sp.params)); FEE = 0.001;
+    res.push(["Costes dobles (0.2%)", fmtS(d), !fails(d)]);
+    // 4. Sin el 5% de las mejores
+    const sorted = [...base].sort((a, z) => z.r - a.r), cutN = Math.ceil(base.length * 0.05);
+    const rest = sorted.slice(cutN).reduce((a, t) => a + t.r, 0);
+    res.push([`Sin el 5% mejores (${cutN} ops)`, `neto ${rest.toFixed(1)}R`, rest > 0]);
+    // 5. Peor racha: 1.000 historias al azar, riesgo 1%, ruina = perder la mitad
+    let ruin = 0; const dds: number[] = []; const R = base.map((t) => t.r);
+    for (let s = 0; s < 1000; s++) {
+      let eq = 1, pk = 1, mdd = 0, dead = false;
+      for (let j = 0; j < R.length; j++) { eq *= 1 + 0.01 * R[Math.floor(Math.random() * R.length)]; pk = Math.max(pk, eq); mdd = Math.max(mdd, 1 - eq / pk); if (eq <= 0.5) dead = true; }
+      if (dead) ruin++; dds.push(mdd);
+    }
+    dds.sort((a, z) => a - z);
+    res.push(["Peor racha (1.000 simulaciones, 1%)", `ruina ${(ruin / 10).toFixed(1)}% · caída del peor 5%: ${(dds[949] * 100).toFixed(1)}%`, ruin / 1000 <= 0.05]);
+    for (const [t, r, ok] of res) rep.push(`  ${ok ? "✅ PASA   " : "❌ NO PASA"}  ${t}: ${r}`);
+    const nFail = res.filter((x) => !x[2]).length;
+    rep.push(`  ⇒ VEREDICTO: ${nFail === 0 ? "PASAR A DEMO" : nFail <= 1 ? "VOLVER AL PASO 2 (revisar la prueba que falla)" : "DESCARTAR"}`);
+  }
+  const txt = rep.join("\n");
+  writeFileSync("prueba_estres.txt", txt);
+  console.log(txt);
+}

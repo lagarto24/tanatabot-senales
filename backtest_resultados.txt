@@ -8,7 +8,7 @@ ETHUSDT 1d: 1999 velas desde 2021-05-20
 SOLUSDT 1h: 7999 velas desde 2025-12-11
 SOLUSDT 4h: 3999 velas desde 2025-01-12
 SOLUSDT 1d: 1999 velas desde 2021-05-20
-HYPEUSDT 1h: 4999 velas desde 2026-04-15
+HYPEUSDT 1h: 5000 velas desde 2026-04-15
 HYPEUSDT 4h: 4226 velas desde 2024-12-05
 HYPEUSDT 1d: 704 velas desde 2024-12-05
 BNBUSDT 1h: 7999 velas desde 2025-12-11
@@ -56,14 +56,14 @@ R Connors RSI(2) LONG+SHORT         5127   61.5%    -55.9R  -0.01R  0.93  108.5R
 S Donchian 20/10 Tortugas           3132   33.8%    267.7R   0.09R  1.17  108.1R
 S2 Donchian solo LONG               1736   37.2%    439.0R   0.25R  1.53   67.3R
 T Williams ruptura volatilidad 0.6 13107   48.9%  -1795.4R  -0.14R  0.73 1921.2R
-U Williams ruptura volatilidad L+S 23355   48.2%  -3456.5R  -0.15R  0.71 3573.6R
-V Williams Smash Day                2586   51.2%   -429.4R  -0.17R  0.61  448.3R
+U Williams ruptura volatilidad L+S 23358   48.2%  -3457.8R  -0.15R  0.71 3574.9R
+V Williams Smash Day                2587   51.2%   -429.2R  -0.17R  0.62  448.3R
 W Williams Oops                     5257   41.1%    341.6R   0.06R  1.10  120.7R
 X Williams %R en tendencia          1593   52.2%    -15.6R  -0.01R  0.97   49.1R
 SA SHORT Donchian bajista, stop móvil   743   34.2%     -1.5R  -0.00R  1.00   74.1R
 SB SHORT Donchian bajista, TP 1:2    760   35.1%    -37.6R  -0.05R  0.93   84.5R
 SC SHORT Donchian bajista, TP 1:1.5   837   40.6%    -40.5R  -0.05R  0.92   75.5R
-SD SHORT RSI(2) rebote fallido      2401   59.4%   -125.6R  -0.05R  0.72  134.9R
+SD SHORT RSI(2) rebote fallido      2400   59.4%   -126.1R  -0.05R  0.72  135.3R
 SE SHORT rebote a EMA20, TP 1:2      683   30.2%   -116.1R  -0.17R  0.76  116.1R
 
 ═══ 1H ═══
@@ -89,18 +89,18 @@ R Connors RSI(2) LONG+SHORT         2977   58.3%    -97.5R  -0.03R  0.81  116.2R
 S Donchian 20/10 Tortugas           1791   33.1%     53.7R   0.03R  1.06   67.4R
 S2 Donchian solo LONG                956   35.6%    136.4R   0.14R  1.28   40.7R
 T Williams ruptura volatilidad 0.6  6938   41.9%  -1654.8R  -0.24R  0.58 1666.6R
-U Williams ruptura volatilidad L+S 13229   42.6%  -3052.4R  -0.23R  0.59 3066.2R
-V Williams Smash Day                1422   45.3%   -293.4R  -0.21R  0.55  303.4R
+U Williams ruptura volatilidad L+S 13232   42.6%  -3053.7R  -0.23R  0.59 3067.6R
+V Williams Smash Day                1423   45.3%   -293.2R  -0.21R  0.55  303.4R
 W Williams Oops                     1750   41.1%     51.4R   0.03R  1.05   61.9R
 X Williams %R en tendencia           864   49.3%    -57.3R  -0.07R  0.79   63.5R
 SA SHORT Donchian bajista, stop móvil   455   35.6%      0.6R   0.00R  1.00   35.3R
 SB SHORT Donchian bajista, TP 1:2    471   35.0%    -28.9R  -0.06R  0.91   58.1R
 SC SHORT Donchian bajista, TP 1:1.5   517   41.8%    -17.5R  -0.03R  0.94   50.8R
-SD SHORT RSI(2) rebote fallido      1495   57.7%   -106.2R  -0.07R  0.63  111.7R
+SD SHORT RSI(2) rebote fallido      1494   57.6%   -106.6R  -0.07R  0.63  112.1R
 SE SHORT rebote a EMA20, TP 1:2      399   32.6%    -47.2R  -0.12R  0.83   52.9R
   — validación: 70% inicial vs 30% final (datos no vistos) —
-A actual (3 filtros, SL 1.5 ATR) · 70%  1222   34.7%    -68.3R  -0.06R  0.92   85.7R
-A actual (3 filtros, SL 1.5 ATR) · 30%   539   36.7%     -7.8R  -0.01R  0.98   44.0R
+A actual (3 filtros, SL 1.5 ATR) · 70%  1223   34.7%    -69.4R  -0.06R  0.92   86.9R
+A actual (3 filtros, SL 1.5 ATR) · 30%   538   36.8%     -6.7R  -0.01R  0.98   42.9R
 B 4 filtros · 70%                    498   32.9%    -54.3R  -0.11R  0.85   66.8R
 B 4 filtros · 30%                    194   32.5%    -28.4R  -0.15R  0.80   39.1R
 C + tendencia mayor · 70%            850   33.3%    -83.7R  -0.10R  0.86   99.8R
@@ -135,27 +135,27 @@ Q Connors RSI(2) solo LONG · 70%    1109   57.5%    -18.9R  -0.02R  0.90   39.4
 Q Connors RSI(2) solo LONG · 30%     475   56.6%    -28.5R  -0.06R  0.70   30.9R
 R Connors RSI(2) LONG+SHORT · 70%   2031   59.3%    -34.8R  -0.02R  0.90   51.0R
 R Connors RSI(2) LONG+SHORT · 30%    946   56.2%    -62.7R  -0.07R  0.66   66.8R
-S Donchian 20/10 Tortugas · 70%     1224   34.5%     20.5R   0.02R  1.03   49.1R
-S Donchian 20/10 Tortugas · 30%      567   30.2%     33.3R   0.06R  1.11   59.9R
+S Donchian 20/10 Tortugas · 70%     1225   34.4%     19.4R   0.02R  1.03   49.1R
+S Donchian 20/10 Tortugas · 30%      566   30.2%     34.4R   0.06R  1.11   59.9R
 S2 Donchian solo LONG · 70%          664   36.9%     51.5R   0.08R  1.16   29.1R
 S2 Donchian solo LONG · 30%          292   32.5%     84.9R   0.29R  1.54   40.7R
 T Williams ruptura volatilidad 0.6 · 70%  4893   42.2%  -1109.1R  -0.23R  0.59 1124.2R
 T Williams ruptura volatilidad 0.6 · 30%  2045   41.1%   -545.8R  -0.27R  0.54  547.1R
-U Williams ruptura volatilidad L+S · 70%  9040   43.2%  -1972.5R  -0.22R  0.60 1985.4R
-U Williams ruptura volatilidad L+S · 30%  4189   41.4%  -1079.9R  -0.26R  0.56 1080.8R
+U Williams ruptura volatilidad L+S · 70%  9040   43.1%  -1973.9R  -0.22R  0.60 1986.8R
+U Williams ruptura volatilidad L+S · 30%  4192   41.4%  -1079.8R  -0.26R  0.56 1080.8R
 V Williams Smash Day · 70%          1004   47.6%   -160.1R  -0.16R  0.62  169.2R
-V Williams Smash Day · 30%           418   39.7%   -133.3R  -0.32R  0.43  134.7R
+V Williams Smash Day · 30%           419   39.9%   -133.1R  -0.32R  0.43  134.7R
 W Williams Oops · 70%               1185   43.0%     83.0R   0.07R  1.11   41.6R
 W Williams Oops · 30%                565   37.3%    -31.5R  -0.06R  0.92   59.5R
 X Williams %R en tendencia · 70%     595   50.9%    -25.9R  -0.04R  0.86   33.8R
 X Williams %R en tendencia · 30%     269   45.7%    -31.4R  -0.12R  0.66   31.7R
-SA SHORT Donchian bajista, stop móvil · 70%   396   37.6%     13.1R   0.03R  1.06   28.0R
-SA SHORT Donchian bajista, stop móvil · 30%    59   22.0%    -12.5R  -0.21R  0.67   21.4R
-SB SHORT Donchian bajista, TP 1:2 · 70%   412   36.2%    -11.5R  -0.03R  0.96   41.4R
-SB SHORT Donchian bajista, TP 1:2 · 30%    59   27.1%    -17.4R  -0.29R  0.62   24.8R
-SC SHORT Donchian bajista, TP 1:1.5 · 70%   453   43.5%      5.7R   0.01R  1.02   31.8R
-SC SHORT Donchian bajista, TP 1:1.5 · 30%    64   29.7%    -23.3R  -0.36R  0.53   26.2R
-SD SHORT RSI(2) rebote fallido · 70%  1276   60.3%    -56.5R  -0.04R  0.75   63.9R
+SA SHORT Donchian bajista, stop móvil · 70%   397   37.5%     12.0R   0.03R  1.06   28.0R
+SA SHORT Donchian bajista, stop móvil · 30%    58   22.4%    -11.4R  -0.20R  0.69   20.3R
+SB SHORT Donchian bajista, TP 1:2 · 70%   413   36.1%    -12.6R  -0.03R  0.95   41.4R
+SB SHORT Donchian bajista, TP 1:2 · 30%    58   27.6%    -16.3R  -0.28R  0.64   23.7R
+SC SHORT Donchian bajista, TP 1:1.5 · 70%   455   43.3%      3.5R   0.01R  1.01   31.8R
+SC SHORT Donchian bajista, TP 1:1.5 · 30%    62   30.6%    -21.1R  -0.34R  0.55   24.1R
+SD SHORT RSI(2) rebote fallido · 70%  1275   60.2%    -56.9R  -0.04R  0.74   64.3R
 SD SHORT RSI(2) rebote fallido · 30%   219   42.5%    -49.7R  -0.23R  0.27   51.2R
 SE SHORT rebote a EMA20, TP 1:2 · 70%   348   33.3%    -34.0R  -0.10R  0.86   47.3R
 SE SHORT rebote a EMA20, TP 1:2 · 30%    51   27.5%    -13.2R  -0.26R  0.66   14.9R
@@ -392,9 +392,9 @@ S2 Donchian solo LONG · cripto       816   34.3%    227.8R   0.28R  1.55   39.2
 S2 Donchian solo LONG · acciones     920   39.7%    211.2R   0.23R  1.52   52.1R
 T Williams ruptura volatilidad 0.6 · cripto  6234   49.1%  -1020.9R  -0.16R  0.65 1029.6R
 T Williams ruptura volatilidad 0.6 · acciones  6873   48.6%   -774.5R  -0.11R  0.79  903.2R
-U Williams ruptura volatilidad L+S · cripto 12839   48.3%  -2141.7R  -0.17R  0.65 2155.4R
+U Williams ruptura volatilidad L+S · cripto 12842   48.3%  -2143.0R  -0.17R  0.65 2156.8R
 U Williams ruptura volatilidad L+S · acciones 10516   48.2%  -1314.8R  -0.13R  0.77 1431.2R
-V Williams Smash Day · cripto       1195   47.1%   -249.3R  -0.21R  0.50  252.9R
+V Williams Smash Day · cripto       1196   47.2%   -249.1R  -0.21R  0.50  252.9R
 V Williams Smash Day · acciones     1391   54.7%   -180.1R  -0.13R  0.71  208.7R
 W Williams Oops · cripto              38   21.1%    -20.7R  -0.54R  0.42   27.9R
 W Williams Oops · acciones          5219   41.2%    362.3R   0.07R  1.11  120.7R
@@ -406,7 +406,7 @@ SB SHORT Donchian bajista, TP 1:2 · cripto   599   35.6%    -30.1R  -0.05R  0.9
 SB SHORT Donchian bajista, TP 1:2 · acciones   161   33.5%     -7.5R  -0.05R  0.93   22.5R
 SC SHORT Donchian bajista, TP 1:1.5 · cripto   659   41.4%    -24.2R  -0.04R  0.94   62.3R
 SC SHORT Donchian bajista, TP 1:1.5 · acciones   178   37.6%    -16.3R  -0.09R  0.86   25.0R
-SD SHORT RSI(2) rebote fallido · cripto  1916   61.5%    -82.9R  -0.04R  0.76   86.7R
+SD SHORT RSI(2) rebote fallido · cripto  1915   61.5%    -83.3R  -0.04R  0.76   87.2R
 SD SHORT RSI(2) rebote fallido · acciones   485   51.1%    -42.8R  -0.09R  0.62   49.1R
 SE SHORT rebote a EMA20, TP 1:2 · cripto   539   31.7%    -71.1R  -0.13R  0.81   76.3R
 SE SHORT rebote a EMA20, TP 1:2 · acciones   144   24.3%    -45.0R  -0.31R  0.60   45.0R
@@ -456,9 +456,9 @@ S2 Donchian solo LONG · SHORT          0    0.0%      0.0R   0.00R  0.00    0.0
 T Williams ruptura volatilidad 0.6 · LONG 13107   48.9%  -1795.4R  -0.14R  0.73 1921.2R
 T Williams ruptura volatilidad 0.6 · SHORT     0    0.0%      0.0R   0.00R  0.00    0.0R
 U Williams ruptura volatilidad L+S · LONG 13045   48.8%  -1784.0R  -0.14R  0.73 1905.3R
-U Williams ruptura volatilidad L+S · SHORT 10310   47.4%  -1672.5R  -0.16R  0.68 1717.7R
+U Williams ruptura volatilidad L+S · SHORT 10313   47.4%  -1673.8R  -0.16R  0.68 1719.0R
 V Williams Smash Day · LONG         1406   52.3%   -221.8R  -0.16R  0.61  241.6R
-V Williams Smash Day · SHORT        1180   49.9%   -207.7R  -0.18R  0.62  216.7R
+V Williams Smash Day · SHORT        1181   50.0%   -207.5R  -0.18R  0.62  216.7R
 W Williams Oops · LONG              2107   42.9%    135.4R   0.06R  1.10   66.5R
 W Williams Oops · SHORT             3150   39.8%    206.2R   0.07R  1.10  126.1R
 X Williams %R en tendencia · LONG   1593   52.2%    -15.6R  -0.01R  0.97   49.1R
@@ -470,7 +470,7 @@ SB SHORT Donchian bajista, TP 1:2 · SHORT   760   35.1%    -37.6R  -0.05R  0.93
 SC SHORT Donchian bajista, TP 1:1.5 · LONG     0    0.0%      0.0R   0.00R  0.00    0.0R
 SC SHORT Donchian bajista, TP 1:1.5 · SHORT   837   40.6%    -40.5R  -0.05R  0.92   75.5R
 SD SHORT RSI(2) rebote fallido · LONG     0    0.0%      0.0R   0.00R  0.00    0.0R
-SD SHORT RSI(2) rebote fallido · SHORT  2401   59.4%   -125.6R  -0.05R  0.72  134.9R
+SD SHORT RSI(2) rebote fallido · SHORT  2400   59.4%   -126.1R  -0.05R  0.72  135.3R
 SE SHORT rebote a EMA20, TP 1:2 · LONG     0    0.0%      0.0R   0.00R  0.00    0.0R
 SE SHORT rebote a EMA20, TP 1:2 · SHORT   683   30.2%   -116.1R  -0.17R  0.76  116.1R
 
@@ -1232,19 +1232,19 @@ SPY 1d                               386   59.3%    -32.2R  -0.08R  0.81   35.3R
 
 ═══ DETALLE: U Williams ruptura volatilidad L+S ═══
                                      ops acierto     total   media    PF   maxDD
-BTCUSDT 1h                          1597   38.6%   -489.9R  -0.31R  0.46  489.9R
+BTCUSDT 1h                          1598   38.7%   -489.8R  -0.31R  0.46  489.9R
 BTCUSDT 4h                           790   51.4%    -36.9R  -0.05R  0.90   61.2R
 BTCUSDT 1d                           380   61.1%      7.8R   0.02R  1.05   26.3R
-ETHUSDT 1h                          1557   42.7%   -378.0R  -0.24R  0.55  378.0R
+ETHUSDT 1h                          1558   42.7%   -377.9R  -0.24R  0.55  378.0R
 ETHUSDT 4h                           778   52.8%    -45.5R  -0.06R  0.87   78.0R
 ETHUSDT 1d                           362   61.3%     12.3R   0.03R  1.10   22.0R
-SOLUSDT 1h                          1569   45.6%   -313.0R  -0.20R  0.59  316.8R
+SOLUSDT 1h                          1569   45.5%   -314.4R  -0.20R  0.59  316.8R
 SOLUSDT 4h                           803   53.9%    -88.1R  -0.11R  0.75   97.0R
 SOLUSDT 1d                           364   62.1%    -17.4R  -0.05R  0.87   22.9R
 HYPEUSDT 1h                          992   52.9%   -124.7R  -0.13R  0.70  126.6R
 HYPEUSDT 4h                          822   58.6%    -70.0R  -0.09R  0.78   71.3R
 HYPEUSDT 1d                          101   64.4%      0.1R   0.00R  1.00    8.2R
-BNBUSDT 1h                          1566   38.8%   -437.6R  -0.28R  0.46  439.0R
+BNBUSDT 1h                          1567   38.8%   -437.7R  -0.28R  0.46  439.1R
 BNBUSDT 4h                           789   48.4%   -131.8R  -0.17R  0.65  145.3R
 BNBUSDT 1d                           369   56.1%    -29.2R  -0.08R  0.81   34.1R
 AAPL 1h                              997   42.9%   -208.6R  -0.21R  0.64  218.6R
@@ -1274,7 +1274,7 @@ BTCUSDT 1d                            29   62.1%     -3.3R  -0.11R  0.65    5.8R
 ETHUSDT 1h                           145   46.2%    -18.8R  -0.13R  0.66   20.6R
 ETHUSDT 4h                            61   49.2%    -14.6R  -0.24R  0.44   18.0R
 ETHUSDT 1d                            35   54.3%     -9.2R  -0.26R  0.44   11.5R
-SOLUSDT 1h                           122   48.4%    -17.2R  -0.14R  0.64   22.8R
+SOLUSDT 1h                           123   48.8%    -17.1R  -0.14R  0.65   22.8R
 SOLUSDT 4h                            67   52.2%     -6.1R  -0.09R  0.77   11.0R
 SOLUSDT 1d                            40   75.0%     -1.3R  -0.03R  0.85    4.6R
 HYPEUSDT 1h                          101   50.5%    -21.0R  -0.21R  0.49   24.9R
@@ -1496,7 +1496,7 @@ SOLUSDT 1d                            45   60.0%     -1.1R  -0.02R  0.84    2.7R
 HYPEUSDT 1h                            0    0.0%      0.0R   0.00R  0.00    0.0R
 HYPEUSDT 4h                           38   63.2%     -2.0R  -0.05R  0.73    3.5R
 HYPEUSDT 1d                            4   50.0%     -0.7R  -0.17R  0.33    1.0R
-BNBUSDT 1h                           280   57.9%    -22.0R  -0.08R  0.61   24.1R
+BNBUSDT 1h                           279   57.3%    -22.4R  -0.08R  0.60   24.5R
 BNBUSDT 4h                            98   66.3%     -1.1R  -0.01R  0.93    4.3R
 BNBUSDT 1d                            42   61.9%     -2.6R  -0.06R  0.68    4.3R
 AAPL 1h                               45   44.4%     -5.4R  -0.12R  0.52    6.6R

@@ -333,7 +333,7 @@ function entryMessage(sym: string, tf: TF, e: Entry, isCrypto: boolean): string 
   return [
     `${L ? "🟢" : "🔴"} <b>${e.side}</b> ${L ? "📈" : "📉"} <b>${sym}</b> · gráfico de ${tfName(tf)} ${isCrypto ? "🪙" : "🏛"}`,
     L ? `<i>LONG = apostar a que el precio SUBE</i>` : `<i>SHORT = apostar a que el precio BAJA</i>`,
-    high ? `⭐ <b>ALTA CONFIANZA</b>` : `🟡 <b>CONFIANZA MEDIA</b> — ventaja comprobada pero menor que en 1D`,
+    high ? `⭐ <b>ALTA CONFIANZA</b> — pasó las 5 pruebas de estrés` : `🧪 <b>EN PRUEBA</b> — gana a la larga, pero depende de pocas operaciones grandes (no pasó 1 de 5 pruebas de estrés). Ideal para practicar en demo.`,
     `🧠 Estrategia: <b>${info.name}</b>`,
     ``,
     `<b>📋 QUÉ HACER</b>`,
