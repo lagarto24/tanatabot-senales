@@ -290,33 +290,44 @@ const fmt = (n: number) => (n >= 1000 ? n.toFixed(2) : n >= 1 ? n.toFixed(n >= 1
 const pct = (a: number, b: number) => `${(((a - b) / b) * 100).toFixed(2)}%`;
 
 function message(sym: string, tf: TF, s: Signal, isCrypto: boolean): string {
-  const icon = s.side === "LONG" ? "🟢" : "🔴";
-  const arrow = s.side === "LONG" ? "📈" : "📉";
+  const L = s.side === "LONG";
+  const cur = isCrypto ? "USDT" : "USD";
+  const slPct = Math.abs((s.sl - s.price) / s.price) * 100;
+  const tpPct = Math.abs((s.tp - s.price) / s.price) * 100;
+  const tfName = tf === "1h" ? "1 hora" : tf === "4h" ? "4 horas" : "1 día";
+  const when = new Date(s.t + TF_MS_MSG[tf]).toLocaleString("es-ES", { timeZone: "Europe/Madrid", day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" });
+  // tamaño de posición para arriesgar 1% de una cuenta de 1000 USD
+  const pos1000 = Math.round(10 / (slPct / 100));
   return [
-    `${icon} <b>${s.side}</b> ${arrow} <b>${sym}</b> · ${tf.toUpperCase()} ${isCrypto ? "🪙" : "🏛"}`,
+    `${L ? "🟢" : "🔴"} <b>${s.side}</b> ${L ? "📈" : "📉"} <b>${sym}</b> · gráfico de ${tfName} ${isCrypto ? "🪙" : "🏛"}`,
+    L ? `<i>LONG = apostar a que el precio SUBE</i>` : `<i>SHORT = apostar a que el precio BAJA</i>`,
     s.highConf
-      ? `⭐ <b>ALTA CONFIANZA</b> — estrategia validada en backtest (EMA 30/150/200)`
-      : `⚠️ <b>BAJA CONFIANZA</b> — en backtest 1h/4h no mostró ventaja; opera con cautela`,
+      ? `⭐ <b>ALTA CONFIANZA</b>: esta estrategia ganó en las pruebas con años de historial.`
+      : `⚠️ <b>BAJA CONFIANZA</b>: en gráficos de 1h/4h la estrategia no ganó en las pruebas. Mejor solo para practicar.`,
     ``,
-    `💵 Entrada: <b>${fmt(s.price)} ${isCrypto ? "USDT" : "USD"}</b>${isCrypto ? "" : " (bolsa EE.UU.)"}`,
-    `🕒 Vela cerrada: ${new Date(s.t + TF_MS_MSG[tf]).toLocaleString("es-ES", { timeZone: "Europe/Madrid", day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" })} (hora España)`,
-    `🛑 Stop loss: <b>${fmt(s.sl)}</b> (${pct(s.sl, s.price)})`,
-    `🎯 Take profit: <b>${fmt(s.tp)}</b> (${pct(s.tp, s.price)})`,
-    `⚖️ Riesgo/beneficio: <b>1:${TP_R}</b>`,
+    `<b>📋 QUÉ HACER</b>`,
+    `1️⃣ ${L ? "Comprar" : "Vender (abrir short)"} cerca de <b>${fmt(s.price)} ${cur}</b>`,
+    `2️⃣ Poner <b>stop loss</b> en <b>${fmt(s.sl)}</b>`,
+    `     → si el precio ${L ? "baja" : "sube"} ahí, sales y pierdes ~${slPct.toFixed(2)}%`,
+    `3️⃣ Poner <b>take profit</b> en <b>${fmt(s.tp)}</b>`,
+    `     → si el precio ${L ? "sube" : "baja"} ahí, cobras ~${tpPct.toFixed(2)}%`,
+    `⚖️ Ganas el <b>doble</b> de lo que arriesgas (1:${TP_R}).`,
+    `🕒 Señal de la vela que cerró el ${when} (hora España)${isCrypto ? "" : " · bolsa EE.UU. en dólares"}`,
     ``,
-    `⚡ <b>Apalancamiento</b> (resultado sobre tu margen):`,
+    `<b>💰 CUÁNTO METER</b>`,
+    `Regla de oro: no arriesgar más del 1% de tu cuenta.`,
+    `Ejemplo: con una cuenta de 1.000 ${cur}, abre una posición de ~<b>${pos1000} ${cur}</b> sin apalancamiento. Si toca el stop pierdes ~10 ${cur}; si toca el objetivo ganas ~20 ${cur}.`,
+    ``,
+    `<b>⚡ CON APALANCAMIENTO</b> (multiplica ganancias Y pérdidas)`,
     ...LEVERAGES.map((lev) => {
-      const slP = (Math.abs(s.sl - s.price) / s.price) * 100 * lev;
-      const tpP = (Math.abs(s.tp - s.price) / s.price) * 100 * lev;
-      const warn = slP >= 80 ? " ⚠️ stop muy cerca de liquidación, no recomendado" : "";
-      return `• <b>x${lev}</b>: TP <b>+${tpP.toFixed(1)}%</b> · SL <b>−${slP.toFixed(1)}%</b>${warn}`;
+      const w = slPct * lev >= 80 ? " ⚠️ muy arriesgado" : "";
+      return `• x${lev}: si gana <b>+${(tpPct * lev).toFixed(1)}%</b> · si pierde <b>−${(slPct * lev).toFixed(1)}%</b> de lo que pongas${w}`;
     }),
     ``,
-    `📊 Confluencia: <b>${s.score}/${s.total}</b>`,
+    `<b>🔍 POR QUÉ ESTA SEÑAL</b> (${s.score}/${s.total} condiciones a favor)`,
     ...s.reasons.map((r) => `✓ ${r}`),
     ``,
-    `🛡 Riesgo sugerido: máx. 1% de tu capital por operación.`,
-    `⚠️ Señal automática de análisis técnico, no es asesoría financiera.`,
+    `🛡 Respeta SIEMPRE el stop loss. Señal automática educativa, no es asesoría financiera.`,
   ].join("\n");
 }
 
