@@ -1,3 +1,60 @@
 {
-  "MSFT|1h": 1794241800000
+  "last": {
+    "DON|BTCUSDT|1d": 1794096000000,
+    "DON|ETHUSDT|1d": 1794096000000,
+    "DON|SOLUSDT|1d": 1794096000000
+  },
+  "open": {
+    "DON|BTCUSDT|1d": {
+      "strat": "DON",
+      "side": "SHORT",
+      "price": 74851.44,
+      "sl": 79439.20686299259,
+      "t": 1794096000000,
+      "reasons": [
+        "Rompió el mínimo de las últimas 20 velas (74888.00)",
+        "Tendencia bajista: precio bajo la EMA200"
+      ],
+      "sym": "BTCUSDT",
+      "tf": "1d",
+      "isCrypto": true,
+      "lastBar": 1794096000000,
+      "bars": 0,
+      "stop": 79439.20686299259
+    },
+    "DON|ETHUSDT|1d": {
+      "strat": "DON",
+      "side": "SHORT",
+      "price": 2127.46,
+      "sl": 2326.1114526282004,
+      "t": 1794096000000,
+      "reasons": [
+        "Rompió el mínimo de las últimas 20 velas (2174.08)",
+        "Tendencia bajista: precio bajo la EMA200"
+      ],
+      "sym": "ETHUSDT",
+      "tf": "1d",
+      "isCrypto": true,
+      "lastBar": 1794096000000,
+      "bars": 0,
+      "stop": 2326.1114526282004
+    },
+    "DON|SOLUSDT|1d": {
+      "strat": "DON",
+      "side": "SHORT",
+      "price": 86.54,
+      "sl": 95.55796669862076,
+      "t": 1794096000000,
+      "reasons": [
+        "Rompió el mínimo de las últimas 20 velas (88.300)",
+        "Tendencia bajista: precio bajo la EMA200"
+      ],
+      "sym": "SOLUSDT",
+      "tf": "1d",
+      "isCrypto": true,
+      "lastBar": 1794096000000,
+      "bars": 0,
+      "stop": 95.55796669862076
+    }
+  }
 }
