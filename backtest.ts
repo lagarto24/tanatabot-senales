@@ -12,7 +12,8 @@ const H = 3600_000;
 const TF_MS: Record<TF, number> = { "1h": H, "4h": 4 * H, "1d": 24 * H };
 const HTF: Record<TF, TF | null> = { "1h": "4h", "4h": "1d", "1d": null };
 
-const CRYPTO = ["BTCUSDT", "ETHUSDT", "SOLUSDT", "BNBUSDT", "XRPUSDT"];
+const CRYPTO = ["BTCUSDT", "ETHUSDT", "SOLUSDT", "HYPEUSDT", "BNBUSDT"];
+const HYPERLIQUID: Record<string, string> = { HYPEUSDT: "HYPE" };
 const STOCKS = ["AAPL", "TSLA", "NVDA", "MSFT", "AMZN", "SPY"];
 const TFS: TF[] = ["1h", "4h", "1d"];
 const FEE = 0.001;
@@ -59,7 +60,21 @@ function to4h(h1: Candle[]): Candle[] {
     }
   return out;
 }
+async function hyperliquid(coin: string, tf: TF): Promise<Candle[]> {
+  const step = TF_MS[tf] * 4000, now = Date.now();
+  const out = new Map<number, Candle>();
+  for (let start = Date.UTC(2024, 10, 1); start < now; start += step) {
+    const r = await fetch("https://api.hyperliquid.xyz/info", {
+      method: "POST", headers: { "content-type": "application/json" },
+      body: JSON.stringify({ type: "candleSnapshot", req: { coin, interval: tf, startTime: start, endTime: Math.min(start + step, now) } }),
+    });
+    const rows: any[] = r.ok ? await r.json() : [];
+    for (const x of rows) if (x.T < now) out.set(x.t, { t: x.t, o: +x.o, h: +x.h, l: +x.l, c: +x.c, v: +x.v });
+  }
+  return [...out.values()].sort((a, b) => a.t - b.t);
+}
 async function load(sym: string, crypto: boolean): Promise<Record<TF, Candle[]>> {
+  if (HYPERLIQUID[sym]) { const c = HYPERLIQUID[sym]; return { "1h": await hyperliquid(c, "1h"), "4h": await hyperliquid(c, "4h"), "1d": await hyperliquid(c, "1d") }; }
   if (crypto) return { "1h": await binance(sym, "1h", 8000), "4h": await binance(sym, "4h", 4000), "1d": await binance(sym, "1d", 2000) };
   const h1 = (await yahoo(sym, "60m", "730d")).filter((c) => c.t + H <= Date.now());
   return { "1h": h1, "4h": to4h(h1), "1d": (await yahoo(sym, "1d", "10y")).filter((c) => c.t + 20 * H < Date.now()) };
@@ -295,6 +310,110 @@ function backtestEMA(k: Candle[], dDir: number[], p: EMAParams): Trade[] {
   return trades;
 }
 
+// ═════════ Estrategias nuevas (investigación de traders) ═════════
+function sma(v: number[], p: number) { const o = new Array(v.length).fill(NaN); let s = 0; for (let i = 0; i < v.length; i++) { s += v[i]; if (i >= p) s -= v[i - p]; if (i >= p - 1) o[i] = s / p; } return o; }
+const pivH = (k: Candle[], i: number, n: number) => i >= n && i + n < k.length && Array.from({ length: n }, (_, d) => d + 1).every((d) => k[i].h >= k[i - d].h && k[i].h > k[i + d].h);
+const pivL = (k: Candle[], i: number, n: number) => i >= n && i + n < k.length && Array.from({ length: n }, (_, d) => d + 1).every((d) => k[i].l <= k[i - d].l && k[i].l < k[i + d].l);
+
+// Estructura diaria (máximos y mínimos crecientes / decrecientes), alineada sin mirar al futuro
+function dailyStructure(k: Candle[], tf: TF, daily: Candle[]): number[] {
+  const N = 2, dir: number[] = []; const hs: number[] = [], ls: number[] = [];
+  for (let i = 0; i < daily.length; i++) {
+    const j = i - N; // pivote confirmado N velas después
+    if (j >= N) { if (pivH(daily, j, N)) hs.push(daily[j].h); if (pivL(daily, j, N)) ls.push(daily[j].l); }
+    const up = hs.length >= 2 && ls.length >= 2 && hs.at(-1)! > hs.at(-2)! && ls.at(-1)! > ls.at(-2)!;
+    const dn = hs.length >= 2 && ls.length >= 2 && hs.at(-1)! < hs.at(-2)! && ls.at(-1)! < ls.at(-2)!;
+    dir.push(up ? 1 : dn ? -1 : 0);
+  }
+  if (tf === "1d") return dir;
+  return alignHtf(k, tf, daily, dir, "1d");
+}
+
+// N · Método Alex Ruiz (fractalidad): tendencia por estructura en diario; en la temporalidad operada,
+// tras un retroceso que deja un mínimo más alto (HL), entrar al romper el último máximo (BOS).
+// SL detrás del último giro. TP 1:3 (o 1:2 en la variante).
+type ARParams = { name: string; rr: number; n: number };
+const AR_VARIANTS: ARParams[] = [
+  { name: "N Alex Ruiz estructura 1:3", rr: 3, n: 2 },
+  { name: "O Alex Ruiz estructura 1:2", rr: 2, n: 2 },
+  { name: "P Alex Ruiz estructura 1:3, giros 3", rr: 3, n: 3 },
+];
+function backtestAR(k: Candle[], dDir: number[], p: ARParams): Trade[] {
+  const { atr } = atrAdx(k), trades: Trade[] = [];
+  const H: { i: number; v: number }[] = [], Lw: { i: number; v: number }[] = [];
+  let busyUntil = -1, usedH = -1, usedL = -1;
+  for (let i = 50; i < k.length - 1; i++) {
+    const j = i - p.n;
+    if (pivH(k, j, p.n)) H.push({ i: j, v: k[j].h });
+    if (pivL(k, j, p.n)) Lw.push({ i: j, v: k[j].l });
+    if (i <= busyUntil || H.length < 2 || Lw.length < 2) continue;
+    const a = atr[i], b = k[i], pv = k[i - 1];
+    // LONG: estructura alcista local (HL), cierre rompe el último máximo
+    const lh = H.at(-1)!, ll = Lw.at(-1)!, pl = Lw.at(-2)!, phh = H.at(-1)!, ph = H.at(-2)!;
+    let done = false;
+    if (dDir[i] === 1 && ll.v > pl.v && ll.i > lh.i && lh.i !== usedH && pv.c <= lh.v && b.c > lh.v) {
+      const sl = ll.v - 0.1 * a, risk = b.c - sl;
+      if (risk > 0.5 * a && risk < 4 * a) {
+        const sim = simulate(k, i, true, b.c, sl, p.rr, false);
+        if (!sim) break;
+        trades.push({ side: "LONG", r: sim.r - (FEE * b.c) / risk, bars: sim.n, t: b.t }); busyUntil = i + sim.n; usedH = lh.i; done = true;
+      }
+    }
+    // SHORT: máximo más bajo (LH), cierre rompe el último mínimo; SL sobre el último máximo
+    if (!done && dDir[i] === -1 && phh.v < ph.v && phh.i > ll.i && ll.i !== usedL && pv.c >= ll.v && b.c < ll.v) {
+      const sl = phh.v + 0.1 * a, risk = sl - b.c;
+      if (risk > 0.5 * a && risk < 4 * a) {
+        const sim = simulate(k, i, false, b.c, sl, p.rr, false);
+        if (!sim) break;
+        trades.push({ side: "SHORT", r: sim.r - (FEE * b.c) / risk, bars: sim.n, t: b.t }); busyUntil = i + sim.n; usedL = ll.i;
+      }
+    }
+  }
+  return trades;
+}
+
+// Q · RSI(2) de Larry Connors: en tendencia (precio vs SMA200), comprar cuando RSI(2) < 10
+// (vender si > 90 en bajista). Salida: cierre cruza la SMA5. Stop de protección 3 ATR. R = pnl / riesgo.
+// R · Donchian ("Tortugas"): cierre rompe máximo/mínimo de 20 velas a favor de la EMA200.
+// Stop inicial 2 ATR; salida por mínimo/máximo de 10 velas (stop que persigue al precio).
+type ExitParams = { name: string; kind: "rsi2" | "donchian"; shorts: boolean };
+const EXIT_VARIANTS: ExitParams[] = [
+  { name: "Q Connors RSI(2) solo LONG", kind: "rsi2", shorts: false },
+  { name: "R Connors RSI(2) LONG+SHORT", kind: "rsi2", shorts: true },
+  { name: "S Donchian 20/10 Tortugas", kind: "donchian", shorts: true },
+];
+function backtestExit(k: Candle[], p: ExitParams): Trade[] {
+  const c = k.map((x) => x.c), s200 = sma(c, 200), s5 = sma(c, 5), e200 = ema(c, 200), r2 = rsi(c, 2), { atr } = atrAdx(k);
+  const trades: Trade[] = [];
+  for (let i = 220; i < k.length - 1; i++) {
+    let L: boolean | null = null;
+    if (p.kind === "rsi2") {
+      if (c[i] > s200[i] && r2[i] < 10) L = true;
+      else if (p.shorts && c[i] < s200[i] && r2[i] > 90) L = false;
+    } else {
+      const hi = Math.max(...k.slice(i - 20, i).map((x) => x.h)), lo = Math.min(...k.slice(i - 20, i).map((x) => x.l));
+      if (c[i] > hi && c[i] > e200[i]) L = true;
+      else if (p.shorts && c[i] < lo && c[i] < e200[i]) L = false;
+    }
+    if (L === null) continue;
+    const entry = c[i], risk = (p.kind === "rsi2" ? 3 : 2) * atr[i];
+    let stop = L ? entry - risk : entry + risk, res = NaN, n = 0;
+    for (n = 1; n <= MAX_HOLD * 2 && i + n < k.length; n++) {
+      const x = k[i + n], m = i + n;
+      if (L ? x.l <= stop : x.h >= stop) { res = (L ? stop - entry : entry - stop) / risk; break; }
+      if (p.kind === "rsi2" && (L ? x.c > s5[m] : x.c < s5[m])) { res = (L ? x.c - entry : entry - x.c) / risk; break; }
+      if (p.kind === "donchian" && m >= 10) {
+        const t10 = L ? Math.min(...k.slice(m - 9, m + 1).map((y) => y.l)) : Math.max(...k.slice(m - 9, m + 1).map((y) => y.h));
+        stop = L ? Math.max(stop, t10) : Math.min(stop, t10);
+      }
+    }
+    if (isNaN(res)) { if (i + n >= k.length) break; res = (L ? c[i + n - 1] - entry : entry - c[i + n - 1]) / risk; }
+    trades.push({ side: L ? "LONG" : "SHORT", r: res - (FEE * entry) / risk, bars: n, t: k[i].t });
+    i += n;
+  }
+  return trades;
+}
+
 function stats(tr: Trade[]) {
   const n = tr.length, wins = tr.filter((t) => t.r > 0).length;
   const total = tr.reduce((s, t) => s + t.r, 0);
@@ -324,6 +443,9 @@ for (const [sym, crypto] of [...CRYPTO.map((s) => [s, true] as const), ...STOCKS
     for (const p of PA_VARIANTS) all[`${p.name}|${sym}|${tf}`] = backtestPA(k, dDir, p);
     const eDir = dailyTrendEMA(k, tf, data["1d"]);
     for (const p of EMA_VARIANTS) all[`${p.name}|${sym}|${tf}`] = backtestEMA(k, eDir, p);
+    const sDir = dailyStructure(k, tf, data["1d"]);
+    for (const p of AR_VARIANTS) all[`${p.name}|${sym}|${tf}`] = backtestAR(k, sDir, p);
+    for (const p of EXIT_VARIANTS) all[`${p.name}|${sym}|${tf}`] = backtestExit(k, p);
     cutoff[`${sym}|${tf}`] = k[Math.floor(k.length * 0.7)].t;
   }
   console.error("✓", sym);
@@ -335,7 +457,7 @@ const pickSplit = (f: (v: string, s: string, t: string) => boolean, oos: boolean
     const [, s, t] = key.split("|"); const c = cutoff[`${s}|${t}`];
     return v.filter((x) => (oos ? x.t >= c : x.t < c));
   });
-const NAMES = [...VARIANTS.map((p) => p.name), ...PA_VARIANTS.map((p) => p.name), ...EMA_VARIANTS.map((p) => p.name)];
+const NAMES = [...VARIANTS.map((p) => p.name), ...PA_VARIANTS.map((p) => p.name), ...EMA_VARIANTS.map((p) => p.name), ...AR_VARIANTS.map((p) => p.name), ...EXIT_VARIANTS.map((p) => p.name)];
 const out: string[] = [];
 out.push("HISTORIAL USADO", ...ranges, "");
 out.push("═══ RESUMEN POR VARIANTE (todos los activos y temporalidades) ═══", HEAD);
