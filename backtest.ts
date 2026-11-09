@@ -381,6 +381,7 @@ const EXIT_VARIANTS: ExitParams[] = [
   { name: "Q Connors RSI(2) solo LONG", kind: "rsi2", shorts: false },
   { name: "R Connors RSI(2) LONG+SHORT", kind: "rsi2", shorts: true },
   { name: "S Donchian 20/10 Tortugas", kind: "donchian", shorts: true },
+  { name: "S2 Donchian solo LONG", kind: "donchian", shorts: false },
 ];
 function backtestExit(k: Candle[], p: ExitParams): Trade[] {
   const c = k.map((x) => x.c), s200 = sma(c, 200), s5 = sma(c, 5), e200 = ema(c, 200), r2 = rsi(c, 2), { atr } = atrAdx(k);
@@ -410,6 +411,62 @@ function backtestExit(k: Candle[], p: ExitParams): Trade[] {
     if (isNaN(res)) { if (i + n >= k.length) break; res = (L ? c[i + n - 1] - entry : entry - c[i + n - 1]) / risk; }
     trades.push({ side: L ? "LONG" : "SHORT", r: res - (FEE * entry) / risk, bars: n, t: k[i].t });
     i += n;
+  }
+  return trades;
+}
+
+// ═════════ Estrategias de Larry Williams ═════════
+// Entradas con orden stop para la vela siguiente (se rellena si el precio llega; si abre más allá, al precio de apertura).
+// Salidas al estilo Williams: "primera apertura con ganancia" (bailout) o tras N velas, con stop de protección.
+type LWParams = { name: string; kind: "volbreak" | "smash" | "oops" | "wr"; shorts: boolean; k?: number };
+const LW_VARIANTS: LWParams[] = [
+  { name: "T Williams ruptura volatilidad 0.6", kind: "volbreak", shorts: false, k: 0.6 },
+  { name: "U Williams ruptura volatilidad L+S", kind: "volbreak", shorts: true, k: 0.6 },
+  { name: "V Williams Smash Day", kind: "smash", shorts: true },
+  { name: "W Williams Oops", kind: "oops", shorts: true },
+  { name: "X Williams %R en tendencia", kind: "wr", shorts: false },
+];
+function williamsR(k: Candle[], p: number) { return k.map((_, i) => { if (i < p - 1) return NaN; const s = k.slice(i - p + 1, i + 1); const hh = Math.max(...s.map((x) => x.h)), ll = Math.min(...s.map((x) => x.l)); return hh === ll ? -50 : (-100 * (hh - k[i].c)) / (hh - ll); }); }
+function backtestLW(k: Candle[], p: LWParams): Trade[] {
+  const c = k.map((x) => x.c), s200 = sma(c, 200), { atr } = atrAdx(k), wr = williamsR(k, 10);
+  const trades: Trade[] = [];
+  for (let i = 220; i < k.length - 2; i++) {
+    const b = k[i], pv = k[i - 1], nx = k[i + 1], rng = b.h - b.l;
+    const upT = c[i] > s200[i], dnT = c[i] < s200[i];
+    let L: boolean | null = null, trig = NaN, stop = NaN;
+    // señales calculadas al cierre de la vela i, ejecutadas en la vela i+1
+    if (p.kind === "volbreak") {
+      if (upT && nx.h >= nx.o + p.k! * rng) { L = true; trig = nx.o + p.k! * rng; stop = trig - rng; }
+      else if (p.shorts && dnT && nx.l <= nx.o - p.k! * rng) { L = false; trig = nx.o - p.k! * rng; stop = trig + rng; }
+    } else if (p.kind === "smash") {
+      const lowest3 = Math.min(...k.slice(i - 3, i).map((x) => x.l)), highest3 = Math.max(...k.slice(i - 3, i).map((x) => x.h));
+      if (upT && b.c < lowest3 && nx.h > b.h) { L = true; trig = b.h; stop = b.l; }
+      else if (p.shorts && dnT && b.c > highest3 && nx.l < b.l) { L = false; trig = b.l; stop = b.h; }
+    } else if (p.kind === "oops") {
+      if (nx.o < b.l && nx.h >= b.l) { L = true; trig = b.l; stop = nx.l; }
+      else if (p.shorts && nx.o > b.h && nx.l <= b.h) { L = false; trig = b.h; stop = nx.h; }
+    } else if (p.kind === "wr") {
+      if (upT && wr[i] < -90) { L = true; trig = c[i]; stop = c[i] - 3 * atr[i]; }
+    }
+    if (L === null) continue;
+    const fill = p.kind === "wr" ? trig : L ? Math.max(trig, nx.o) : Math.min(trig, nx.o);
+    const risk = Math.abs(fill - stop);
+    if (!(risk > 0.1 * atr[i])) continue;
+    const start = p.kind === "wr" ? i : i + 1; // vela de entrada
+    if (p.kind !== "wr" && (L ? nx.l <= stop && nx.c < fill : nx.h >= stop && nx.c > fill)) { trades.push({ side: L ? "LONG" : "SHORT", r: -1 - (FEE * fill) / risk, bars: 1, t: b.t }); i = i + 1; continue; }
+    let res = NaN, n = 0;
+    for (n = 1; n <= 10 && start + n < k.length; n++) {
+      const x = k[start + n];
+      // 1) primera apertura con ganancia (bailout de Williams)
+      if (p.kind !== "wr" && (L ? x.o > fill : x.o < fill)) { res = (L ? x.o - fill : fill - x.o) / risk; break; }
+      // 2) stop de protección
+      if (L ? x.l <= stop : x.h >= stop) { res = (L ? Math.min(stop, x.o) - fill : fill - Math.max(stop, x.o)) / risk; break; }
+      // 3) %R: salir cuando el oscilador sube a sobrecompra
+      if (p.kind === "wr" && wr[start + n] > -20) { res = (x.c - fill) / risk; break; }
+    }
+    if (isNaN(res)) { if (start + n >= k.length) break; const x = k[start + n - 1]; res = (L ? x.c - fill : fill - x.c) / risk; }
+    trades.push({ side: L ? "LONG" : "SHORT", r: res - (FEE * fill) / risk, bars: n, t: b.t });
+    i = start + n;
   }
   return trades;
 }
@@ -446,6 +503,7 @@ for (const [sym, crypto] of [...CRYPTO.map((s) => [s, true] as const), ...STOCKS
     const sDir = dailyStructure(k, tf, data["1d"]);
     for (const p of AR_VARIANTS) all[`${p.name}|${sym}|${tf}`] = backtestAR(k, sDir, p);
     for (const p of EXIT_VARIANTS) all[`${p.name}|${sym}|${tf}`] = backtestExit(k, p);
+    for (const p of LW_VARIANTS) all[`${p.name}|${sym}|${tf}`] = backtestLW(k, p);
     cutoff[`${sym}|${tf}`] = k[Math.floor(k.length * 0.7)].t;
   }
   console.error("✓", sym);
@@ -457,7 +515,7 @@ const pickSplit = (f: (v: string, s: string, t: string) => boolean, oos: boolean
     const [, s, t] = key.split("|"); const c = cutoff[`${s}|${t}`];
     return v.filter((x) => (oos ? x.t >= c : x.t < c));
   });
-const NAMES = [...VARIANTS.map((p) => p.name), ...PA_VARIANTS.map((p) => p.name), ...EMA_VARIANTS.map((p) => p.name), ...AR_VARIANTS.map((p) => p.name), ...EXIT_VARIANTS.map((p) => p.name)];
+const NAMES = [...VARIANTS.map((p) => p.name), ...PA_VARIANTS.map((p) => p.name), ...EMA_VARIANTS.map((p) => p.name), ...AR_VARIANTS.map((p) => p.name), ...EXIT_VARIANTS.map((p) => p.name), ...LW_VARIANTS.map((p) => p.name)];
 const out: string[] = [];
 out.push("HISTORIAL USADO", ...ranges, "");
 out.push("═══ RESUMEN POR VARIANTE (todos los activos y temporalidades) ═══", HEAD);

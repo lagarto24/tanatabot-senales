@@ -3,7 +3,7 @@
 //       bun signals.ts --report (resumen a Telegram) · --dry (prueba local) · --replay (verificación) · --sample (ejemplos)
 //
 // Estrategias elegidas por backtest con validación (70% historial / 30% datos no vistos):
-//   Donchian 20/10 (todas las temporalidades), RSI(2) Connors (acciones 1D), EMA 30/150/200 retroceso (1D).
+//   Donchian 20/10 solo LONG (todas), RSI(2) Connors (acciones 1D), EMA 30/150/200 retroceso solo LONG (1D).
 // Sigue las posiciones abiertas: avisa de mover el stop y de cerrar. NO es asesoría financiera.
 
 import { readFileSync, writeFileSync, existsSync } from "fs";
@@ -298,10 +298,10 @@ type Strat = "DON" | "RSI2" | "EMA";
 const STRAT_INFO: Record<Strat, { name: string; how: string; hist: (tf: TF) => string }> = {
   DON: {
     name: "Ruptura Donchian (método \"Tortugas\")",
-    how: "El precio rompe el máximo (o mínimo) de las últimas 20 velas a favor de la tendencia. Se deja correr la ganancia con un stop que va siguiendo al precio.",
+    how: "El precio rompe el máximo de las últimas 20 velas en tendencia alcista. Se deja correr la ganancia con un stop que va siguiendo al precio.",
     hist: (tf) => tf === "1d"
-      ? "En pruebas con años de historial: acierta ~40%, pero cada ganancia vale de media 2-3 veces cada pérdida."
-      : "En pruebas en 1h/4h la ventaja fue muy pequeña. Mejor para practicar.",
+      ? "En pruebas con años de historial (solo LONG): acierta ~45% y cada ganancia vale de media más de 2 veces cada pérdida. Ganó en los 11 activos."
+      : "En pruebas en 1h/4h (solo LONG): acierta ~35%, pero las ganancias compensan de sobra las pérdidas.",
   },
   RSI2: {
     name: "Rebote RSI(2) (método Larry Connors)",
@@ -333,7 +333,7 @@ function entryMessage(sym: string, tf: TF, e: Entry, isCrypto: boolean): string 
   return [
     `${L ? "🟢" : "🔴"} <b>${e.side}</b> ${L ? "📈" : "📉"} <b>${sym}</b> · gráfico de ${tfName(tf)} ${isCrypto ? "🪙" : "🏛"}`,
     L ? `<i>LONG = apostar a que el precio SUBE</i>` : `<i>SHORT = apostar a que el precio BAJA</i>`,
-    high ? `⭐ <b>ALTA CONFIANZA</b>` : `⚠️ <b>BAJA CONFIANZA</b> — mejor solo para practicar`,
+    high ? `⭐ <b>ALTA CONFIANZA</b>` : `🟡 <b>CONFIANZA MEDIA</b> — ventaja comprobada pero menor que en 1D`,
     `🧠 Estrategia: <b>${info.name}</b>`,
     ``,
     `<b>📋 QUÉ HACER</b>`,
@@ -397,7 +397,8 @@ function donchianEntry(k: Candle[], I: ReturnType<typeof ind>): Entry | null {
   const hi = Math.max(...k.slice(i - 20, i).map((x) => x.h)), lo = Math.min(...k.slice(i - 20, i).map((x) => x.l));
   const c = I.c[i], a = I.atr[i];
   if (c > hi && c > I.e200[i]) return { strat: "DON", side: "LONG", price: c, sl: c - 2 * a, t: k[i].t, reasons: [`Rompió el máximo de las últimas 20 velas (${fmt(hi)})`, `Tendencia alcista: precio sobre la EMA200`] };
-  if (c < lo && c < I.e200[i]) return { strat: "DON", side: "SHORT", price: c, sl: c + 2 * a, t: k[i].t, reasons: [`Rompió el mínimo de las últimas 20 velas (${fmt(lo)})`, `Tendencia bajista: precio bajo la EMA200`] };
+  // SHORT desactivado: en backtest los cortos de Donchian perdían (PF 0.78). Solo LONG.
+  //   if (c < lo && c < I.e200[i]) return { strat: "DON", side: "SHORT", price: c, sl: c + 2 * a, t: k[i].t, reasons: [`Rompió el mínimo de las últimas 20 velas (${fmt(lo)})`, `Tendencia bajista: precio bajo la EMA200`] };
   return null;
 }
 function rsi2Entry(k: Candle[], I: ReturnType<typeof ind>): Entry | null {
@@ -411,6 +412,7 @@ function emaEntry(k: Candle[]): Entry | null {
   const a = analyzeDaily(k);
   if (!a?.signal) return null;
   const s = a.signal;
+  if (s.side !== "LONG") return null; // en backtest los SHORT de la EMA perdían (PF 0.77)
   return { strat: "EMA", side: s.side, price: s.price, sl: s.sl, tp: s.tp, t: s.t, reasons: s.reasons };
 }
 
