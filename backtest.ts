@@ -471,6 +471,49 @@ function backtestLW(k: Candle[], p: LWParams): Trade[] {
   return trades;
 }
 
+// ═════════ Estrategias SHORT con filtro de mercado bajista ═════════
+// Régimen bajista diario: cierre < SMA200 y SMA50 < SMA200 (alineado sin mirar al futuro).
+function dailyBear(k: Candle[], tf: TF, daily: Candle[]): number[] {
+  const c = daily.map((x) => x.c), s50 = sma(c, 50), s200 = sma(c, 200);
+  const dir = daily.map((_, i) => (c[i] < s200[i] && s50[i] < s200[i] ? -1 : 0));
+  if (tf === "1d") return dir;
+  return alignHtf(k, tf, daily, dir, "1d");
+}
+type ShParams = { name: string; kind: "don-trail" | "don-tp" | "rsi2" | "pull"; rr?: number };
+const SH_VARIANTS: ShParams[] = [
+  { name: "SA SHORT Donchian bajista, stop móvil", kind: "don-trail" },
+  { name: "SB SHORT Donchian bajista, TP 1:2", kind: "don-tp", rr: 2 },
+  { name: "SC SHORT Donchian bajista, TP 1:1.5", kind: "don-tp", rr: 1.5 },
+  { name: "SD SHORT RSI(2) rebote fallido", kind: "rsi2" },
+  { name: "SE SHORT rebote a EMA20, TP 1:2", kind: "pull", rr: 2 },
+];
+function backtestShort(k: Candle[], bear: number[], p: ShParams): Trade[] {
+  const c = k.map((x) => x.c), s5 = sma(c, 5), e20 = ema(c, 20), e50 = ema(c, 50), r2 = rsi(c, 2), { atr } = atrAdx(k);
+  const trades: Trade[] = [];
+  for (let i = 220; i < k.length - 1; i++) {
+    if (bear[i] !== -1) continue;
+    const b = k[i];
+    let ok = false, risk = 2 * atr[i];
+    if (p.kind === "don-trail" || p.kind === "don-tp") ok = c[i] < Math.min(...k.slice(i - 20, i).map((x) => x.l));
+    else if (p.kind === "rsi2") { ok = r2[i] > 90; risk = 3 * atr[i]; }
+    else if (p.kind === "pull") ok = e20[i] < e50[i] && b.h >= e20[i] && b.c < e20[i] && b.c < b.o;
+    if (!ok) continue;
+    const entry = c[i]; let stop = entry + risk, res = NaN, n = 0;
+    const tp = p.rr ? entry - risk * p.rr : NaN;
+    for (n = 1; n <= MAX_HOLD && i + n < k.length; n++) {
+      const x = k[i + n], m = i + n;
+      if (x.h >= stop) { res = (entry - stop) / risk; break; }
+      if (!isNaN(tp) && x.l <= tp) { res = p.rr!; break; }
+      if (p.kind === "rsi2" && x.c < s5[m]) { res = (entry - x.c) / risk; break; }
+      if (p.kind === "don-trail" && m >= 10) stop = Math.min(stop, Math.max(...k.slice(m - 9, m + 1).map((y) => y.h)));
+    }
+    if (isNaN(res)) { if (i + n >= k.length) break; res = (entry - k[i + n - 1].c) / risk; }
+    trades.push({ side: "SHORT", r: res - (FEE * entry) / risk, bars: n, t: b.t });
+    i += n;
+  }
+  return trades;
+}
+
 function stats(tr: Trade[]) {
   const n = tr.length, wins = tr.filter((t) => t.r > 0).length;
   const total = tr.reduce((s, t) => s + t.r, 0);
@@ -504,6 +547,8 @@ for (const [sym, crypto] of [...CRYPTO.map((s) => [s, true] as const), ...STOCKS
     for (const p of AR_VARIANTS) all[`${p.name}|${sym}|${tf}`] = backtestAR(k, sDir, p);
     for (const p of EXIT_VARIANTS) all[`${p.name}|${sym}|${tf}`] = backtestExit(k, p);
     for (const p of LW_VARIANTS) all[`${p.name}|${sym}|${tf}`] = backtestLW(k, p);
+    const bear = dailyBear(k, tf, data["1d"]);
+    for (const p of SH_VARIANTS) all[`${p.name}|${sym}|${tf}`] = backtestShort(k, bear, p);
     cutoff[`${sym}|${tf}`] = k[Math.floor(k.length * 0.7)].t;
   }
   console.error("✓", sym);
@@ -515,7 +560,7 @@ const pickSplit = (f: (v: string, s: string, t: string) => boolean, oos: boolean
     const [, s, t] = key.split("|"); const c = cutoff[`${s}|${t}`];
     return v.filter((x) => (oos ? x.t >= c : x.t < c));
   });
-const NAMES = [...VARIANTS.map((p) => p.name), ...PA_VARIANTS.map((p) => p.name), ...EMA_VARIANTS.map((p) => p.name), ...AR_VARIANTS.map((p) => p.name), ...EXIT_VARIANTS.map((p) => p.name), ...LW_VARIANTS.map((p) => p.name)];
+const NAMES = [...VARIANTS.map((p) => p.name), ...PA_VARIANTS.map((p) => p.name), ...EMA_VARIANTS.map((p) => p.name), ...AR_VARIANTS.map((p) => p.name), ...EXIT_VARIANTS.map((p) => p.name), ...LW_VARIANTS.map((p) => p.name), ...SH_VARIANTS.map((p) => p.name)];
 const out: string[] = [];
 out.push("HISTORIAL USADO", ...ranges, "");
 out.push("═══ RESUMEN POR VARIANTE (todos los activos y temporalidades) ═══", HEAD);

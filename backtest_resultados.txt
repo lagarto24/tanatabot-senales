@@ -60,6 +60,11 @@ U Williams ruptura volatilidad L+S 23355   48.2%  -3456.5R  -0.15R  0.71 3573.6R
 V Williams Smash Day                2586   51.2%   -429.4R  -0.17R  0.61  448.3R
 W Williams Oops                     5257   41.1%    341.6R   0.06R  1.10  120.7R
 X Williams %R en tendencia          1593   52.2%    -15.6R  -0.01R  0.97   49.1R
+SA SHORT Donchian bajista, stop móvil   743   34.2%     -1.5R  -0.00R  1.00   74.1R
+SB SHORT Donchian bajista, TP 1:2    760   35.1%    -37.6R  -0.05R  0.93   84.5R
+SC SHORT Donchian bajista, TP 1:1.5   837   40.6%    -40.5R  -0.05R  0.92   75.5R
+SD SHORT RSI(2) rebote fallido      2401   59.4%   -125.6R  -0.05R  0.72  134.9R
+SE SHORT rebote a EMA20, TP 1:2      683   30.2%   -116.1R  -0.17R  0.76  116.1R
 
 ═══ 1H ═══
                                      ops acierto     total   media    PF   maxDD
@@ -88,6 +93,11 @@ U Williams ruptura volatilidad L+S 13229   42.6%  -3052.4R  -0.23R  0.59 3066.2R
 V Williams Smash Day                1422   45.3%   -293.4R  -0.21R  0.55  303.4R
 W Williams Oops                     1750   41.1%     51.4R   0.03R  1.05   61.9R
 X Williams %R en tendencia           864   49.3%    -57.3R  -0.07R  0.79   63.5R
+SA SHORT Donchian bajista, stop móvil   455   35.6%      0.6R   0.00R  1.00   35.3R
+SB SHORT Donchian bajista, TP 1:2    471   35.0%    -28.9R  -0.06R  0.91   58.1R
+SC SHORT Donchian bajista, TP 1:1.5   517   41.8%    -17.5R  -0.03R  0.94   50.8R
+SD SHORT RSI(2) rebote fallido      1495   57.7%   -106.2R  -0.07R  0.63  111.7R
+SE SHORT rebote a EMA20, TP 1:2      399   32.6%    -47.2R  -0.12R  0.83   52.9R
   — validación: 70% inicial vs 30% final (datos no vistos) —
 A actual (3 filtros, SL 1.5 ATR) · 70%  1222   34.7%    -68.3R  -0.06R  0.92   85.7R
 A actual (3 filtros, SL 1.5 ATR) · 30%   539   36.7%     -7.8R  -0.01R  0.98   44.0R
@@ -139,6 +149,16 @@ W Williams Oops · 70%               1185   43.0%     83.0R   0.07R  1.11   41.6
 W Williams Oops · 30%                565   37.3%    -31.5R  -0.06R  0.92   59.5R
 X Williams %R en tendencia · 70%     595   50.9%    -25.9R  -0.04R  0.86   33.8R
 X Williams %R en tendencia · 30%     269   45.7%    -31.4R  -0.12R  0.66   31.7R
+SA SHORT Donchian bajista, stop móvil · 70%   396   37.6%     13.1R   0.03R  1.06   28.0R
+SA SHORT Donchian bajista, stop móvil · 30%    59   22.0%    -12.5R  -0.21R  0.67   21.4R
+SB SHORT Donchian bajista, TP 1:2 · 70%   412   36.2%    -11.5R  -0.03R  0.96   41.4R
+SB SHORT Donchian bajista, TP 1:2 · 30%    59   27.1%    -17.4R  -0.29R  0.62   24.8R
+SC SHORT Donchian bajista, TP 1:1.5 · 70%   453   43.5%      5.7R   0.01R  1.02   31.8R
+SC SHORT Donchian bajista, TP 1:1.5 · 30%    64   29.7%    -23.3R  -0.36R  0.53   26.2R
+SD SHORT RSI(2) rebote fallido · 70%  1276   60.3%    -56.5R  -0.04R  0.75   63.9R
+SD SHORT RSI(2) rebote fallido · 30%   219   42.5%    -49.7R  -0.23R  0.27   51.2R
+SE SHORT rebote a EMA20, TP 1:2 · 70%   348   33.3%    -34.0R  -0.10R  0.86   47.3R
+SE SHORT rebote a EMA20, TP 1:2 · 30%    51   27.5%    -13.2R  -0.26R  0.66   14.9R
 
 ═══ 4H ═══
                                      ops acierto     total   media    PF   maxDD
@@ -167,6 +187,11 @@ U Williams ruptura volatilidad L+S  5702   51.8%   -427.2R  -0.07R  0.84  473.1R
 V Williams Smash Day                 526   50.8%   -114.1R  -0.22R  0.52  120.1R
 W Williams Oops                     1112   46.0%    214.8R   0.19R  1.34   35.5R
 X Williams %R en tendencia           380   51.8%      2.1R   0.01R  1.02   25.7R
+SA SHORT Donchian bajista, stop móvil   173   27.2%    -10.7R  -0.06R  0.89   28.8R
+SB SHORT Donchian bajista, TP 1:2    167   34.7%     -6.2R  -0.04R  0.94   27.4R
+SC SHORT Donchian bajista, TP 1:1.5   186   38.2%    -14.7R  -0.08R  0.87   28.1R
+SD SHORT RSI(2) rebote fallido       588   63.3%     -6.8R  -0.01R  0.93   12.1R
+SE SHORT rebote a EMA20, TP 1:2      152   27.0%    -34.8R  -0.23R  0.69   41.5R
   — validación: 70% inicial vs 30% final (datos no vistos) —
 A actual (3 filtros, SL 1.5 ATR) · 70%   474   37.6%     36.5R   0.08R  1.12   27.1R
 A actual (3 filtros, SL 1.5 ATR) · 30%   253   27.7%    -59.4R  -0.23R  0.69   61.4R
@@ -218,6 +243,16 @@ W Williams Oops · 70%                703   47.5%    194.1R   0.28R  1.50   22.5
 W Williams Oops · 30%                409   43.5%     20.7R   0.05R  1.09   35.5R
 X Williams %R en tendencia · 70%     243   53.1%      0.1R   0.00R  1.00   18.6R
 X Williams %R en tendencia · 30%     137   49.6%      2.0R   0.01R  1.06    8.7R
+SA SHORT Donchian bajista, stop móvil · 70%   112   25.0%    -17.1R  -0.15R  0.73   28.3R
+SA SHORT Donchian bajista, stop móvil · 30%    61   31.1%      6.5R   0.11R  1.19   10.2R
+SB SHORT Donchian bajista, TP 1:2 · 70%   106   34.0%     -6.5R  -0.06R  0.91   23.6R
+SB SHORT Donchian bajista, TP 1:2 · 30%    61   36.1%      0.3R   0.01R  1.01   15.8R
+SC SHORT Donchian bajista, TP 1:1.5 · 70%   119   36.1%    -14.0R  -0.12R  0.82   23.2R
+SC SHORT Donchian bajista, TP 1:1.5 · 30%    67   41.8%     -0.7R  -0.01R  0.98   12.9R
+SD SHORT RSI(2) rebote fallido · 70%   402   64.2%     -3.9R  -0.01R  0.94   13.1R
+SD SHORT RSI(2) rebote fallido · 30%   186   61.3%     -2.9R  -0.02R  0.92   10.3R
+SE SHORT rebote a EMA20, TP 1:2 · 70%   100   28.0%    -20.2R  -0.20R  0.72   31.8R
+SE SHORT rebote a EMA20, TP 1:2 · 30%    52   25.0%    -14.6R  -0.28R  0.64   19.7R
 
 ═══ 1D ═══
                                      ops acierto     total   media    PF   maxDD
@@ -246,6 +281,11 @@ U Williams ruptura volatilidad L+S  4424   60.4%     23.1R   0.01R  1.01   89.3R
 V Williams Smash Day                 638   64.7%    -21.9R  -0.03R  0.90   37.8R
 W Williams Oops                     2395   38.7%     75.4R   0.03R  1.04  120.7R
 X Williams %R en tendencia           349   59.9%     39.6R   0.11R  1.45   10.5R
+SA SHORT Donchian bajista, stop móvil   115   39.1%      8.6R   0.07R  1.16   21.2R
+SB SHORT Donchian bajista, TP 1:2    122   36.1%     -2.5R  -0.02R  0.97   24.9R
+SC SHORT Donchian bajista, TP 1:1.5   134   39.6%     -8.3R  -0.06R  0.90   27.1R
+SD SHORT RSI(2) rebote fallido       318   60.7%    -12.6R  -0.04R  0.79   21.7R
+SE SHORT rebote a EMA20, TP 1:2      132   26.5%    -34.2R  -0.26R  0.64   34.2R
   — validación: 70% inicial vs 30% final (datos no vistos) —
 A actual (3 filtros, SL 1.5 ATR) · 70%   410   39.0%     55.5R   0.14R  1.22   26.5R
 A actual (3 filtros, SL 1.5 ATR) · 30%   174   32.8%     -7.6R  -0.04R  0.94   21.7R
@@ -297,6 +337,16 @@ W Williams Oops · 70%               1655   39.8%     76.6R   0.05R  1.07  120.7
 W Williams Oops · 30%                740   36.1%     -1.2R  -0.00R  1.00   70.1R
 X Williams %R en tendencia · 70%     208   54.8%      8.3R   0.04R  1.14   10.5R
 X Williams %R en tendencia · 30%     141   67.4%     31.3R   0.22R  2.11    5.6R
+SA SHORT Donchian bajista, stop móvil · 70%    79   43.0%      8.7R   0.11R  1.25   10.1R
+SA SHORT Donchian bajista, stop móvil · 30%    36   30.6%     -0.1R  -0.00R  0.99   12.5R
+SB SHORT Donchian bajista, TP 1:2 · 70%    84   39.3%      5.7R   0.07R  1.11   17.2R
+SB SHORT Donchian bajista, TP 1:2 · 30%    38   28.9%     -8.2R  -0.22R  0.69   10.6R
+SC SHORT Donchian bajista, TP 1:1.5 · 70%    94   39.4%     -6.0R  -0.06R  0.90   19.8R
+SC SHORT Donchian bajista, TP 1:1.5 · 30%    40   40.0%     -2.3R  -0.06R  0.90    9.6R
+SD SHORT RSI(2) rebote fallido · 70%   215   59.5%     -7.5R  -0.04R  0.81   14.0R
+SD SHORT RSI(2) rebote fallido · 30%   103   63.1%     -5.1R  -0.05R  0.75    9.3R
+SE SHORT rebote a EMA20, TP 1:2 · 70%    89   24.7%    -26.2R  -0.29R  0.60   28.1R
+SE SHORT rebote a EMA20, TP 1:2 · 30%    43   30.2%     -8.0R  -0.19R  0.72   12.9R
 
 ═══ CRIPTO vs ACCIONES ═══
                                      ops acierto     total   media    PF   maxDD
@@ -350,6 +400,16 @@ W Williams Oops · cripto              38   21.1%    -20.7R  -0.54R  0.42   27.9
 W Williams Oops · acciones          5219   41.2%    362.3R   0.07R  1.11  120.7R
 X Williams %R en tendencia · cripto   728   50.1%    -32.1R  -0.04R  0.84   42.4R
 X Williams %R en tendencia · acciones   865   54.0%     16.5R   0.02R  1.06   21.1R
+SA SHORT Donchian bajista, stop móvil · cripto   589   34.0%      6.2R   0.01R  1.02   56.3R
+SA SHORT Donchian bajista, stop móvil · acciones   154   35.1%     -7.7R  -0.05R  0.90   22.6R
+SB SHORT Donchian bajista, TP 1:2 · cripto   599   35.6%    -30.1R  -0.05R  0.92   73.9R
+SB SHORT Donchian bajista, TP 1:2 · acciones   161   33.5%     -7.5R  -0.05R  0.93   22.5R
+SC SHORT Donchian bajista, TP 1:1.5 · cripto   659   41.4%    -24.2R  -0.04R  0.94   62.3R
+SC SHORT Donchian bajista, TP 1:1.5 · acciones   178   37.6%    -16.3R  -0.09R  0.86   25.0R
+SD SHORT RSI(2) rebote fallido · cripto  1916   61.5%    -82.9R  -0.04R  0.76   86.7R
+SD SHORT RSI(2) rebote fallido · acciones   485   51.1%    -42.8R  -0.09R  0.62   49.1R
+SE SHORT rebote a EMA20, TP 1:2 · cripto   539   31.7%    -71.1R  -0.13R  0.81   76.3R
+SE SHORT rebote a EMA20, TP 1:2 · acciones   144   24.3%    -45.0R  -0.31R  0.60   45.0R
 
 ═══ LONG vs SHORT ═══
                                      ops acierto     total   media    PF   maxDD
@@ -403,6 +463,16 @@ W Williams Oops · LONG              2107   42.9%    135.4R   0.06R  1.10   66.5
 W Williams Oops · SHORT             3150   39.8%    206.2R   0.07R  1.10  126.1R
 X Williams %R en tendencia · LONG   1593   52.2%    -15.6R  -0.01R  0.97   49.1R
 X Williams %R en tendencia · SHORT     0    0.0%      0.0R   0.00R  0.00    0.0R
+SA SHORT Donchian bajista, stop móvil · LONG     0    0.0%      0.0R   0.00R  0.00    0.0R
+SA SHORT Donchian bajista, stop móvil · SHORT   743   34.2%     -1.5R  -0.00R  1.00   74.1R
+SB SHORT Donchian bajista, TP 1:2 · LONG     0    0.0%      0.0R   0.00R  0.00    0.0R
+SB SHORT Donchian bajista, TP 1:2 · SHORT   760   35.1%    -37.6R  -0.05R  0.93   84.5R
+SC SHORT Donchian bajista, TP 1:1.5 · LONG     0    0.0%      0.0R   0.00R  0.00    0.0R
+SC SHORT Donchian bajista, TP 1:1.5 · SHORT   837   40.6%    -40.5R  -0.05R  0.92   75.5R
+SD SHORT RSI(2) rebote fallido · LONG     0    0.0%      0.0R   0.00R  0.00    0.0R
+SD SHORT RSI(2) rebote fallido · SHORT  2401   59.4%   -125.6R  -0.05R  0.72  134.9R
+SE SHORT rebote a EMA20, TP 1:2 · LONG     0    0.0%      0.0R   0.00R  0.00    0.0R
+SE SHORT rebote a EMA20, TP 1:2 · SHORT   683   30.2%   -116.1R  -0.17R  0.76  116.1R
 
 ═══ DETALLE: A actual (3 filtros, SL 1.5 ATR) ═══
                                      ops acierto     total   media    PF   maxDD
@@ -1303,3 +1373,183 @@ AMZN 1d                               41   58.5%      4.2R   0.10R  1.37    3.0R
 SPY 1h                                92   48.9%    -12.6R  -0.14R  0.66   12.6R
 SPY 4h                                34   82.4%     14.8R   0.44R  4.73    1.3R
 SPY 1d                                48   66.7%     10.9R   0.23R  1.86    2.4R
+
+═══ DETALLE: SA SHORT Donchian bajista, stop móvil ═══
+                                     ops acierto     total   media    PF   maxDD
+BTCUSDT 1h                            98   35.7%      6.8R   0.07R  1.13   11.7R
+BTCUSDT 4h                            28   28.6%      6.1R   0.22R  1.41    6.2R
+BTCUSDT 1d                            10   60.0%      8.4R   0.84R  4.39    1.3R
+ETHUSDT 1h                            90   37.8%      1.7R   0.02R  1.04    9.1R
+ETHUSDT 4h                            37   27.0%      4.2R   0.11R  1.20    7.3R
+ETHUSDT 1d                            13   23.1%      3.7R   0.29R  1.52    6.3R
+SOLUSDT 1h                           102   37.3%     -0.4R  -0.00R  0.99   10.9R
+SOLUSDT 4h                            45   20.0%     -7.1R  -0.16R  0.73   10.2R
+SOLUSDT 1d                            15   40.0%      2.4R   0.16R  1.39    4.2R
+HYPEUSDT 1h                            0    0.0%      0.0R   0.00R  0.00    0.0R
+HYPEUSDT 4h                           14   28.6%     -3.1R  -0.22R  0.52    3.1R
+HYPEUSDT 1d                            3   33.3%     -0.8R  -0.28R  0.55    1.9R
+BNBUSDT 1h                            91   34.1%     -8.7R  -0.10R  0.83   22.1R
+BNBUSDT 4h                            29   34.5%     -3.8R  -0.13R  0.74    5.2R
+BNBUSDT 1d                            14   35.7%     -3.1R  -0.22R  0.63    4.4R
+AAPL 1h                               15   26.7%     -4.6R  -0.31R  0.47    5.3R
+AAPL 4h                                5    0.0%     -4.9R  -0.99R  0.00    4.9R
+AAPL 1d                                8   37.5%     -3.0R  -0.38R  0.40    4.1R
+TSLA 1h                               28   32.1%      1.7R   0.06R  1.11    6.1R
+TSLA 4h                                6   16.7%     -1.6R  -0.26R  0.69    3.1R
+TSLA 1d                               17   35.3%     -1.3R  -0.08R  0.82    3.0R
+NVDA 1h                                4   75.0%      2.0R   0.50R  2.94    1.0R
+NVDA 4h                                1  100.0%      0.0R   0.05R 99.00    0.0R
+NVDA 1d                               10   30.0%      0.0R   0.00R  1.01    2.3R
+MSFT 1h                               22   36.4%      5.3R   0.24R  1.52    2.9R
+MSFT 4h                                7   57.1%      0.5R   0.07R  1.17    1.7R
+MSFT 1d                               12   41.7%     -2.1R  -0.18R  0.65    4.1R
+AMZN 1h                                4    0.0%     -3.0R  -0.75R  0.00    3.0R
+AMZN 4h                                1    0.0%     -1.0R  -1.03R  0.00    1.0R
+AMZN 1d                                8   37.5%      1.6R   0.21R  1.40    2.7R
+SPY 1h                                 1    0.0%     -0.3R  -0.28R  0.00    0.3R
+SPY 4h                                 0    0.0%      0.0R   0.00R  0.00    0.0R
+SPY 1d                                 5   80.0%      2.8R   0.56R  4.34    0.8R
+
+═══ DETALLE: SB SHORT Donchian bajista, TP 1:2 ═══
+                                     ops acierto     total   media    PF   maxDD
+BTCUSDT 1h                           108   35.2%     -8.2R  -0.08R  0.89   21.0R
+BTCUSDT 4h                            27   44.4%      7.9R   0.29R  1.51    5.3R
+BTCUSDT 1d                            12   58.3%      5.2R   0.44R  2.18    1.4R
+ETHUSDT 1h                            89   39.3%      2.3R   0.03R  1.04    8.7R
+ETHUSDT 4h                            40   35.0%     -1.7R  -0.04R  0.94   10.3R
+ETHUSDT 1d                            16   25.0%     -4.1R  -0.26R  0.66    9.1R
+SOLUSDT 1h                           102   36.3%     -4.8R  -0.05R  0.93   13.5R
+SOLUSDT 4h                            40   35.0%     -0.7R  -0.02R  0.97    8.5R
+SOLUSDT 1d                            16   31.3%     -3.5R  -0.22R  0.68    8.1R
+HYPEUSDT 1h                            0    0.0%      0.0R   0.00R  0.00    0.0R
+HYPEUSDT 4h                           11   27.3%     -4.4R  -0.40R  0.41    4.4R
+HYPEUSDT 1d                            2   50.0%      0.8R   0.39R  1.78    1.0R
+BNBUSDT 1h                            96   30.2%    -17.3R  -0.18R  0.76   25.2R
+BNBUSDT 4h                            27   33.3%     -2.0R  -0.07R  0.89    7.6R
+BNBUSDT 1d                            13   38.5%      0.4R   0.03R  1.05    4.1R
+AAPL 1h                               13   23.1%     -5.6R  -0.43R  0.47    6.5R
+AAPL 4h                                5    0.0%     -5.1R  -1.03R  0.00    5.1R
+AAPL 1d                                9   11.1%     -6.2R  -0.69R  0.24    6.2R
+TSLA 1h                               29   27.6%     -5.6R  -0.19R  0.74    9.2R
+TSLA 4h                                7   14.3%     -4.1R  -0.59R  0.32    4.1R
+TSLA 1d                               18   33.3%     -0.2R  -0.01R  0.99    3.1R
+NVDA 1h                                5   60.0%      3.9R   0.77R  2.88    2.1R
+NVDA 4h                                1  100.0%      2.0R   1.98R 99.00    0.0R
+NVDA 1d                                9   44.4%      1.2R   0.13R  1.23    3.0R
+MSFT 1h                               24   50.0%     11.7R   0.49R  2.01    4.2R
+MSFT 4h                                8   50.0%      3.0R   0.38R  1.74    2.1R
+MSFT 1d                               11   45.5%      3.8R   0.34R  1.62    2.1R
+AMZN 1h                                4    0.0%     -4.2R  -1.05R  0.00    4.2R
+AMZN 4h                                1    0.0%     -1.0R  -1.03R  0.00    1.0R
+AMZN 1d                                9   33.3%     -1.7R  -0.19R  0.71    3.0R
+SPY 1h                                 1    0.0%     -1.0R  -1.05R  0.00    1.0R
+SPY 4h                                 0    0.0%      0.0R   0.00R  0.00    0.0R
+SPY 1d                                 7   42.9%      1.8R   0.26R  1.45    2.1R
+
+═══ DETALLE: SC SHORT Donchian bajista, TP 1:1.5 ═══
+                                     ops acierto     total   media    PF   maxDD
+BTCUSDT 1h                           115   41.7%     -7.4R  -0.06R  0.90   16.3R
+BTCUSDT 4h                            36   38.9%     -2.4R  -0.07R  0.90    7.8R
+BTCUSDT 1d                            12   58.3%      3.8R   0.31R  1.85    1.4R
+ETHUSDT 1h                            98   41.8%     -2.0R  -0.02R  0.97   18.7R
+ETHUSDT 4h                            41   36.6%     -4.1R  -0.10R  0.84   11.2R
+ETHUSDT 1d                            17   35.3%     -2.1R  -0.13R  0.81    9.1R
+SOLUSDT 1h                           113   41.6%     -4.5R  -0.04R  0.94   12.8R
+SOLUSDT 4h                            45   40.0%     -0.2R  -0.00R  0.99    6.7R
+SOLUSDT 1d                            16   50.0%      2.5R   0.16R  1.31    4.0R
+HYPEUSDT 1h                            0    0.0%      0.0R   0.00R  0.00    0.0R
+HYPEUSDT 4h                           13   46.2%      1.0R   0.07R  1.14    3.7R
+HYPEUSDT 1d                            3   33.3%     -0.5R  -0.17R  0.74    2.0R
+BNBUSDT 1h                           107   42.1%     -4.2R  -0.04R  0.94   16.1R
+BNBUSDT 4h                            28   42.9%     -0.4R  -0.01R  0.98    5.7R
+BNBUSDT 1d                            15   33.3%     -3.6R  -0.24R  0.64    5.6R
+AAPL 1h                               15   33.3%     -3.4R  -0.23R  0.67    4.1R
+AAPL 4h                                5    0.0%     -5.1R  -1.03R  0.00    5.1R
+AAPL 1d                                9   11.1%     -6.7R  -0.74R  0.18    6.7R
+TSLA 1h                               31   38.7%     -2.1R  -0.07R  0.89    7.2R
+TSLA 4h                                7   14.3%     -4.6R  -0.66R  0.24    4.6R
+TSLA 1d                               21   33.3%     -3.7R  -0.18R  0.74    4.6R
+NVDA 1h                                6   50.0%      1.3R   0.22R  1.43    2.1R
+NVDA 4h                                1  100.0%      1.5R   1.48R 99.00    0.0R
+NVDA 1d                               10   50.0%      1.2R   0.12R  1.23    3.0R
+MSFT 1h                               27   51.9%      7.5R   0.28R  1.60    4.2R
+MSFT 4h                                9   44.4%      0.7R   0.08R  1.14    2.1R
+MSFT 1d                               13   46.2%      1.8R   0.14R  1.25    3.2R
+AMZN 1h                                4    0.0%     -4.2R  -1.05R  0.00    4.2R
+AMZN 4h                                1    0.0%     -1.0R  -1.03R  0.00    1.0R
+AMZN 1d                               11   27.3%     -3.6R  -0.33R  0.55    3.6R
+SPY 1h                                 1  100.0%      1.5R   1.45R 99.00    0.0R
+SPY 4h                                 0    0.0%      0.0R   0.00R  0.00    0.0R
+SPY 1d                                 7   57.1%      2.8R   0.40R  1.92    2.0R
+
+═══ DETALLE: SD SHORT RSI(2) rebote fallido ═══
+                                     ops acierto     total   media    PF   maxDD
+BTCUSDT 1h                           322   59.6%    -22.5R  -0.07R  0.63   22.5R
+BTCUSDT 4h                            99   65.7%      2.1R   0.02R  1.16    3.0R
+BTCUSDT 1d                            39   64.1%      1.3R   0.03R  1.24    2.4R
+ETHUSDT 1h                           302   58.6%    -21.3R  -0.07R  0.63   21.9R
+ETHUSDT 4h                           145   72.4%      3.3R   0.02R  1.15    3.5R
+ETHUSDT 1d                            43   60.5%     -4.2R  -0.10R  0.56    4.4R
+SOLUSDT 1h                           324   62.7%    -10.9R  -0.03R  0.80   16.5R
+SOLUSDT 4h                           135   59.3%     -1.1R  -0.01R  0.95    7.5R
+SOLUSDT 1d                            45   60.0%     -1.1R  -0.02R  0.84    2.7R
+HYPEUSDT 1h                            0    0.0%      0.0R   0.00R  0.00    0.0R
+HYPEUSDT 4h                           38   63.2%     -2.0R  -0.05R  0.73    3.5R
+HYPEUSDT 1d                            4   50.0%     -0.7R  -0.17R  0.33    1.0R
+BNBUSDT 1h                           280   57.9%    -22.0R  -0.08R  0.61   24.1R
+BNBUSDT 4h                            98   66.3%     -1.1R  -0.01R  0.93    4.3R
+BNBUSDT 1d                            42   61.9%     -2.6R  -0.06R  0.68    4.3R
+AAPL 1h                               45   44.4%     -5.4R  -0.12R  0.52    6.6R
+AAPL 4h                               10   30.0%     -1.4R  -0.14R  0.26    1.7R
+AAPL 1d                               19   63.2%     -1.1R  -0.06R  0.71    1.3R
+TSLA 1h                              109   54.1%     -8.3R  -0.08R  0.64   13.4R
+TSLA 4h                               25   36.0%     -5.6R  -0.22R  0.40    8.3R
+TSLA 1d                               43   62.8%     -3.1R  -0.07R  0.71    6.5R
+NVDA 1h                               16   37.5%     -2.1R  -0.13R  0.34    2.1R
+NVDA 4h                                5   60.0%      0.1R   0.03R  1.11    1.1R
+NVDA 1d                               20   50.0%     -1.6R  -0.08R  0.61    2.1R
+MSFT 1h                               70   44.3%    -10.8R  -0.15R  0.38   11.6R
+MSFT 4h                               24   62.5%      1.3R   0.05R  1.24    2.1R
+MSFT 1d                               22   77.3%      3.8R   0.17R  2.69    1.0R
+AMZN 1h                               19   47.4%     -2.9R  -0.15R  0.49    3.3R
+AMZN 4h                                6   33.3%     -1.8R  -0.30R  0.20    1.8R
+AMZN 1d                               22   45.5%     -4.1R  -0.19R  0.41    4.1R
+SPY 1h                                 8   37.5%     -0.0R  -0.00R  0.98    1.3R
+SPY 4h                                 3   33.3%     -0.6R  -0.19R  0.27    0.6R
+SPY 1d                                19   57.9%      0.7R   0.03R  1.37    1.3R
+
+═══ DETALLE: SE SHORT rebote a EMA20, TP 1:2 ═══
+                                     ops acierto     total   media    PF   maxDD
+BTCUSDT 1h                            84   39.3%      5.0R   0.06R  1.09    6.6R
+BTCUSDT 4h                            28   28.6%     -4.1R  -0.15R  0.79    5.4R
+BTCUSDT 1d                            17   29.4%     -3.6R  -0.21R  0.70    5.1R
+ETHUSDT 1h                            83   30.1%    -14.0R  -0.17R  0.75   14.0R
+ETHUSDT 4h                            34   35.3%     -3.5R  -0.10R  0.84    8.0R
+ETHUSDT 1d                            17   23.5%     -5.3R  -0.31R  0.56    5.3R
+SOLUSDT 1h                            90   32.2%     -8.4R  -0.09R  0.86   15.1R
+SOLUSDT 4h                            38   21.1%    -13.6R  -0.36R  0.54   13.8R
+SOLUSDT 1d                            20   20.0%    -10.1R  -0.50R  0.38   10.1R
+HYPEUSDT 1h                            0    0.0%      0.0R   0.00R  0.00    0.0R
+HYPEUSDT 4h                           13   30.8%     -1.2R  -0.09R  0.87    4.2R
+HYPEUSDT 1d                            1  100.0%      2.0R   1.99R 99.00    0.0R
+BNBUSDT 1h                            80   35.0%     -9.4R  -0.12R  0.83   13.1R
+BNBUSDT 4h                            19   26.3%     -3.8R  -0.20R  0.72    8.5R
+BNBUSDT 1d                            15   33.3%     -1.0R  -0.07R  0.88    6.8R
+AAPL 1h                                9   11.1%     -7.0R  -0.77R  0.18    7.4R
+AAPL 4h                                2    0.0%     -2.0R  -1.02R  0.00    2.0R
+AAPL 1d                                7   28.6%     -2.4R  -0.34R  0.46    2.4R
+TSLA 1h                               23   26.1%     -5.9R  -0.26R  0.67    7.7R
+TSLA 4h                                4   25.0%     -1.1R  -0.27R  0.65    2.0R
+TSLA 1d                               19   31.6%     -1.2R  -0.06R  0.91    4.0R
+NVDA 1h                                4   25.0%     -1.1R  -0.27R  0.64    3.1R
+NVDA 4h                                3   33.3%     -0.0R  -0.01R  0.98    2.0R
+NVDA 1d                                5   20.0%     -2.0R  -0.41R  0.49    2.0R
+MSFT 1h                               23   30.4%     -3.3R  -0.14R  0.81    6.8R
+MSFT 4h                                8   25.0%     -2.2R  -0.28R  0.64    4.2R
+MSFT 1d                               10   30.0%     -1.2R  -0.12R  0.83    4.1R
+AMZN 1h                                2    0.0%     -2.1R  -1.06R  0.00    2.1R
+AMZN 4h                                2    0.0%     -2.1R  -1.03R  0.00    2.1R
+AMZN 1d                               13   15.4%     -7.2R  -0.55R  0.36    7.2R
+SPY 1h                                 1    0.0%     -1.1R  -1.05R  0.00    1.1R
+SPY 4h                                 1    0.0%     -1.0R  -1.02R  0.00    1.0R
+SPY 1d                                 8   25.0%     -2.2R  -0.27R  0.65    5.1R
