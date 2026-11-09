@@ -285,6 +285,7 @@ function analyzeDaily(k: Candle[]): { signal: Signal | null; reading: Reading } 
 const analyzeFor = (tf: TF, k: Candle[]) => (tf === "1d" ? analyzeDaily(k) : analyze(k));
 
 // ───────────── Formato ─────────────
+const TF_MS_MSG: Record<TF, number> = { "1h": 3600_000, "4h": 4 * 3600_000, "1d": 24 * 3600_000 };
 const fmt = (n: number) => (n >= 1000 ? n.toFixed(2) : n >= 1 ? n.toFixed(n >= 100 ? 2 : 3) : n.toPrecision(4));
 const pct = (a: number, b: number) => `${(((a - b) / b) * 100).toFixed(2)}%`;
 
@@ -297,7 +298,8 @@ function message(sym: string, tf: TF, s: Signal, isCrypto: boolean): string {
       ? `⭐ <b>ALTA CONFIANZA</b> — estrategia validada en backtest (EMA 30/150/200)`
       : `⚠️ <b>BAJA CONFIANZA</b> — en backtest 1h/4h no mostró ventaja; opera con cautela`,
     ``,
-    `💵 Entrada: <b>${fmt(s.price)}</b>`,
+    `💵 Entrada: <b>${fmt(s.price)} ${isCrypto ? "USDT" : "USD"}</b>${isCrypto ? "" : " (bolsa EE.UU.)"}`,
+    `🕒 Vela cerrada: ${new Date(s.t + TF_MS_MSG[tf]).toLocaleString("es-ES", { timeZone: "Europe/Madrid", day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" })} (hora España)`,
     `🛑 Stop loss: <b>${fmt(s.sl)}</b> (${pct(s.sl, s.price)})`,
     `🎯 Take profit: <b>${fmt(s.tp)}</b> (${pct(s.tp, s.price)})`,
     `⚖️ Riesgo/beneficio: <b>1:${TP_R}</b>`,
