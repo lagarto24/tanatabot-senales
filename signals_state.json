@@ -18,8 +18,8 @@
       "sym": "BTCUSDT",
       "tf": "1d",
       "isCrypto": true,
-      "lastBar": 1794096000000,
-      "bars": 0,
+      "lastBar": 1794182400000,
+      "bars": 1,
       "stop": 79439.20686299259
     },
     "DON|ETHUSDT|1d": {
@@ -35,8 +35,8 @@
       "sym": "ETHUSDT",
       "tf": "1d",
       "isCrypto": true,
-      "lastBar": 1794096000000,
-      "bars": 0,
+      "lastBar": 1794182400000,
+      "bars": 1,
       "stop": 2326.1114526282004
     },
     "DON|SOLUSDT|1d": {
@@ -52,8 +52,8 @@
       "sym": "SOLUSDT",
       "tf": "1d",
       "isCrypto": true,
-      "lastBar": 1794096000000,
-      "bars": 0,
+      "lastBar": 1794182400000,
+      "bars": 1,
       "stop": 95.55796669862076
     }
   }
