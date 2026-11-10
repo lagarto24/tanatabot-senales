@@ -12,7 +12,7 @@ const H = 3600_000;
 const TF_MS: Record<TF, number> = { "1h": H, "4h": 4 * H, "1d": 24 * H };
 const HTF: Record<TF, TF | null> = { "1h": "4h", "4h": "1d", "1d": null };
 
-const CRYPTO = ["BTCUSDT", "ETHUSDT", "SOLUSDT", "HYPEUSDT", "BNBUSDT"];
+const CRYPTO = ["BTCUSDT", "ETHUSDT", "SOLUSDT", "HYPEUSDT", "BNBUSDT", "DOGEUSDT"];
 const HYPERLIQUID: Record<string, string> = { HYPEUSDT: "HYPE" };
 const STOCKS = ["AAPL", "TSLA", "NVDA", "MSFT", "AMZN", "SPY"];
 const TFS: TF[] = ["1h", "4h", "1d"];
@@ -584,7 +584,9 @@ const DATA: Record<string, Record<TF, Candle[]>> = {};
 const all: Record<string, Trade[]> = {}; // clave: variante|sym|tf
 const cutoff: Record<string, number> = {}; // 70% inicial = "entrenamiento", 30% final = "prueba"
 const ranges: string[] = [];
+const RUNSYMS = process.env.ONLY ? [process.env.ONLY] : null;
 for (const [sym, crypto] of [...CRYPTO.map((s) => [s, true] as const), ...STOCKS.map((s) => [s, false] as const)]) {
+  if (RUNSYMS && !RUNSYMS.includes(sym)) continue;
   let data: Record<TF, Candle[]>;
   try { data = await load(sym, crypto); DATA[sym] = data; } catch (e) { console.error(sym, "error de datos:", (e as Error).message); continue; }
   for (const tf of TFS) {
@@ -663,6 +665,11 @@ if (process.env.STRESS) {
   ];
   const numKeys = (P: LVParams) => Object.fromEntries(Object.entries(P).filter(([kk, v]) => typeof v === "number" && kk !== "rr")) as Record<string, number>;
   const specs: Spec[] = [
+    ...(process.env.ONLY ? [
+      { name: "DOGE Donchian 1d TP 3R", tfs: ["1d"] as TF[], syms: [process.env.ONLY], params: { n: 20, sl: 2 }, run: (k: Candle[], _t: TF, _s: string, P: Record<string, number>) => backtestExit(k, { name: "", kind: "donchian", shorts: false, n: P.n, sl: P.sl, trail: 9999, tp: 3 }) },
+      { name: "DOGE EMA retroceso 1d", tfs: ["1d"] as TF[], syms: [process.env.ONLY], params: { sl: 2 }, run: (k: Candle[], tf: TF, s: string, P: Record<string, number>) => backtestEMA(k, dailyTrendEMA(k, tf, DATA[s]["1d"]), { name: "", entry: "pullback", partial: false, slAtr: P.sl }).filter((t) => t.side === "LONG") },
+      { name: "DOGE Rango LONG 4h", tfs: ["4h"] as TF[], syms: [process.env.ONLY], params: { sl: 1.5 }, run: (k: Candle[], _t: TF, _s: string, P: Record<string, number>) => backtestLV(k, { kind: "range", side: "L", rr: 1.5, sl: P.sl }) },
+    ] : []),
     ...LV.flatMap(([nm, P]) => (["1h", "4h"] as TF[]).map((tf): Spec => ({ name: `BAJA VOL ${nm} ${tf}`, tfs: [tf], syms: ALL, params: numKeys(P), run: (k, _t, _s, Q) => backtestLV(k, { ...P, ...Q }) }))),
     ...[1.5, 2, 3].map((tp): Spec => ({ name: `Donchian LONG 1d TP fijo ${tp}R`, tfs: ["1d"], syms: ALL, params: { n: 20, sl: 2 }, run: (k, _t, _s, P) => backtestExit(k, { name: "", kind: "donchian", shorts: false, n: P.n, sl: P.sl, trail: 9999, tp }) })),
     ...[1, 1.5, 2].map((tp): Spec => ({ name: `RSI(2) LONG 1d TP fijo ${tp}R`, tfs: ["1d"], syms: STOCKS, params: { th: 10, sl: 1.5 }, run: (k, _t, _s, P) => backtestExit(k, { name: "", kind: "rsi2", shorts: false, th: P.th, sl: P.sl, ex: 99999, tp }) })),
@@ -686,7 +693,7 @@ if (process.env.STRESS) {
   }));
   const fmtS = (s: ReturnType<typeof stats>) => `${s.n} ops, PF ${s.pf.toFixed(2)}, neto ${s.total.toFixed(1)}R, caída ${s.dd.toFixed(1)}R`;
   const rep: string[] = ["", "════════ PRUEBA DE ESTRÉS ════════"];
-  for (const sp of specs) {
+  for (const sp of (process.env.ONLY ? specs.filter((s) => s.name.startsWith("DOGE")) : specs)) {
     const base = runSpec(sp, sp.params), b = stats(base);
     const fails = (s: ReturnType<typeof stats>) => s.pf < 1 || s.dd > 2 * b.dd;
     rep.push("", `■ ${sp.name} — base: ${fmtS(b)}`);
