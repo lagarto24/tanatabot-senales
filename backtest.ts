@@ -632,6 +632,39 @@ function backtestFund(k: Candle[], f: { t: number; r: number }[], p: FundParams)
   return trades;
 }
 
+// ═════════ Barrido de liquidez (lógica de los mapas de calor de liquidaciones) ═════════
+// Las zonas de liquidez están justo encima de máximos y debajo de mínimos recientes (giros confirmados).
+// Señal: la vela perfora esa zona pero CIERRA de vuelta dentro → entrada en contra del barrido.
+type LiqParams = { name: string; side: "L" | "S" | "LS"; trend: boolean; rr: number; n?: number; look?: number; target?: boolean };
+function backtestLiq(k: Candle[], p: LiqParams): Trade[] {
+  const c = k.map((x) => x.c), e200 = ema(c, 200), { atr } = atrAdx(k), trades: Trade[] = [], N = p.n ?? 3, look = p.look ?? 50;
+  const isH = (j: number) => [...Array(N)].every((_, d) => k[j].h >= k[j - d - 1].h && k[j].h > k[j + d + 1].h);
+  const isL = (j: number) => [...Array(N)].every((_, d) => k[j].l <= k[j - d - 1].l && k[j].l < k[j + d + 1].l);
+  for (let i = 220; i < k.length - 1; i++) {
+    const b = k[i], a = atr[i];
+    // giros confirmados (j + N < i) en la ventana
+    let pl = NaN, ph = NaN, nextH = NaN, nextL = NaN;
+    for (let j = i - N - 1; j >= i - look; j--) {
+      if (isNaN(pl) && isL(j) && k[j].l < Math.min(...k.slice(j + 1, i).map((x) => x.l))) pl = k[j].l;
+      if (isNaN(ph) && isH(j) && k[j].h > Math.max(...k.slice(j + 1, i).map((x) => x.h))) ph = k[j].h;
+      if (!isNaN(pl) && !isNaN(ph)) break;
+    }
+    let L: boolean | null = null, sl = NaN;
+    if (p.side !== "S" && !isNaN(pl) && b.l < pl && b.c > pl && (!p.trend || c[i] > e200[i])) { L = true; sl = b.l - 0.1 * a; }
+    else if (p.side !== "L" && !isNaN(ph) && b.h > ph && b.c < ph && (!p.trend || c[i] < e200[i])) { L = false; sl = b.h + 0.1 * a; }
+    if (L === null) continue;
+    const entry = c[i], risk = Math.abs(entry - sl);
+    if (!(risk > 0.3 * a && risk < 3 * a)) continue;
+    let rr = p.rr;
+    if (p.target) { const tgt = L ? ph : pl; if (isNaN(tgt)) continue; rr = Math.abs(tgt - entry) / risk; if (rr < 1.5) continue; }
+    const sim = simulate(k, i, L, entry, sl, rr, false);
+    if (!sim) break;
+    trades.push({ side: L ? "LONG" : "SHORT", r: sim.r - (FEE * entry) / risk, bars: sim.n, t: b.t });
+    i += sim.n;
+  }
+  return trades;
+}
+
 function stats(tr: Trade[]) {
   const n = tr.length, wins = tr.filter((t) => t.r > 0).length;
   const total = tr.reduce((s, t) => s + t.r, 0);
@@ -738,7 +771,16 @@ if (process.env.STRESS) {
     { name: "contrario LONG en tendencia 10%", side: "L", pct: 0.1, trend: true, rr: 2, sl: 2 },
     { name: "contrario 5% TP 1:1.5", side: "LS", pct: 0.05, trend: false, rr: 1.5, sl: 2 },
   ];
+  const LQ: LiqParams[] = [
+    { name: "barrido LONG+SHORT 1:2", side: "LS", trend: false, rr: 2 },
+    { name: "barrido LONG 1:2", side: "L", trend: false, rr: 2 },
+    { name: "barrido SHORT 1:2", side: "S", trend: false, rr: 2 },
+    { name: "barrido a favor de tendencia 1:2", side: "LS", trend: true, rr: 2 },
+    { name: "barrido hacia la liquidez opuesta", side: "LS", trend: false, rr: 2, target: true },
+    { name: "barrido LONG en tendencia 1:3", side: "L", trend: true, rr: 3 },
+  ];
   const specs: Spec[] = [
+    ...(process.env.LIQ ? LQ.flatMap((P) => (["4h", "1d"] as TF[]).map((tf): Spec => ({ name: `LIQ ${P.name} ${tf}`, tfs: [tf], syms: process.env.ONLY!.split(","), params: { n: 3, look: 50 }, run: (k: Candle[], _t: TF, _s: string, Q: Record<string, number>) => backtestLiq(k, { ...P, ...Q }) }))) : []),
     ...(process.env.FUND ? FV.map((P): Spec => ({ name: `FUND ${P.name} 4h`, tfs: ["4h"], syms: process.env.ONLY!.split(","), params: { sl: P.sl, pct: P.pct }, run: (k: Candle[], _t: TF, s: string, Q: Record<string, number>) => backtestFund(k, FUNDING[s] ?? [], { ...P, ...Q }) })) : []),
     ...(process.env.PCT ? (["don", "ema", "rng", "sq"] as const).flatMap((kind) => (["L", "S"] as const).flatMap((side) => [[2, 1], [3, 1.5], [4, 2]].map(([tp, sl]): Spec => ({ name: `PCT ${kind} ${side === "L" ? "LONG" : "SHORT"} TP${tp}% SL${sl}%`, tfs: ["4h"], syms: ["BTCUSDT", "HYPEUSDT", "SOLUSDT"], params: kind === "don" ? { n: 20 } : {}, run: (k: Candle[], _t: TF, _s: string, P: Record<string, number>) => backtestPct(k, { kind, side, tp, sl, n: P.n }) })))) : []),
     ...(process.env.ONLY ? [
@@ -770,7 +812,7 @@ if (process.env.STRESS) {
   }));
   const fmtS = (s: ReturnType<typeof stats>) => `${s.n} ops, PF ${s.pf.toFixed(2)}, neto ${s.total.toFixed(1)}R, caída ${s.dd.toFixed(1)}R`;
   const rep: string[] = ["", "════════ PRUEBA DE ESTRÉS ════════"];
-  for (const sp of (process.env.FUND ? specs.filter((s) => s.name.startsWith("FUND")) : process.env.PCT ? specs.filter((s) => s.name.startsWith("PCT")) : process.env.ONLY ? specs.filter((s) => s.name.startsWith("ACTIVO")) : specs)) {
+  for (const sp of (process.env.LIQ ? specs.filter((s) => s.name.startsWith("LIQ")) : process.env.FUND ? specs.filter((s) => s.name.startsWith("FUND")) : process.env.PCT ? specs.filter((s) => s.name.startsWith("PCT")) : process.env.ONLY ? specs.filter((s) => s.name.startsWith("ACTIVO")) : specs)) {
     const base = runSpec(sp, sp.params), b = stats(base);
     const fails = (s: ReturnType<typeof stats>) => s.pf < 1 || s.dd > 2 * b.dd;
     rep.push("", `■ ${sp.name} — base: ${fmtS(b)}`);
