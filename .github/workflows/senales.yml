@@ -1,14 +1,16 @@
-# Ejecuta el bot de señales en la nube de GitHub, cada hora, justo después del cierre de vela.
-# Funciona con tu PC apagada. El token y el chat se guardan como secretos del repositorio.
+# Bot de señales Tanatabot: siempre encendido en la nube de GitHub (repositorio público = minutos ilimitados).
+# Cada ejecución revisa el mercado cada 15 minutos durante ~5 h 40 min y, al terminar, lanza la siguiente.
+# El cron es solo un respaldo por si la cadena se corta. El token y el chat son secretos cifrados.
 name: Señales Tanatabot
 
 on:
   schedule:
-    - cron: "3,33 * * * *"   # cada 30 min (GitHub se salta algunas; así hay margen)
-  workflow_dispatch:        # permite lanzarlo a mano desde la pestaña Actions
+    - cron: "7 */2 * * *"   # respaldo cada 2 horas (si ya hay una en marcha, espera en cola)
+  workflow_dispatch:
 
 permissions:
-  contents: write           # para guardar signals_state.json (evita señales repetidas)
+  contents: write           # guardar signals_state.json (evita señales repetidas)
+  actions: write            # lanzar la siguiente ejecución al terminar
 
 concurrency:
   group: senales
@@ -17,7 +19,7 @@ concurrency:
 jobs:
   scan:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 355
     steps:
       - uses: actions/checkout@v4
 
@@ -25,15 +27,27 @@ jobs:
         with:
           bun-version: 1.2.21
 
-      - name: Analizar mercado y enviar señales
+      - name: Bucle de señales (cada 15 min durante ~5 h 40 min)
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_IDS: ${{ secrets.TELEGRAM_CHAT_IDS }}
-        run: bun signals.ts --once
-
-      - name: Guardar estado de señales enviadas
         run: |
           git config user.name "tanatabot"
           git config user.email "tanatabot@users.noreply.github.com"
-          git add signals_state.json
-          git diff --cached --quiet || (git commit -m "estado de señales" && git push)
+          end=$((SECONDS + 340*60))
+          while [ $SECONDS -lt $end ]; do
+            git pull -q --rebase || true
+            bun signals.ts --once || echo "pasada con error, se reintenta en 15 min"
+            git add signals_state.json
+            if ! git diff --cached --quiet; then
+              git commit -q -m "estado de señales"
+              git push -q || (git pull -q --rebase && git push -q) || echo "no se pudo guardar el estado, se reintenta"
+            fi
+            sleep 900
+          done
+
+      - name: Lanzar la siguiente ejecución
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run senales.yml --ref main
