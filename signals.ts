@@ -491,7 +491,7 @@ const NEWS_ES: [RegExp, string][] = [
   [/GDP/i, "PIB EE.UU."], [/Retail Sales/i, "Ventas minoristas EE.UU."], [/ISM/i, "Índice ISM"], [/JOLTS/i, "Ofertas de empleo JOLTS"],
 ];
 const newsName = (t: string) => NEWS_ES.find(([re]) => re.test(t))?.[1] ?? t;
-async function loadNews(cache?: { newsCache?: { at: number; ev: NewsEvent[] }; resultsDone?: string[] }): Promise<NewsEvent[]> {
+async function loadNews(cache?: { newsCache?: { at: number; ev: NewsEvent[] }; resultsDone?: string[]; opens?: Record<string, string> }): Promise<NewsEvent[]> {
   if (NEWS) return NEWS;
   const c = cache?.newsCache;
   if (c && Date.now() - c.at < 6 * 3600_000 && c.ev.length) return (NEWS = c.ev); // copia guardada reciente
@@ -666,6 +666,95 @@ async function waitMode() {
   }
 }
 
+// ───────────── Aperturas de mercado (Asia, Europa, EE.UU.) ─────────────
+// En cada apertura publica en el grupo un resumen: índices, BTC, oro, noticias del día y operaciones abiertas.
+// No publica en fin de semana ni en festivos (si el índice no ha cotizado hoy, se salta).
+type Market = { key: string; title: string; tz: string; h: number; m: number; idx: [string, string][] };
+const MARKETS: Market[] = [
+  { key: "ASIA", title: "🌏 ABRE ASIA (Tokio · Hong Kong)", tz: "Asia/Tokyo", h: 9, m: 0, idx: [["^N225", "Nikkei 225"], ["^HSI", "Hang Seng"]] },
+  { key: "EU", title: "🌍 ABRE EUROPA (Londres · Fráncfort)", tz: "Europe/London", h: 8, m: 0, idx: [["^GDAXI", "DAX"], ["^STOXX50E", "Euro Stoxx 50"], ["^FTSE", "FTSE 100"]] },
+  { key: "US", title: "🌎 ABRE EE.UU. (Nueva York)", tz: "America/New_York", h: 9, m: 30, idx: [["^GSPC", "S&P 500"], ["^IXIC", "Nasdaq"]] },
+];
+function localParts(tz: string) {
+  const p = new Intl.DateTimeFormat("en-GB", { timeZone: tz, weekday: "short", year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", hour12: false }).formatToParts(new Date());
+  const g = (t: string) => p.find((x) => x.type === t)?.value ?? "";
+  return { wd: g("weekday"), date: `${g("year")}-${g("month")}-${g("day")}`, min: +g("hour") * 60 + +g("minute") };
+}
+async function quote(sym: string, tries = 3): Promise<{ price: number; prev: number; t: number } | null> {
+  for (let a = 1; a <= tries; a++) try {
+    const j: any = await (await fetch(`https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(sym)}?range=1d&interval=5m`, { headers: { "User-Agent": "Mozilla/5.0" } })).json();
+    const m = j.chart.result[0].meta;
+    return { price: m.regularMarketPrice, prev: m.chartPreviousClose ?? m.previousClose, t: m.regularMarketTime * 1000 };
+  } catch { if (a < tries) await Bun.sleep(1500 * a); }
+  return null;
+}
+const chg = (p: number, prev: number) => { const x = ((p - prev) / prev) * 100; return `${x >= 0 ? "🟢 +" : "🔴 "}${x.toFixed(2)}%`; };
+const big = (n: number) => n.toLocaleString("es-ES", { maximumFractionDigits: n >= 100 ? 0 : 2 });
+async function marketOpens(state: { opens?: Record<string, string>; open: Record<string, Position> }, news: NewsEvent[], send: (m: string) => Promise<boolean>) {
+  for (const mk of MARKETS) {
+    const lp = localParts(mk.tz), openMin = mk.h * 60 + mk.m, forced = process.env.FORCE_OPEN === mk.key, since = forced ? 10 : lp.min - openMin;
+    if (!forced && (["Sat", "Sun"].includes(lp.wd) || since < 0 || since >= 45 || state.opens?.[mk.key] === lp.date)) continue;
+    const qs: Awaited<ReturnType<typeof quote>>[] = []; for (const [s] of mk.idx) qs.push(await quote(s));
+    const ref = qs[0];
+    // ¿ya cotiza hoy? (si no, puede ser festivo o el dato aún no se ha actualizado)
+    const openedToday = ref && Date.now() - ref.t < 40 * 60_000 && ref.t > Date.now() - (since + 5) * 60_000;
+    if (!openedToday && !forced) { if (since >= 40) (state.opens ??= {})[mk.key] = lp.date; continue; }
+    const btc = await (async () => { for (let a = 0; a < 3; a++) try { const j: any = await (await fetch("https://api.binance.com/api/v3/ticker/24hr?symbol=BTCUSDT")).json(); return { p: +j.lastPrice, c: +j.priceChangePercent }; } catch { await Bun.sleep(1500); } return null; })();
+    const gold = await quote("GC=F");
+    const today = news.filter((e) => new Date(e.t).toLocaleDateString("en-CA", { timeZone: "Europe/Madrid" }) === new Date().toLocaleDateString("en-CA", { timeZone: "Europe/Madrid" }) && e.t > Date.now() - 3600_000);
+    const open = Object.values(state.open);
+    const msg = [
+      `🔔 <b>${mk.title}</b>`,
+      ``,
+      ...mk.idx.map(([, name], i) => (qs[i] ? `• ${name}: <b>${big(qs[i]!.price)}</b> ${chg(qs[i]!.price, qs[i]!.prev)}` : `• ${name}: sin datos`)),
+      btc ? `• Bitcoin: <b>${big(btc.p)}</b> ${btc.c >= 0 ? "🟢 +" : "🔴 "}${btc.c.toFixed(2)}% (24 h)` : "",
+      gold ? `• Oro: <b>${big(gold.price)}</b> ${chg(gold.price, gold.prev)}` : "",
+      ``,
+      today.length ? `📰 Noticias fuertes hoy: ${today.map((e) => `${newsName(e.title)} (${new Date(e.t).toLocaleTimeString("es-ES", { timeZone: "Europe/Madrid", hour: "2-digit", minute: "2-digit" })})`).join(", ")}` : `📰 Sin noticias fuertes de EE.UU. pendientes hoy.`,
+      open.length ? `📈 Operaciones abiertas: ${open.map((p) => `${p.sym} ${p.side}`).join(", ")}` : `📈 Sin operaciones abiertas.`,
+    ].filter((l, i, a) => !(l === "" && (a[i - 1] ?? "") === "")).join("\n");
+    if (await send(msg)) (state.opens ??= {})[mk.key] = lp.date;
+  }
+}
+
+// ───────────── Fin de semana: resumen cripto (sáb y dom 9:00) y agenda de la semana siguiente (dom 19:00) ─────────────
+async function weekendBrief(state: { opens?: Record<string, string>; open: Record<string, Position> }, send: (m: string) => Promise<boolean>) {
+  const lp = localParts("Europe/Madrid");
+  if (!["Sat", "Sun"].includes(lp.wd)) return;
+  // 1) Resumen cripto de la mañana
+  if (lp.min >= 9 * 60 && lp.min < 9 * 60 + 45 && state.opens?.WKND !== lp.date) {
+    const rows: string[] = [];
+    for (const [s, n] of [["BTCUSDT", "Bitcoin"], ["ETHUSDT", "Ethereum"], ["SOLUSDT", "Solana"]] as const) {
+      try { const j: any = await (await fetch(`https://api.binance.com/api/v3/ticker/24hr?symbol=${s}`)).json(); rows.push(`• ${n}: <b>${big(+j.lastPrice)}</b> ${+j.priceChangePercent >= 0 ? "🟢 +" : "🔴 "}${(+j.priceChangePercent).toFixed(2)}% (24 h)`); } catch {}
+    }
+    try { const k = await fetchHyperliquid("HYPE", "1d"); const a = k.at(-1)!, b = k.at(-2)!; rows.push(`• HYPE: <b>${big(a.c)}</b> ${chg(a.c, b.c)} (ayer)`); } catch {}
+    const open = Object.values(state.open);
+    const msg = [
+      `🪙 <b>CRIPTO · ${lp.wd === "Sat" ? "SÁBADO" : "DOMINGO"}</b> (las bolsas están cerradas, la cripto no)`,
+      ``, ...rows, ``,
+      open.length ? `📈 Operaciones abiertas: ${open.map((p) => `${p.sym} ${p.side}`).join(", ")}` : `📈 Sin operaciones abiertas.`,
+      `<i>En fin de semana hay menos volumen: los movimientos pueden ser bruscos. Las señales de cripto siguen activas.</i>`,
+    ].join("\n");
+    if (await send(msg)) (state.opens ??= {}).WKND = lp.date;
+  }
+  // 2) Domingo por la tarde: agenda de la semana que viene
+  if (lp.wd === "Sun" && lp.min >= 19 * 60 && state.opens?.NEXTWK !== lp.date) {
+    let ev: NewsEvent[] = [];
+    try {
+      const r = await fetch("https://nfs.faireconomy.media/ff_calendar_nextweek.json", { headers: { "User-Agent": "Mozilla/5.0" } });
+      if (r.ok) ev = ((await r.json()) as any[]).filter((e) => e.impact === "High" && e.country === "USD").map((e) => ({ t: Date.parse(e.date), title: e.title, forecast: e.forecast ?? "", previous: e.previous ?? "" }));
+    } catch {}
+    if (!ev.length && lp.min < 22 * 60) return; // aún no publicado: reintenta más tarde
+    const msg = ev.length
+      ? [`📅 <b>AGENDA DE LA SEMANA QUE VIENE</b> (EE.UU., impacto alto)`, ``,
+         ...ev.sort((a, b) => a.t - b.t).map((e) => `• <b>${new Date(e.t).toLocaleString("es-ES", { timeZone: "Europe/Madrid", weekday: "short", day: "2-digit", hour: "2-digit", minute: "2-digit" })}</b> · ${newsName(e.title)}${e.forecast ? ` · previsión ${e.forecast}` : ""}`),
+         ``, `⚠️ Esos días y horas el precio puede dar saltos fuertes. Planifica tus entradas.`,
+         `🔗 <a href="https://es.investing.com/economic-calendar/">Calendario completo en Investing.com</a>`].join("\n")
+      : `📅 <b>Semana que viene</b>: el calendario aún no está publicado. Cada mañana a las 8:00 tendrás la agenda del día.`;
+    if (await send(msg)) (state.opens ??= {}).NEXTWK = lp.date;
+  }
+}
+
 // ───────────── Bucle ─────────────
 type Closed = { sym: string; tf: TF; strat: Strat; side: "LONG" | "SHORT"; entry: number; exit: number; sl: number; tp?: number; R: number; pct: number; opened: number; closed: number; why: string };
 type State = { last: Record<string, number>; open: Record<string, Position>; history?: Closed[]; lastWeekly?: string; lastAgenda?: string };
@@ -755,6 +844,8 @@ async function scan(report = false) {
     }
   }
   if (!report) await postResults(state, news, (m) => sendTelegram(m, newsTo()));
+  if (!report) await marketOpens(state, news, (m) => sendTelegram(m, newsTo()));
+  if (!report) await weekendBrief(state, (m) => sendTelegram(m, newsTo()));
   if (!report) { const day = agendaDue(state); if (day) { const m = agendaMessage(news, day); if (!m || (await sendTelegram(m, newsTo()))) state.lastAgenda = day; } }
   if (!report) { const wk = weeklyDue(state); if (wk) { await sendTelegram(summaryMessage(state)); state.lastWeekly = wk; sent++; } }
   saveState(state);
@@ -766,6 +857,7 @@ async function scan(report = false) {
 const args = process.argv.slice(2);
 if (args.includes("--summary")) await sendTelegram(summaryMessage(loadState()));
 else if (args.includes("--wait")) await waitMode();
+else if (args.includes("--opentest")) { const st = loadState(); await marketOpens(st, await loadNews(st), async (m) => (console.log(m), true)); }
 else if (args.includes("--fedtest")) console.log(await fedResult({ t: Date.parse("2026-10-28T14:00:00-04:00"), title: "Federal Funds Rate", forecast: "4.00%", previous: "4.00%" }));
 else if (args.includes("--results")) { const st = loadState(); const n = await postResults(st, await loadNews(st), (m) => (console.log(m), sendTelegram(m, newsTo()))); saveState(st); console.log("resultados publicados:", n); }
 else if (args.includes("--agenda")) { const d = new Date().toLocaleDateString("en-CA", { timeZone: "Europe/Madrid" }); const st0 = loadState(); const nw = await loadNews(st0); saveState(st0); console.log("eventos fuertes cargados:", nw.length); const m = agendaMessage(nw, d); console.log(m ?? "sin noticias fuertes hoy"); if (m) await sendTelegram(m, newsTo()); }
