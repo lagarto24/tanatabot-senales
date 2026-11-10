@@ -567,6 +567,31 @@ function backtestLV(k: Candle[], p: LVParams): Trade[] {
   return trades;
 }
 
+// ═════════ Señales 4H con TP/SL en % fijo (para apalancamiento alto) ═════════
+type PctParams = { kind: "don" | "ema" | "rng" | "sq"; side: "L" | "S"; tp: number; sl: number; n?: number };
+function backtestPct(k: Candle[], p: PctParams): Trade[] {
+  const c = k.map((x) => x.c), e20 = ema(c, 20), e50 = ema(c, 50), e200 = ema(c, 200), mid = sma(c, 20), sd = stdev(c, 20), { atr, adx } = atrAdx(k);
+  const up = c.map((_, i) => mid[i] + 2 * sd[i]), lo = c.map((_, i) => mid[i] - 2 * sd[i]);
+  const sqOn = c.map((_, i) => up[i] < mid[i] + 1.5 * atr[i] && lo[i] > mid[i] - 1.5 * atr[i]);
+  const L = p.side === "L", trades: Trade[] = [], n = p.n ?? 20;
+  for (let i = 220; i < k.length - 1; i++) {
+    const b = k[i], pv = k[i - 1];
+    let ok = false;
+    if (p.kind === "don") ok = L ? c[i] > Math.max(...k.slice(i - n, i).map((x) => x.h)) && c[i] > e200[i] : c[i] < Math.min(...k.slice(i - n, i).map((x) => x.l)) && c[i] < e200[i];
+    else if (p.kind === "ema") ok = L ? e20[i] > e50[i] && e50[i] > e200[i] && b.l <= e20[i] && b.c > e20[i] && b.c > b.o : e20[i] < e50[i] && e50[i] < e200[i] && b.h >= e20[i] && b.c < e20[i] && b.c < b.o;
+    else if (p.kind === "rng") ok = adx[i] < 20 && (up[i] - lo[i]) / mid[i] < 0.06 && (L ? pv.c < lo[i - 1] && c[i] > lo[i] : pv.c > up[i - 1] && c[i] < up[i]);
+    else if (p.kind === "sq") { let was = true; for (let j = i - 6; j < i; j++) if (!sqOn[j]) { was = false; break; } ok = was && !sqOn[i] && (L ? c[i] > up[i] && c[i] > e200[i] : c[i] < lo[i] && c[i] < e200[i]); }
+    if (!ok) continue;
+    const entry = c[i], sl = L ? entry * (1 - p.sl / 100) : entry * (1 + p.sl / 100), rr = p.tp / p.sl;
+    const sim = simulate(k, i, L, entry, sl, rr, false);
+    if (!sim) break;
+    // costes de futuros con apalancamiento: comisión 0.1% ida y vuelta sobre el nocional, en R
+    trades.push({ side: L ? "LONG" : "SHORT", r: sim.r - (FEE * 100) / p.sl, bars: sim.n, t: b.t });
+    i += sim.n;
+  }
+  return trades;
+}
+
 function stats(tr: Trade[]) {
   const n = tr.length, wins = tr.filter((t) => t.r > 0).length;
   const total = tr.reduce((s, t) => s + t.r, 0);
@@ -665,6 +690,7 @@ if (process.env.STRESS) {
   ];
   const numKeys = (P: LVParams) => Object.fromEntries(Object.entries(P).filter(([kk, v]) => typeof v === "number" && kk !== "rr")) as Record<string, number>;
   const specs: Spec[] = [
+    ...(process.env.PCT ? (["don", "ema", "rng", "sq"] as const).flatMap((kind) => (["L", "S"] as const).flatMap((side) => [[2, 1], [3, 1.5], [4, 2]].map(([tp, sl]): Spec => ({ name: `PCT ${kind} ${side === "L" ? "LONG" : "SHORT"} TP${tp}% SL${sl}%`, tfs: ["4h"], syms: ["BTCUSDT", "HYPEUSDT", "SOLUSDT"], params: kind === "don" ? { n: 20 } : {}, run: (k: Candle[], _t: TF, _s: string, P: Record<string, number>) => backtestPct(k, { kind, side, tp, sl, n: P.n }) })))) : []),
     ...(process.env.ONLY ? [
       { name: "ACTIVO Donchian 1d TP 3R", tfs: ["1d"] as TF[], syms: process.env.ONLY.split(","), params: { n: 20, sl: 2 }, run: (k: Candle[], _t: TF, _s: string, P: Record<string, number>) => backtestExit(k, { name: "", kind: "donchian", shorts: false, n: P.n, sl: P.sl, trail: 9999, tp: 3 }) },
       { name: "ACTIVO EMA retroceso 1d", tfs: ["1d"] as TF[], syms: process.env.ONLY.split(","), params: { sl: 2 }, run: (k: Candle[], tf: TF, s: string, P: Record<string, number>) => backtestEMA(k, dailyTrendEMA(k, tf, DATA[s]["1d"]), { name: "", entry: "pullback", partial: false, slAtr: P.sl }).filter((t) => t.side === "LONG") },
@@ -694,7 +720,7 @@ if (process.env.STRESS) {
   }));
   const fmtS = (s: ReturnType<typeof stats>) => `${s.n} ops, PF ${s.pf.toFixed(2)}, neto ${s.total.toFixed(1)}R, caída ${s.dd.toFixed(1)}R`;
   const rep: string[] = ["", "════════ PRUEBA DE ESTRÉS ════════"];
-  for (const sp of (process.env.ONLY ? specs.filter((s) => s.name.startsWith("ACTIVO")) : specs)) {
+  for (const sp of (process.env.PCT ? specs.filter((s) => s.name.startsWith("PCT")) : process.env.ONLY ? specs.filter((s) => s.name.startsWith("ACTIVO")) : specs)) {
     const base = runSpec(sp, sp.params), b = stats(base);
     const fails = (s: ReturnType<typeof stats>) => s.pf < 1 || s.dd > 2 * b.dd;
     rep.push("", `■ ${sp.name} — base: ${fmtS(b)}`);
