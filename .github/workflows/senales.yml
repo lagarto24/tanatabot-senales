@@ -35,7 +35,7 @@ jobs:
         run: |
           git config user.name "tanatabot"
           git config user.email "tanatabot@users.noreply.github.com"
-          end=$((SECONDS + 340*60))
+          end=$((SECONDS + 320*60))   # margen para el modo en directo dentro del límite de 6 h
           while [ $SECONDS -lt $end ]; do
             git pull -q --rebase || true
             bun signals.ts --once || echo "pasada con error, se reintenta en 15 min"
@@ -44,7 +44,13 @@ jobs:
               git commit -q -m "estado de señales"
               git push -q || (git pull -q --rebase && git push -q) || echo "no se pudo guardar el estado, se reintenta"
             fi
-            sleep 900
+            # espera 15 min; si hay un dato fuerte dentro de ese tiempo, se queda en directo y lo publica al momento
+            bun signals.ts --wait || sleep 900
+            git add signals_state.json
+            if ! git diff --cached --quiet; then
+              git commit -q -m "estado de señales"
+              git push -q || (git pull -q --rebase && git push -q) || echo "no se pudo guardar el estado"
+            fi
           done
 
       - name: Lanzar la siguiente ejecución

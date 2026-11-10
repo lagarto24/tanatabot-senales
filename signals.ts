@@ -1,7 +1,7 @@
 // Bot de señales técnicas -> Telegram (@Tanatabot)
 // Uso:  bun signals.ts --once   (una pasada: la usa GitHub Actions cada hora)
 //       bun signals.ts --summary (resumen de resultados a Telegram; se envía solo cada domingo 19:00)
-//       bun signals.ts --agenda (noticias fuertes de hoy; sola a las 8:00) · --results (publica el dato real tras salir, fuente BLS)
+//       bun signals.ts --agenda (noticias de hoy; sola a las 8:00) · --results (dato real: BLS y Fed) · --wait (modo en directo)
 //       bun signals.ts --report (estado del mercado a Telegram) · --dry (prueba local) · --replay (verificación) · --sample (ejemplos)
 //
 // Estrategias elegidas por backtest con validación (70% historial / 30% datos no vistos):
@@ -549,12 +549,17 @@ async function postResults(state: { resultsDone?: string[] }, news: NewsEvent[],
   const now = Date.now();
   const due = news.filter((e) => e.t + 5 * 60_000 < now && e.t > now - 8 * 3600_000)
     .map((e) => ({ e, def: RESULTS.find((d) => d.re.test(e.title)) }))
-    .filter((x) => x.def && !(state.resultsDone ?? []).includes(`${x.e.title}|${x.e.t}`));
+    .filter((x) => (x.def || FED_RE.test(x.e.title)) && !(state.resultsDone ?? []).includes(`${x.e.title}|${x.e.t}`));
   if (!due.length) return 0;
-  let data: Awaited<ReturnType<typeof blsLatest>>;
-  try { data = await blsLatest([...new Set(due.map((x) => x.def!.series))]); } catch (err) { console.error("Resultados no disponibles:", (err as Error).message); return 0; }
   let posted = 0;
-  for (const { e, def } of due) {
+  for (const { e } of due.filter((x) => !x.def)) { // decisión de la Fed
+    try { const m = await fedResult(e); if (m && (await send(m))) { (state.resultsDone ??= []).push(`${e.title}|${e.t}`); posted++; } } catch (err) { console.error("Fed no disponible:", (err as Error).message); }
+  }
+  const blsDue = due.filter((x) => x.def);
+  if (!blsDue.length) return posted;
+  let data: Awaited<ReturnType<typeof blsLatest>>;
+  try { data = await blsLatest([...new Set(blsDue.map((x) => x.def!.series))]); } catch (err) { console.error("Resultados no disponibles:", (err as Error).message); return posted; }
+  for (const { e, def } of blsDue) {
     const d = data[def!.series]; if (!d) continue;
     // el dato debe ser del mes anterior al de publicación (si aún no se actualizó, se reintenta en la próxima pasada)
     const pub = new Date(e.t), expM = pub.getUTCMonth() === 0 ? 12 : pub.getUTCMonth(), expY = pub.getUTCMonth() === 0 ? pub.getUTCFullYear() - 1 : pub.getUTCFullYear();
@@ -590,6 +595,58 @@ async function postResults(state: { resultsDone?: string[] }, news: NewsEvent[],
   }
   if (state.resultsDone && state.resultsDone.length > 200) state.resultsDone = state.resultsDone.slice(-100);
   return posted;
+}
+
+// ───────────── Decisión de tipos de la Fed (fuente oficial: federalreserve.gov) ─────────────
+const FED_RE = /Federal Funds Rate|FOMC Statement/i;
+const frac = (s: string) => { const m = s.trim().match(/^(\d+)(?:[-\s](\d)\/(\d))?$/); return m ? +m[1] + (m[2] ? +m[2] / +m[3] : 0) : NaN; };
+async function fedResult(e: NewsEvent): Promise<string | null> {
+  const r = await fetch("https://www.federalreserve.gov/feeds/press_monetary.xml", { headers: { "User-Agent": "Mozilla/5.0" } });
+  const x = await r.text();
+  const items = [...x.matchAll(/<item>([\s\S]*?)<\/item>/g)].map((m) => ({
+    title: (m[1].match(/<title>([\s\S]*?)<\/title>/) ?? [])[1] ?? "",
+    link: ((m[1].match(/<link>([\s\S]*?)<\/link>/) ?? [])[1] ?? "").replace(/<!\[CDATA\[|\]\]>/g, "").trim(),
+    t: Date.parse(((m[1].match(/<pubDate>([\s\S]*?)<\/pubDate>/) ?? [])[1] ?? "").replace(/<!\[CDATA\[|\]\]>/g, "")),
+  }));
+  const it = items.find((i) => /FOMC statement/i.test(i.title) && Math.abs(i.t - e.t) < 3 * 3600_000);
+  if (!it) return null; // aún no publicado
+  const txt = (await (await fetch(it.link, { headers: { "User-Agent": "Mozilla/5.0" } })).text()).replace(/<[^>]+>/g, " ").replace(/\s+/g, " ");
+  const m = txt.match(/(maintain|lower|raise)[^.]{0,60}target range for the federal funds rate (?:at|to) ([\d\-\/ ]+?) to ([\d\-\/ ]+?) percent/i);
+  if (!m) return null;
+  const act = m[1].toLowerCase(), lo = frac(m[2]), hi = frac(m[3]);
+  const verdict = act === "lower" ? "🟢 <b>BAJA los tipos de interés</b>" : act === "raise" ? "🔴 <b>SUBE los tipos de interés</b>" : "➖ <b>MANTIENE los tipos de interés</b>";
+  const fc = num(e.forecast), surprise = !isNaN(fc) && Math.abs(hi - fc) > 0.01;
+  const impact = act === "lower" ? "Bajar tipos suele ser positivo para cripto, acciones y oro." : act === "raise" ? "Subir tipos suele ser negativo para cripto, acciones y oro." : "Sin cambios: el mercado mirará el tono de la rueda de prensa de Powell (30 min después).";
+  return [
+    `🏦 <b>DECISIÓN DE LA FED</b>`,
+    ``,
+    verdict,
+    `Nuevo rango: <b>${lo.toFixed(2)}% – ${hi.toFixed(2)}%</b>${e.forecast ? ` · previsión ${e.forecast}` : ""}${e.previous ? ` · anterior ${e.previous}` : ""}`,
+    surprise ? `⚡ <b>¡Sorpresa!</b> El mercado esperaba otra cosa: pueden venir movimientos fuertes.` : "",
+    `💡 ${impact}`,
+    ``,
+    `<i>Fuente oficial: Reserva Federal. Publicado ${hhmm(it.t)} hora España.</i>`,
+  ].filter((l) => l !== "").join("\n");
+}
+// ¿El bot sabe sacar el resultado de este evento?
+const resultable = (e: NewsEvent) => FED_RE.test(e.title) || RESULTS.some((d) => d.re.test(e.title));
+// Modo "dato en directo": si hay un dato fuerte en los próximos 15 min, espera a la hora exacta y consulta cada minuto
+// hasta publicarlo (máx. 10 min). Si no, simplemente espera 15 min. Lo usa el bucle de la nube en lugar de "sleep 900".
+async function waitMode() {
+  const st = loadState(); const news = await loadNews(st); saveState(st);
+  const now = Date.now();
+  const next = news.filter((e) => resultable(e) && e.t > now - 60_000 && e.t <= now + 15 * 60_000).sort((a, b) => a.t - b.t)[0];
+  if (!next) { await Bun.sleep(15 * 60_000); return; }
+  console.log(`⏱ Dato en directo: ${newsName(next.title)} a las ${hhmm(next.t)} — esperando…`);
+  await Bun.sleep(Math.max(0, next.t - Date.now() + 20_000));
+  const targets = news.filter((e) => resultable(e) && e.t === next.t);
+  for (let i = 0; i < 10; i++) {
+    const s = loadState();
+    await postResults(s, news, (m) => sendTelegram(m, newsTo()));
+    saveState(s);
+    if (targets.every((e) => (s.resultsDone ?? []).includes(`${e.title}|${e.t}`))) { console.log("✅ datos publicados"); break; }
+    await Bun.sleep(60_000);
+  }
 }
 
 // ───────────── Bucle ─────────────
@@ -691,6 +748,8 @@ async function scan(report = false) {
 
 const args = process.argv.slice(2);
 if (args.includes("--summary")) await sendTelegram(summaryMessage(loadState()));
+else if (args.includes("--wait")) await waitMode();
+else if (args.includes("--fedtest")) console.log(await fedResult({ t: Date.parse("2026-10-28T14:00:00-04:00"), title: "Federal Funds Rate", forecast: "4.00%", previous: "4.00%" }));
 else if (args.includes("--results")) { const st = loadState(); const n = await postResults(st, await loadNews(st), (m) => (console.log(m), sendTelegram(m, newsTo()))); saveState(st); console.log("resultados publicados:", n); }
 else if (args.includes("--agenda")) { const d = new Date().toLocaleDateString("en-CA", { timeZone: "Europe/Madrid" }); const st0 = loadState(); const nw = await loadNews(st0); saveState(st0); console.log("eventos fuertes cargados:", nw.length); const m = agendaMessage(nw, d); console.log(m ?? "sin noticias fuertes hoy"); if (m) await sendTelegram(m, newsTo()); }
 else if (args.includes("--sample")) {
