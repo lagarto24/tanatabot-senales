@@ -14,7 +14,7 @@ const HTF: Record<TF, TF | null> = { "1h": "4h", "4h": "1d", "1d": null };
 
 const CRYPTO = ["BTCUSDT", "ETHUSDT", "SOLUSDT", "HYPEUSDT", "BNBUSDT", "DOGEUSDT", "XRPUSDT", "SUIUSDT", "AVAXUSDT"];
 const HYPERLIQUID: Record<string, string> = { HYPEUSDT: "HYPE" };
-const STOCKS = ["AAPL", "TSLA", "NVDA", "MSFT", "AMZN", "SPY", "QQQ", "INTC", "AMD", "GOOGL", "META", "NFLX", "AVGO", "COST", "LLY", "ORCL", "GLD"];
+const STOCKS = ["AAPL", "TSLA", "NVDA", "MSFT", "AMZN", "SPY", "QQQ", "INTC", "AMD", "GOOGL", "META", "NFLX", "AVGO", "COST", "LLY", "ORCL", "GLD", "SLV"];
 const TFS: TF[] = ["1h", "4h", "1d"];
 let FEE = 0.001; // let: la prueba de estrés la duplica
 const MAX_HOLD = 60; // velas máximas en una operación; luego cierra a mercado

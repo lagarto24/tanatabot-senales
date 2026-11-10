@@ -15,7 +15,7 @@ import { join } from "path";
 const CRYPTO = ["BTCUSDT", "ETHUSDT", "SOLUSDT", "HYPEUSDT", "BNBUSDT", "DOGEUSDT", "XRPUSDT", "SUIUSDT", "AVAXUSDT"];
 // criptos que se leen de Hyperliquid (Binance tiene poco historial de HYPE)
 const HYPERLIQUID: Record<string, string> = { HYPEUSDT: "HYPE" };
-const STOCKS = ["AAPL", "TSLA", "NVDA", "MSFT", "AMZN", "SPY", "QQQ", "INTC", "AMD", "GOOGL", "META", "NFLX", "AVGO", "COST", "LLY", "ORCL", "GLD"];
+const STOCKS = ["AAPL", "TSLA", "NVDA", "MSFT", "AMZN", "SPY", "QQQ", "INTC", "AMD", "GOOGL", "META", "NFLX", "AVGO", "COST", "LLY", "ORCL", "GLD", "SLV"];
 const TIMEFRAMES = ["4h", "1d"] as const; // 1D: 3 estrategias validadas · 4H: rebote en rango (baja volatilidad)
 const CHECK_EVERY_MIN = 15;
 const MIN_FILTERS = 3; // de 4 filtros (ADX, RSI, MACD, volumen)
@@ -332,17 +332,21 @@ const HIGH_CONF = (s: Strat, tf: TF) => tf === "1d";
 type Entry = { strat: Strat; side: "LONG" | "SHORT"; price: number; sl: number; tp?: number; t: number; reasons: string[] };
 type Position = Entry & { sym: string; tf: TF; isCrypto: boolean; lastBar: number; bars: number; stop: number; exit?: { price: number; why: string } };
 
+// Metales: se operan con sus fondos (GLD, SLV), que se mueven en el mismo % que XAU/USD y XAG/USD
+const METALS: Record<string, { name: string; pair: string }> = { GLD: { name: "🥇 ORO (GLD)", pair: "XAU/USD" }, SLV: { name: "🥈 PLATA (SLV)", pair: "XAG/USD" } };
 function entryMessage(sym: string, tf: TF, e: Entry, isCrypto: boolean): string {
+  const metal = METALS[sym];
   const L = e.side === "LONG", cur = HYPERLIQUID[sym] ? "USDC" : isCrypto ? "USDT" : "USD";
   const pct = (x: number) => `${x >= e.price ? "+" : "−"}${Math.abs(((x - e.price) / e.price) * 100).toFixed(2)}%`;
   const rr = e.tp ? Math.abs(e.tp - e.price) / Math.abs(e.price - e.sl) : 0;
   return [
-    `${L ? "🟢" : "🔴"} <b>${e.side} · ${sym}</b> (${tf.toUpperCase()})`,
+    `${L ? "🟢" : "🔴"} <b>${e.side} · ${metal ? metal.name : sym}</b> (${tf.toUpperCase()})`,
     ``,
     `Entrada: <b>${fmt(e.price)} ${cur}</b>`,
     `Take profit: <b>${fmt(e.tp!)}</b> (${pct(e.tp!)})`,
     `Stop loss: <b>${fmt(e.sl)}</b> (${pct(e.sl)})`,
     `Riesgo/beneficio: 1:${+rr.toFixed(1)}`,
+    ...(metal ? [``, `📌 Si operas ${metal.pair}: entra ahora y usa los mismos % de TP y SL.`] : []),
   ].join("\n");
 }
 
