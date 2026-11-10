@@ -481,6 +481,7 @@ const silent = (r: { msgs: string[]; closed: boolean }, p: Position) => (p.tp ? 
 // Solo eventos de EE.UU. de impacto alto: son los que más mueven cripto, acciones, oro y plata.
 type NewsEvent = { t: number; title: string; forecast: string; previous: string };
 let NEWS: NewsEvent[] | null = null;
+let NEWS_OK = true; // false si el calendario no se pudo descargar ni había copia guardada
 const NEWS_ES: [RegExp, string][] = [
   [/Core CPI/i, "Inflación subyacente EE.UU. (IPC subyacente)"], [/CPI/i, "Inflación EE.UU. (IPC)"],
   [/Core PCE/i, "Inflación PCE subyacente (la favorita de la Fed)"], [/PCE/i, "Inflación PCE"],
@@ -501,7 +502,7 @@ async function loadNews(cache?: { newsCache?: { at: number; ev: NewsEvent[] }; r
     NEWS = j.filter((e) => e.impact === "High" && e.country === "USD").map((e) => ({ t: Date.parse(e.date), title: e.title, forecast: e.forecast ?? "", previous: e.previous ?? "" })).filter((e) => !isNaN(e.t));
     if (!r.ok) throw new Error("calendario " + r.status);
     if (cache) cache.newsCache = { at: Date.now(), ev: NEWS };
-  } catch (e) { console.error("Calendario no disponible:", (e as Error).message); NEWS = c?.ev ?? []; }
+  } catch (e) { console.error("Calendario no disponible:", (e as Error).message); NEWS = c?.ev ?? []; NEWS_OK = !!c?.ev?.length; }
   return NEWS;
 }
 const hhmm = (ms: number) => new Date(ms).toLocaleString("es-ES", { timeZone: "Europe/Madrid", weekday: "short", hour: "2-digit", minute: "2-digit" });
@@ -689,7 +690,7 @@ async function quote(sym: string, tries = 3): Promise<{ price: number; prev: num
   return null;
 }
 const chg = (p: number, prev: number) => { const x = ((p - prev) / prev) * 100; return `${x >= 0 ? "🟢 +" : "🔴 "}${x.toFixed(2)}%`; };
-const big = (n: number) => n.toLocaleString("es-ES", { maximumFractionDigits: n >= 100 ? 0 : 2 });
+const big = (n: number) => n.toLocaleString("de-DE", { maximumFractionDigits: n >= 100 ? 0 : 2 }); // de-DE: igual que es-ES pero con punto de miles siempre
 async function marketOpens(state: { opens?: Record<string, string>; open: Record<string, Position> }, news: NewsEvent[], send: (m: string) => Promise<boolean>) {
   for (const mk of MARKETS) {
     const lp = localParts(mk.tz), openMin = mk.h * 60 + mk.m, forced = process.env.FORCE_OPEN === mk.key, since = forced ? 10 : lp.min - openMin;
@@ -710,7 +711,7 @@ async function marketOpens(state: { opens?: Record<string, string>; open: Record
       btc ? `• Bitcoin: <b>${big(btc.p)}</b> ${btc.c >= 0 ? "🟢 +" : "🔴 "}${btc.c.toFixed(2)}% (24 h)` : "",
       gold ? `• Oro: <b>${big(gold.price)}</b> ${chg(gold.price, gold.prev)}` : "",
       ``,
-      today.length ? `📰 Noticias fuertes hoy: ${today.map((e) => `${newsName(e.title)} (${new Date(e.t).toLocaleTimeString("es-ES", { timeZone: "Europe/Madrid", hour: "2-digit", minute: "2-digit" })})`).join(", ")}` : `📰 Sin noticias fuertes de EE.UU. pendientes hoy.`,
+      today.length ? `📰 Noticias fuertes hoy: ${today.map((e) => `${newsName(e.title)} (${new Date(e.t).toLocaleTimeString("es-ES", { timeZone: "Europe/Madrid", hour: "2-digit", minute: "2-digit" })})`).join(", ")}` : NEWS_OK ? `📰 Sin noticias fuertes de EE.UU. pendientes hoy.` : `📰 Calendario no disponible ahora mismo: revisa la agenda de las 8:00.`,
       open.length ? `📈 Operaciones abiertas: ${open.map((p) => `${p.sym} ${p.side}`).join(", ")}` : `📈 Sin operaciones abiertas.`,
     ].filter((l, i, a) => !(l === "" && (a[i - 1] ?? "") === "")).join("\n");
     if (await send(msg)) (state.opens ??= {})[mk.key] = lp.date;
@@ -727,7 +728,7 @@ async function weekendBrief(state: { opens?: Record<string, string>; open: Recor
     for (const [s, n] of [["BTCUSDT", "Bitcoin"], ["ETHUSDT", "Ethereum"], ["SOLUSDT", "Solana"]] as const) {
       try { const j: any = await (await fetch(`https://api.binance.com/api/v3/ticker/24hr?symbol=${s}`)).json(); rows.push(`• ${n}: <b>${big(+j.lastPrice)}</b> ${+j.priceChangePercent >= 0 ? "🟢 +" : "🔴 "}${(+j.priceChangePercent).toFixed(2)}% (24 h)`); } catch {}
     }
-    try { const k = await fetchHyperliquid("HYPE", "1d"); const a = k.at(-1)!, b = k.at(-2)!; rows.push(`• HYPE: <b>${big(a.c)}</b> ${chg(a.c, b.c)} (ayer)`); } catch {}
+    try { const k = await fetchHyperliquid("HYPE", "1d"); const a = k.at(-1)!, b = k.at(-2)!; rows.push(`• HYPE: <b>${big(a.c)}</b> ${chg(a.c, b.c)} (desde el cierre de ayer)`); } catch {}
     const open = Object.values(state.open);
     const msg = [
       `🪙 <b>CRIPTO · ${lp.wd === "Sat" ? "SÁBADO" : "DOMINGO"}</b> (las bolsas están cerradas, la cripto no)`,
@@ -757,7 +758,7 @@ async function weekendBrief(state: { opens?: Record<string, string>; open: Recor
 
 // ───────────── Bucle ─────────────
 type Closed = { sym: string; tf: TF; strat: Strat; side: "LONG" | "SHORT"; entry: number; exit: number; sl: number; tp?: number; R: number; pct: number; opened: number; closed: number; why: string };
-type State = { last: Record<string, number>; open: Record<string, Position>; history?: Closed[]; lastWeekly?: string; lastAgenda?: string };
+type State = { last: Record<string, number>; open: Record<string, Position>; history?: Closed[]; lastWeekly?: string; lastAgenda?: string; opens?: Record<string, string> };
 const loadState = (): State => {
   const raw = existsSync(STATE_FILE) ? JSON.parse(readFileSync(STATE_FILE, "utf8")) : {};
   return raw.open ? raw : { last: {}, open: {} }; // formato antiguo → empezar limpio
