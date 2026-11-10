@@ -585,7 +585,7 @@ const all: Record<string, Trade[]> = {}; // clave: variante|sym|tf
 const cutoff: Record<string, number> = {}; // 70% inicial = "entrenamiento", 30% final = "prueba"
 const ranges: string[] = [];
 const RUNSYMS = process.env.ONLY ? process.env.ONLY.split(",") : null;
-for (const [sym, crypto] of (RUNSYMS ? RUNSYMS.map((s) => [s, true] as const) : [...CRYPTO.map((s) => [s, true] as const), ...STOCKS.map((s) => [s, false] as const)])) {
+for (const [sym, crypto] of (RUNSYMS ? RUNSYMS.map((s) => [s, s.endsWith("USDT")] as const) : [...CRYPTO.map((s) => [s, true] as const), ...STOCKS.map((s) => [s, false] as const)])) {
   if (RUNSYMS && !RUNSYMS.includes(sym)) continue;
   let data: Record<TF, Candle[]>;
   try { data = await load(sym, crypto); DATA[sym] = data; } catch (e) { console.error(sym, "error de datos:", (e as Error).message); continue; }
@@ -668,6 +668,7 @@ if (process.env.STRESS) {
     ...(process.env.ONLY ? [
       { name: "ACTIVO Donchian 1d TP 3R", tfs: ["1d"] as TF[], syms: process.env.ONLY.split(","), params: { n: 20, sl: 2 }, run: (k: Candle[], _t: TF, _s: string, P: Record<string, number>) => backtestExit(k, { name: "", kind: "donchian", shorts: false, n: P.n, sl: P.sl, trail: 9999, tp: 3 }) },
       { name: "ACTIVO EMA retroceso 1d", tfs: ["1d"] as TF[], syms: process.env.ONLY.split(","), params: { sl: 2 }, run: (k: Candle[], tf: TF, s: string, P: Record<string, number>) => backtestEMA(k, dailyTrendEMA(k, tf, DATA[s]["1d"]), { name: "", entry: "pullback", partial: false, slAtr: P.sl }).filter((t) => t.side === "LONG") },
+      { name: "ACTIVO RSI(2) 1d TP 1.5R", tfs: ["1d"] as TF[], syms: process.env.ONLY.split(",").filter((s) => !s.endsWith("USDT")), params: { th: 10, sl: 1.5 }, run: (k: Candle[], _t: TF, _s: string, P: Record<string, number>) => backtestExit(k, { name: "", kind: "rsi2", shorts: false, th: P.th, sl: P.sl, ex: 99999, tp: 1.5 }) },
       { name: "ACTIVO Rango LONG 4h", tfs: ["4h"] as TF[], syms: process.env.ONLY.split(","), params: { sl: 1.5 }, run: (k: Candle[], _t: TF, _s: string, P: Record<string, number>) => backtestLV(k, { kind: "range", side: "L", rr: 1.5, sl: P.sl }) },
     ] : []),
     ...LV.flatMap(([nm, P]) => (["1h", "4h"] as TF[]).map((tf): Spec => ({ name: `BAJA VOL ${nm} ${tf}`, tfs: [tf], syms: ALL, params: numKeys(P), run: (k, _t, _s, Q) => backtestLV(k, { ...P, ...Q }) }))),

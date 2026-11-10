@@ -14,7 +14,7 @@ import { join } from "path";
 const CRYPTO = ["BTCUSDT", "ETHUSDT", "SOLUSDT", "HYPEUSDT", "BNBUSDT", "DOGEUSDT", "XRPUSDT", "SUIUSDT"];
 // criptos que se leen de Hyperliquid (Binance tiene poco historial de HYPE)
 const HYPERLIQUID: Record<string, string> = { HYPEUSDT: "HYPE" };
-const STOCKS = ["AAPL", "TSLA", "NVDA", "MSFT", "AMZN", "SPY"];
+const STOCKS = ["AAPL", "TSLA", "NVDA", "MSFT", "AMZN", "SPY", "QQQ", "INTC", "AMD"];
 const TIMEFRAMES = ["4h", "1d"] as const; // 1D: 3 estrategias validadas · 4H: rebote en rango (baja volatilidad)
 const CHECK_EVERY_MIN = 15;
 const MIN_FILTERS = 3; // de 4 filtros (ADX, RSI, MACD, volumen)
