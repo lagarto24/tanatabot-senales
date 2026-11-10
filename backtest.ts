@@ -592,6 +592,46 @@ function backtestPct(k: Candle[], p: PctParams): Trade[] {
   return trades;
 }
 
+// ═════════ Estrategia de FUNDING extremo (datos de derivados, idea tipo InvestRuiz) ═════════
+// Funding muy alto = demasiados LONG apalancados pagando → posible caída (SHORT). Muy bajo/negativo = demasiados SHORT → posible subida (LONG).
+const FUNDING: Record<string, { t: number; r: number }[]> = {};
+async function loadFunding(sym: string) {
+  if (FUNDING[sym]) return FUNDING[sym];
+  const out: { t: number; r: number }[] = []; let start = Date.UTC(2019, 8, 1);
+  while (true) {
+    const r = await fetch(`https://fapi.binance.com/fapi/v1/fundingRate?symbol=${sym}&startTime=${start}&limit=1000`);
+    if (!r.ok) break;
+    const rows: any[] = await r.json(); if (!rows.length) break;
+    for (const x of rows) out.push({ t: x.fundingTime, r: +x.fundingRate });
+    start = rows.at(-1).fundingTime + 1; if (rows.length < 1000) break;
+  }
+  return (FUNDING[sym] = out);
+}
+type FundParams = { name: string; side: "L" | "S" | "LS"; pct: number; trend: boolean; rr: number; sl: number; win?: number };
+function backtestFund(k: Candle[], f: { t: number; r: number }[], p: FundParams): Trade[] {
+  if (f.length < 300) return [];
+  const c = k.map((x) => x.c), e200 = ema(c, 200), { atr } = atrAdx(k), trades: Trade[] = [];
+  const W = p.win ?? 270; let j = -1;
+  for (let i = 220; i < k.length - 1; i++) {
+    const close = k[i].t + 4 * H;
+    while (j + 1 < f.length && f[j + 1].t <= close) j++;
+    if (j < W) continue;
+    if (f[j].t <= k[i].t) continue; // solo actuar en la vela donde se publica un funding nuevo
+    const hist = f.slice(j - W, j).map((x) => x.r).sort((a, b) => a - b), now = f[j].r;
+    const lo = hist[Math.floor(W * p.pct)], hi = hist[Math.floor(W * (1 - p.pct)) - 1];
+    let L: boolean | null = null;
+    if (p.side !== "S" && now < lo && (!p.trend || c[i] > e200[i])) L = true;
+    else if (p.side !== "L" && now > hi && (!p.trend || c[i] < e200[i])) L = false;
+    if (L === null) continue;
+    const entry = c[i], risk = p.sl * atr[i];
+    const sim = simulate(k, i, L, entry, L ? entry - risk : entry + risk, p.rr, false);
+    if (!sim) break;
+    trades.push({ side: L ? "LONG" : "SHORT", r: sim.r - (FEE * entry) / risk, bars: sim.n, t: k[i].t });
+    i += sim.n;
+  }
+  return trades;
+}
+
 function stats(tr: Trade[]) {
   const n = tr.length, wins = tr.filter((t) => t.r > 0).length;
   const total = tr.reduce((s, t) => s + t.r, 0);
@@ -689,7 +729,17 @@ if (process.env.STRESS) {
     ["Rango LONG", { kind: "range", side: "L", rr: 1.5, sl: 1.5 }], ["Rango SHORT", { kind: "range", side: "S", rr: 1.5, sl: 1.5 }],
   ];
   const numKeys = (P: LVParams) => Object.fromEntries(Object.entries(P).filter(([kk, v]) => typeof v === "number" && kk !== "rr")) as Record<string, number>;
+  if (process.env.FUND) for (const s of process.env.ONLY!.split(",")) await loadFunding(s);
+  const FV: FundParams[] = [
+    { name: "contrario LONG+SHORT 5%", side: "LS", pct: 0.05, trend: false, rr: 2, sl: 2 },
+    { name: "contrario LONG 5%", side: "L", pct: 0.05, trend: false, rr: 2, sl: 2 },
+    { name: "contrario SHORT 5%", side: "S", pct: 0.05, trend: false, rr: 2, sl: 2 },
+    { name: "contrario a favor de tendencia 10%", side: "LS", pct: 0.1, trend: true, rr: 2, sl: 2 },
+    { name: "contrario LONG en tendencia 10%", side: "L", pct: 0.1, trend: true, rr: 2, sl: 2 },
+    { name: "contrario 5% TP 1:1.5", side: "LS", pct: 0.05, trend: false, rr: 1.5, sl: 2 },
+  ];
   const specs: Spec[] = [
+    ...(process.env.FUND ? FV.map((P): Spec => ({ name: `FUND ${P.name} 4h`, tfs: ["4h"], syms: process.env.ONLY!.split(","), params: { sl: P.sl, pct: P.pct }, run: (k: Candle[], _t: TF, s: string, Q: Record<string, number>) => backtestFund(k, FUNDING[s] ?? [], { ...P, ...Q }) })) : []),
     ...(process.env.PCT ? (["don", "ema", "rng", "sq"] as const).flatMap((kind) => (["L", "S"] as const).flatMap((side) => [[2, 1], [3, 1.5], [4, 2]].map(([tp, sl]): Spec => ({ name: `PCT ${kind} ${side === "L" ? "LONG" : "SHORT"} TP${tp}% SL${sl}%`, tfs: ["4h"], syms: ["BTCUSDT", "HYPEUSDT", "SOLUSDT"], params: kind === "don" ? { n: 20 } : {}, run: (k: Candle[], _t: TF, _s: string, P: Record<string, number>) => backtestPct(k, { kind, side, tp, sl, n: P.n }) })))) : []),
     ...(process.env.ONLY ? [
       { name: "ACTIVO Donchian 1d TP 3R", tfs: ["1d"] as TF[], syms: process.env.ONLY.split(","), params: { n: 20, sl: 2 }, run: (k: Candle[], _t: TF, _s: string, P: Record<string, number>) => backtestExit(k, { name: "", kind: "donchian", shorts: false, n: P.n, sl: P.sl, trail: 9999, tp: 3 }) },
@@ -720,7 +770,7 @@ if (process.env.STRESS) {
   }));
   const fmtS = (s: ReturnType<typeof stats>) => `${s.n} ops, PF ${s.pf.toFixed(2)}, neto ${s.total.toFixed(1)}R, caída ${s.dd.toFixed(1)}R`;
   const rep: string[] = ["", "════════ PRUEBA DE ESTRÉS ════════"];
-  for (const sp of (process.env.PCT ? specs.filter((s) => s.name.startsWith("PCT")) : process.env.ONLY ? specs.filter((s) => s.name.startsWith("ACTIVO")) : specs)) {
+  for (const sp of (process.env.FUND ? specs.filter((s) => s.name.startsWith("FUND")) : process.env.PCT ? specs.filter((s) => s.name.startsWith("PCT")) : process.env.ONLY ? specs.filter((s) => s.name.startsWith("ACTIVO")) : specs)) {
     const base = runSpec(sp, sp.params), b = stats(base);
     const fails = (s: ReturnType<typeof stats>) => s.pf < 1 || s.dd > 2 * b.dd;
     rep.push("", `■ ${sp.name} — base: ${fmtS(b)}`);
