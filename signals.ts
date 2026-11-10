@@ -1,7 +1,7 @@
 // Bot de señales técnicas -> Telegram (@Tanatabot)
 // Uso:  bun signals.ts --once   (una pasada: la usa GitHub Actions cada hora)
 //       bun signals.ts --summary (resumen de resultados a Telegram; se envía solo cada domingo 19:00)
-//       bun signals.ts --agenda (noticias fuertes de hoy a Telegram; se envía sola a las 8:00 si las hay)
+//       bun signals.ts --agenda (noticias fuertes de hoy; sola a las 8:00) · --results (publica el dato real tras salir, fuente BLS)
 //       bun signals.ts --report (estado del mercado a Telegram) · --dry (prueba local) · --replay (verificación) · --sample (ejemplos)
 //
 // Estrategias elegidas por backtest con validación (70% historial / 30% datos no vistos):
@@ -474,7 +474,7 @@ const NEWS_ES: [RegExp, string][] = [
   [/GDP/i, "PIB EE.UU."], [/Retail Sales/i, "Ventas minoristas EE.UU."], [/ISM/i, "Índice ISM"], [/JOLTS/i, "Ofertas de empleo JOLTS"],
 ];
 const newsName = (t: string) => NEWS_ES.find(([re]) => re.test(t))?.[1] ?? t;
-async function loadNews(cache?: { newsCache?: { at: number; ev: NewsEvent[] } }): Promise<NewsEvent[]> {
+async function loadNews(cache?: { newsCache?: { at: number; ev: NewsEvent[] }; resultsDone?: string[] }): Promise<NewsEvent[]> {
   if (NEWS) return NEWS;
   const c = cache?.newsCache;
   if (c && Date.now() - c.at < 6 * 3600_000 && c.ev.length) return (NEWS = c.ev); // copia guardada reciente
@@ -515,6 +515,81 @@ function agendaMessage(news: NewsEvent[], dayKey: string): string | null {
     ``,
     `🔗 Calendario completo y datos en directo: <a href="https://es.investing.com/economic-calendar/">Investing.com</a>`,
   ].join("\n");
+}
+
+// ───────────── Resultados de los datos (fuente oficial: BLS, Oficina de Estadísticas Laborales de EE.UU.) ─────────────
+// Tras la hora de publicación, el bot lee el dato real y lo publica con la previsión y lo que suele significar.
+type ResultDef = { re: RegExp; series: string; kind: "mm" | "chgK" | "level"; name: string; goodIfLower: boolean | null; what: string };
+const RESULTS: ResultDef[] = [
+  { re: /^Core CPI m\/m/i, series: "CUSR0000SA0L1E", kind: "mm", name: "IPC subyacente (mensual)", goodIfLower: true, what: "inflación" },
+  { re: /^CPI m\/m/i, series: "CUSR0000SA0", kind: "mm", name: "IPC (inflación mensual)", goodIfLower: true, what: "inflación" },
+  { re: /^PPI m\/m/i, series: "WPSFD4", kind: "mm", name: "Precios de producción (IPP mensual)", goodIfLower: true, what: "inflación" },
+  { re: /^Non-Farm Employment Change/i, series: "CES0000000001", kind: "chgK", name: "Empleo EE.UU. (nóminas NFP)", goodIfLower: null, what: "empleo" },
+  { re: /^Unemployment Rate/i, series: "LNS14000000", kind: "level", name: "Tasa de paro EE.UU.", goodIfLower: null, what: "paro" },
+  { re: /^Average Hourly Earnings m\/m/i, series: "CES0500000003", kind: "mm", name: "Salarios por hora (mensual)", goodIfLower: true, what: "salarios" },
+];
+const num = (s: string) => { const m = s.replace(",", ".").match(/-?\d+(\.\d+)?/); return m ? +m[0] * (/K/i.test(s) ? 1 : 1) : NaN; };
+async function blsLatest(series: string[]): Promise<Record<string, { y: number; m: number; v: number[] }>> {
+  const y = new Date().getUTCFullYear();
+  const r = await fetch("https://api.bls.gov/publicAPI/v1/timeseries/data/", {
+    method: "POST", headers: { "content-type": "application/json" },
+    body: JSON.stringify({ seriesid: series, startyear: String(y - 1), endyear: String(y) }),
+  });
+  const j: any = await r.json();
+  if (j.status !== "REQUEST_SUCCEEDED") throw new Error("BLS: " + (j.message ?? []).join(" "));
+  const out: Record<string, { y: number; m: number; v: number[] }> = {};
+  for (const s of j.Results?.series ?? []) {
+    const d = (s.data as any[]).filter((x) => /^M\d\d$/.test(x.period) && x.period !== "M13");
+    if (d.length >= 2) out[s.seriesID] = { y: +d[0].year, m: +d[0].period.slice(1), v: d.slice(0, 2).map((x) => +x.value) };
+  }
+  return out;
+}
+// Publica los resultados de los eventos de las últimas 8 horas que aún no se hayan publicado
+async function postResults(state: { resultsDone?: string[] }, news: NewsEvent[], send: (m: string) => Promise<boolean>): Promise<number> {
+  const now = Date.now();
+  const due = news.filter((e) => e.t + 5 * 60_000 < now && e.t > now - 8 * 3600_000)
+    .map((e) => ({ e, def: RESULTS.find((d) => d.re.test(e.title)) }))
+    .filter((x) => x.def && !(state.resultsDone ?? []).includes(`${x.e.title}|${x.e.t}`));
+  if (!due.length) return 0;
+  let data: Awaited<ReturnType<typeof blsLatest>>;
+  try { data = await blsLatest([...new Set(due.map((x) => x.def!.series))]); } catch (err) { console.error("Resultados no disponibles:", (err as Error).message); return 0; }
+  let posted = 0;
+  for (const { e, def } of due) {
+    const d = data[def!.series]; if (!d) continue;
+    // el dato debe ser del mes anterior al de publicación (si aún no se actualizó, se reintenta en la próxima pasada)
+    const pub = new Date(e.t), expM = pub.getUTCMonth() === 0 ? 12 : pub.getUTCMonth(), expY = pub.getUTCMonth() === 0 ? pub.getUTCFullYear() - 1 : pub.getUTCFullYear();
+    if (d.m !== expM || d.y !== expY) continue;
+    const actual = def!.kind === "mm" ? +(((d.v[0] / d.v[1]) - 1) * 100).toFixed(1) : def!.kind === "chgK" ? Math.round(d.v[0] - d.v[1]) : d.v[0];
+    const fc = num(e.forecast), unit = def!.kind === "chgK" ? "K" : "%";
+    const show = (x: number) => (def!.kind === "chgK" ? `${x >= 0 ? "+" : ""}${x}K` : `${x.toFixed(1)}%`);
+    let verdict = "", impact = "";
+    if (!isNaN(fc)) {
+      const diff = actual - fc;
+      if (Math.abs(diff) < (def!.kind === "chgK" ? 15 : 0.05)) { verdict = "➖ <b>En línea con lo esperado</b>"; impact = "Sin sorpresa: el mercado suele moverse poco por este dato."; }
+      else if (def!.goodIfLower === true) {
+        verdict = diff > 0 ? `🔴 <b>Más alto de lo esperado</b> (más ${def!.what})` : `🟢 <b>Más bajo de lo esperado</b> (menos ${def!.what})`;
+        impact = diff > 0 ? "Suele ser negativo para cripto, acciones y oro: aleja las bajadas de tipos de la Fed." : "Suele ser positivo para cripto, acciones y oro: acerca las bajadas de tipos de la Fed.";
+      } else if (def!.what === "empleo") {
+        verdict = diff > 0 ? "🟡 <b>Más fuerte de lo esperado</b>" : "🟡 <b>Más débil de lo esperado</b>";
+        impact = diff > 0 ? "Economía fuerte: puede retrasar las bajadas de tipos (presión sobre cripto y acciones)." : "Economía más débil: acerca bajadas de tipos, pero puede asustar al mercado.";
+      } else {
+        verdict = diff > 0 ? "🟡 <b>Más alto de lo esperado</b>" : "🟡 <b>Más bajo de lo esperado</b>";
+        impact = diff > 0 ? "Más paro: economía más débil, acerca bajadas de tipos." : "Menos paro: economía fuerte, puede retrasar bajadas de tipos.";
+      }
+    }
+    const msg = [
+      `📊 <b>DATO PUBLICADO · ${newsName(e.title)}</b>`,
+      ``,
+      `Resultado: <b>${show(actual)}</b>${!isNaN(fc) ? ` · previsión ${e.forecast}` : ""}${e.previous ? ` · anterior ${e.previous}` : ""}`,
+      verdict,
+      impact ? `💡 ${impact}` : "",
+      ``,
+      `<i>Fuente oficial: BLS (EE.UU.). Publicado ${hhmm(e.t)} hora España.</i>`,
+    ].filter((l, i, a) => l !== "" || (a[i - 1] ?? "") !== "").join("\n");
+    if (await send(msg)) { (state.resultsDone ??= []).push(`${e.title}|${e.t}`); posted++; }
+  }
+  if (state.resultsDone && state.resultsDone.length > 200) state.resultsDone = state.resultsDone.slice(-100);
+  return posted;
 }
 
 // ───────────── Bucle ─────────────
@@ -605,6 +680,7 @@ async function scan(report = false) {
       }
     }
   }
+  if (!report) await postResults(state, news, (m) => sendTelegram(m, newsTo()));
   if (!report) { const day = agendaDue(state); if (day) { const m = agendaMessage(news, day); if (!m || (await sendTelegram(m, newsTo()))) state.lastAgenda = day; } }
   if (!report) { const wk = weeklyDue(state); if (wk) { await sendTelegram(summaryMessage(state)); state.lastWeekly = wk; sent++; } }
   saveState(state);
@@ -615,6 +691,7 @@ async function scan(report = false) {
 
 const args = process.argv.slice(2);
 if (args.includes("--summary")) await sendTelegram(summaryMessage(loadState()));
+else if (args.includes("--results")) { const st = loadState(); const n = await postResults(st, await loadNews(st), (m) => (console.log(m), sendTelegram(m, newsTo()))); saveState(st); console.log("resultados publicados:", n); }
 else if (args.includes("--agenda")) { const d = new Date().toLocaleDateString("en-CA", { timeZone: "Europe/Madrid" }); const st0 = loadState(); const nw = await loadNews(st0); saveState(st0); console.log("eventos fuertes cargados:", nw.length); const m = agendaMessage(nw, d); console.log(m ?? "sin noticias fuertes hoy"); if (m) await sendTelegram(m, newsTo()); }
 else if (args.includes("--sample")) {
   // envía ejemplos de formato con precios reales (no son señales reales)
