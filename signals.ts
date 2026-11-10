@@ -48,15 +48,18 @@ const TOKEN = loadToken();
 const CHATS = loadChatIds();
 
 // Devuelve true si llegó a todos los chats. Si Telegram rechaza el formato HTML, reenvía en texto plano.
-async function sendTelegram(text: string): Promise<boolean> {
+// Destino de las noticias (grupo y tema): secreto TELEGRAM_NEWS_TARGET con formato "chat_id:tema". Si no existe, van al privado.
+const NEWS_TARGET = process.env.TELEGRAM_NEWS_TARGET?.trim() || "";
+const newsTo = () => { if (!NEWS_TARGET) return undefined; const [chat, th] = NEWS_TARGET.split(":"); return { chat, thread: th ? +th : undefined }; };
+async function sendTelegram(text: string, to?: { chat: string; thread?: number }): Promise<boolean> {
   let allOk = true;
-  for (const chat_id of CHATS) {
+  for (const chat_id of to ? [to.chat] : CHATS) {
     let ok = false, html = true;
     for (let attempt = 1; attempt <= 4 && !ok; attempt++) {
       try {
         const body = html
-          ? { chat_id, text, parse_mode: "HTML", disable_web_page_preview: true }
-          : { chat_id, text: text.replace(/<[^>]+>/g, ""), disable_web_page_preview: true };
+          ? { chat_id, text, parse_mode: "HTML", disable_web_page_preview: true, ...(to?.thread ? { message_thread_id: to.thread } : {}) }
+          : { chat_id, text: text.replace(/<[^>]+>/g, ""), disable_web_page_preview: true, ...(to?.thread ? { message_thread_id: to.thread } : {}) };
         const r = await fetch(`https://api.telegram.org/bot${TOKEN}/sendMessage`, {
           method: "POST",
           headers: { "content-type": "application/json" },
@@ -602,7 +605,7 @@ async function scan(report = false) {
       }
     }
   }
-  if (!report) { const day = agendaDue(state); if (day) { const m = agendaMessage(news, day); if (!m || (await sendTelegram(m))) state.lastAgenda = day; } }
+  if (!report) { const day = agendaDue(state); if (day) { const m = agendaMessage(news, day); if (!m || (await sendTelegram(m, newsTo()))) state.lastAgenda = day; } }
   if (!report) { const wk = weeklyDue(state); if (wk) { await sendTelegram(summaryMessage(state)); state.lastWeekly = wk; sent++; } }
   saveState(state);
   console.log(new Date().toLocaleString(), `— mensajes enviados: ${sent} · posiciones abiertas: ${Object.keys(state.open).length}`);
@@ -612,7 +615,7 @@ async function scan(report = false) {
 
 const args = process.argv.slice(2);
 if (args.includes("--summary")) await sendTelegram(summaryMessage(loadState()));
-else if (args.includes("--agenda")) { const d = new Date().toLocaleDateString("en-CA", { timeZone: "Europe/Madrid" }); const st0 = loadState(); const nw = await loadNews(st0); saveState(st0); console.log("eventos fuertes cargados:", nw.length); const m = agendaMessage(nw, d); console.log(m ?? "sin noticias fuertes hoy"); if (m) await sendTelegram(m); }
+else if (args.includes("--agenda")) { const d = new Date().toLocaleDateString("en-CA", { timeZone: "Europe/Madrid" }); const st0 = loadState(); const nw = await loadNews(st0); saveState(st0); console.log("eventos fuertes cargados:", nw.length); const m = agendaMessage(nw, d); console.log(m ?? "sin noticias fuertes hoy"); if (m) await sendTelegram(m, newsTo()); }
 else if (args.includes("--sample")) {
   // envía ejemplos de formato con precios reales (no son señales reales)
   const k = await fetchBinance("BTCUSDT", "1d"), I = ind(k), i = k.length - 1, c = I.c[i];

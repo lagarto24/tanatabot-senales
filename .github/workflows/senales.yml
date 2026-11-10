@@ -31,6 +31,7 @@ jobs:
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_IDS: ${{ secrets.TELEGRAM_CHAT_IDS }}
+          TELEGRAM_NEWS_TARGET: ${{ secrets.TELEGRAM_NEWS_TARGET }}
         run: |
           git config user.name "tanatabot"
           git config user.email "tanatabot@users.noreply.github.com"
