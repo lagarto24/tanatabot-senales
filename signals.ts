@@ -46,24 +46,34 @@ function loadChatIds(): string[] {
 const TOKEN = loadToken();
 const CHATS = loadChatIds();
 
-async function sendTelegram(text: string) {
+// Devuelve true si llegó a todos los chats. Si Telegram rechaza el formato HTML, reenvía en texto plano.
+async function sendTelegram(text: string): Promise<boolean> {
+  let allOk = true;
   for (const chat_id of CHATS) {
-    for (let attempt = 1; attempt <= 4; attempt++) {
+    let ok = false, html = true;
+    for (let attempt = 1; attempt <= 4 && !ok; attempt++) {
       try {
+        const body = html
+          ? { chat_id, text, parse_mode: "HTML", disable_web_page_preview: true }
+          : { chat_id, text: text.replace(/<[^>]+>/g, ""), disable_web_page_preview: true };
         const r = await fetch(`https://api.telegram.org/bot${TOKEN}/sendMessage`, {
           method: "POST",
           headers: { "content-type": "application/json" },
-          body: JSON.stringify({ chat_id, text, parse_mode: "HTML", disable_web_page_preview: true }),
+          body: JSON.stringify(body),
         });
-        if (r.ok) break;
-        console.error("Telegram error:", r.status, await r.text());
+        if (r.ok) { ok = true; break; }
+        const err = await r.text();
+        console.error("Telegram error:", r.status, err);
+        if (r.status === 400 && html) { html = false; continue; } // formato no válido → texto plano
         if (r.status < 500 && r.status !== 429) break;
       } catch (e) {
         console.error(`Telegram fallo de red (intento ${attempt}):`, (e as Error).message);
       }
       await Bun.sleep(attempt * 3000);
     }
+    allOk &&= ok;
   }
+  return allOk;
 }
 
 // ───────────── Datos ─────────────
@@ -120,7 +130,7 @@ async function fetchStock(sym: string, tf: TF): Promise<Candle[]> {
   if (tf === "1d") {
     const d = await yahoo(sym, "1d", "2y");
     // la vela de hoy está abierta hasta ~16:00 NY; se descarta si es de las últimas 20 h
-    return d.filter((c) => c.t + 20 * H < now);
+    return d.filter((c) => c.t + 7 * H < now); // la vela diaria (abre 9:30 NY) se da por cerrada 30 min después del cierre (16:00 NY)
   }
   const h1 = (await yahoo(sym, "60m", "1y")).filter((c) => c.t + H <= now);
   if (tf === "1h") return h1;
@@ -323,7 +333,7 @@ type Entry = { strat: Strat; side: "LONG" | "SHORT"; price: number; sl: number; 
 type Position = Entry & { sym: string; tf: TF; isCrypto: boolean; lastBar: number; bars: number; stop: number; exit?: { price: number; why: string } };
 
 function entryMessage(sym: string, tf: TF, e: Entry, isCrypto: boolean): string {
-  const L = e.side === "LONG", cur = isCrypto ? "USDT" : "USD";
+  const L = e.side === "LONG", cur = HYPERLIQUID[sym] ? "USDC" : isCrypto ? "USDT" : "USD";
   const pct = (x: number) => `${x >= e.price ? "+" : "−"}${Math.abs(((x - e.price) / e.price) * 100).toFixed(2)}%`;
   const rr = e.tp ? Math.abs(e.tp - e.price) / Math.abs(e.price - e.sl) : 0;
   return [
@@ -486,7 +496,7 @@ async function scan(report = false) {
   const state = loadState();
   const lines: string[] = [];
   let sent = 0;
-  const send = async (m: string) => { if (!report) { await sendTelegram(m); sent++; } };
+  const send = async (m: string) => { if (report) return true; const ok = await sendTelegram(m); if (ok) sent++; return ok; };
   const jobs = [...CRYPTO.map((s) => [s, true] as const), ...STOCKS.map((s) => [s, false] as const)];
   for (const [sym, isCrypto] of jobs) {
     for (const tf of TIMEFRAMES) {
@@ -494,7 +504,8 @@ async function scan(report = false) {
         const k = isCrypto ? await fetchCrypto(sym, tf) : await fetchStock(sym, tf);
         if (k.length < 220) { lines.push(`${sym} ${tf}: datos insuficientes`); continue; }
         const I = ind(k), last = k[k.length - 1];
-        const strats: Strat[] = tf === "1d" ? (isCrypto ? ["DON", "EMA", "VOL"] : ["DON", "RSI2", "EMA", "VOL"]) : ["RNG"];
+        // orden = prioridad si varias estrategias coinciden en el mismo activo
+        const strats: Strat[] = tf === "1d" ? (isCrypto ? ["DON", "VOL", "EMA"] : ["DON", "RSI2", "VOL", "EMA"]) : ["RNG"];
         const tags: string[] = [];
         for (const st of strats) {
           const key = `${st}|${sym}|${tf}`;
@@ -512,13 +523,14 @@ async function scan(report = false) {
             continue;
           }
           if (state.last[key] === last.t) continue;
-          if (st === "VOL" && state.open[`DON|${sym}|${tf}`]) continue; // evita doble señal del mismo activo
+          // una sola operación LONG por activo a la vez (evita acumular riesgo si varias estrategias coinciden)
+          if (Object.values(state.open).some((p) => p.sym === sym && p.side === "LONG")) continue;
           const e = st === "DON" ? donchianEntry(k, I) : st === "RSI2" ? rsi2Entry(k, I) : st === "RNG" ? rangeEntry(k, I) : st === "VOL" ? volEntry(k, I) : emaEntry(k);
           if (!e) continue;
           tags.push(`${st} ${e.side} NUEVA`);
           if (report) continue;
+          if (!(await send(entryMessage(sym, tf, e, isCrypto)))) { tags.push("(no enviada, se reintenta)"); continue; } // si Telegram falla, no se marca: se reintenta en la próxima pasada
           state.last[key] = last.t;
-          await send(entryMessage(sym, tf, e, isCrypto));
           state.open[key] = { ...e, sym, tf, isCrypto, lastBar: last.t, bars: 0, stop: e.sl };
         }
         lines.push(`${sym} ${tf}: ${fmt(last.c)}${tags.length ? " · " + tags.join(" · ") : ""}`);
