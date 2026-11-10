@@ -56,5 +56,34 @@
       "bars": 1,
       "stop": 95.55796669862076
     }
+  },
+  "newsCache": {
+    "at": 1794314484401,
+    "ev": [
+      {
+        "t": 1794317400000,
+        "title": "Core CPI m/m",
+        "forecast": "0.2%",
+        "previous": "0.3%"
+      },
+      {
+        "t": 1794317400000,
+        "title": "CPI m/m",
+        "forecast": "0.3%",
+        "previous": "0.6%"
+      },
+      {
+        "t": 1794576600000,
+        "title": "Core PPI m/m",
+        "forecast": "0.3%",
+        "previous": "0.7%"
+      },
+      {
+        "t": 1794576600000,
+        "title": "PPI m/m",
+        "forecast": "0.4%",
+        "previous": "1.3%"
+      }
+    ]
   }
 }
