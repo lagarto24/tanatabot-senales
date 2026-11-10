@@ -1,6 +1,7 @@
 // Bot de señales técnicas -> Telegram (@Tanatabot)
 // Uso:  bun signals.ts --once   (una pasada: la usa GitHub Actions cada hora)
-//       bun signals.ts --report (resumen a Telegram) · --dry (prueba local) · --replay (verificación) · --sample (ejemplos)
+//       bun signals.ts --summary (resumen de resultados a Telegram; se envía solo cada domingo 19:00)
+//       bun signals.ts --report (estado del mercado a Telegram) · --dry (prueba local) · --replay (verificación) · --sample (ejemplos)
 //
 // Estrategias elegidas por backtest con validación (70% historial / 30% datos no vistos):
 //   Donchian 20/10 solo LONG (todas), RSI(2) Connors (acciones 1D), EMA 30/150/200 retroceso solo LONG (1D).
@@ -318,7 +319,7 @@ const STRAT_INFO: Record<Strat, { name: string; how: string; hist: (tf: TF) => s
 const HIGH_CONF = (s: Strat, tf: TF) => tf === "1d";
 
 type Entry = { strat: Strat; side: "LONG" | "SHORT"; price: number; sl: number; tp?: number; t: number; reasons: string[] };
-type Position = Entry & { sym: string; tf: TF; isCrypto: boolean; lastBar: number; bars: number; stop: number };
+type Position = Entry & { sym: string; tf: TF; isCrypto: boolean; lastBar: number; bars: number; stop: number; exit?: { price: number; why: string } };
 
 function entryMessage(sym: string, tf: TF, e: Entry, isCrypto: boolean): string {
   const L = e.side === "LONG", cur = isCrypto ? "USDT" : "USD";
@@ -406,6 +407,7 @@ function emaEntry(k: Candle[]): Entry | null {
 function track(p: Position, k: Candle[], I: ReturnType<typeof ind>): { msgs: string[]; closed: boolean } {
   const L = p.side === "LONG", msgs: string[] = [];
   const legacy = !p.tp; // posiciones antiguas (sin TP fijo) siguen con sus avisos; las nuevas cierran en silencio en TP o SL
+  const done = (price: number, why: string) => { p.exit = { price, why }; msgs.push(exitMessage(p, price, why)); return { msgs, closed: true }; };
   const start = k.findIndex((x) => x.t > p.lastBar);
   if (start < 0) return { msgs, closed: false };
   const prevStop = p.stop;
@@ -413,16 +415,15 @@ function track(p: Position, k: Candle[], I: ReturnType<typeof ind>): { msgs: str
     const x = k[m];
     p.lastBar = x.t; p.bars++;
     if (L ? x.l <= p.stop : x.h >= p.stop) {
-      msgs.push(exitMessage(p, p.stop, p.stop === p.sl ? "el precio tocó el stop loss" : "el precio tocó el stop que fuimos subiendo"));
-      return { msgs, closed: true };
+      return done(p.stop, p.stop === p.sl ? "el precio tocó el stop loss" : "el precio tocó el stop que fuimos subiendo");
     }
-    if (p.tp && (L ? x.h >= p.tp : x.l <= p.tp)) { msgs.push(exitMessage(p, p.tp, "🎯 se alcanzó el objetivo (take profit)")); return { msgs, closed: true }; }
-    if (legacy && p.strat === "RSI2" && x.c > I.s5[m]) { msgs.push(exitMessage(p, x.c, "el precio rebotó sobre su media de 5 días (fin del rebote)")); return { msgs, closed: true }; }
+    if (p.tp && (L ? x.h >= p.tp : x.l <= p.tp)) { return done(p.tp, "🎯 se alcanzó el objetivo (take profit)"); }
+    if (legacy && p.strat === "RSI2" && x.c > I.s5[m]) { return done(x.c, "el precio rebotó sobre su media de 5 días (fin del rebote)"); }
     if (legacy && p.strat === "DON" && m >= 10) {
       const t10 = L ? Math.min(...k.slice(m - 9, m + 1).map((y) => y.l)) : Math.max(...k.slice(m - 9, m + 1).map((y) => y.h));
       p.stop = L ? Math.max(p.stop, t10) : Math.min(p.stop, t10);
     }
-    if (p.bars >= (p.strat === "EMA" || p.strat === "RNG" ? 60 : 120)) { msgs.push(exitMessage(p, x.c, "llevaba demasiado tiempo abierta sin resolverse")); return { msgs, closed: true }; }
+    if (p.bars >= (p.strat === "EMA" || p.strat === "RNG" ? 60 : 120)) { return done(x.c, "llevaba demasiado tiempo abierta sin resolverse"); }
   }
   // avisar de movimiento de stop solo si es relevante (≥ 0.25 ATR); en 1h solo si es ≥ 1 ATR para no saturar
   const a = I.atr[k.length - 1], minMove = (p.tf === "1h" ? 1 : 0.25) * a;
@@ -432,12 +433,44 @@ function track(p: Position, k: Candle[], I: ReturnType<typeof ind>): { msgs: str
 const silent = (r: { msgs: string[]; closed: boolean }, p: Position) => (p.tp ? { msgs: [], closed: r.closed } : r);
 
 // ───────────── Bucle ─────────────
-type State = { last: Record<string, number>; open: Record<string, Position> };
+type Closed = { sym: string; tf: TF; strat: Strat; side: "LONG" | "SHORT"; entry: number; exit: number; sl: number; tp?: number; R: number; pct: number; opened: number; closed: number; why: string };
+type State = { last: Record<string, number>; open: Record<string, Position>; history?: Closed[]; lastWeekly?: string };
 const loadState = (): State => {
   const raw = existsSync(STATE_FILE) ? JSON.parse(readFileSync(STATE_FILE, "utf8")) : {};
   return raw.open ? raw : { last: {}, open: {} }; // formato antiguo → empezar limpio
 };
 const saveState = (s: State) => writeFileSync(STATE_FILE, JSON.stringify(s, null, 2));
+
+// ───────────── Registro y resumen semanal ─────────────
+function summaryMessage(state: State, days = 7): string {
+  const h = state.history ?? [], since = Date.now() - days * 86400_000;
+  const block = (list: Closed[]) => {
+    if (!list.length) return ["Sin operaciones cerradas."];
+    const w = list.filter((x) => x.R > 0).length, R = list.reduce((a, x) => a + x.R, 0);
+    return [`Operaciones: <b>${list.length}</b> · ✅ ${w} ganadas · 🛑 ${list.length - w} perdidas`, `Acierto: <b>${((w / list.length) * 100).toFixed(0)}%</b> · Resultado: <b>${R >= 0 ? "+" : ""}${R.toFixed(1)}R</b>`];
+  };
+  const week = h.filter((x) => x.closed >= since);
+  const open = Object.values(state.open);
+  return [
+    `📊 <b>RESUMEN SEMANAL</b>`,
+    ``,
+    `<b>Esta semana</b>`, ...block(week),
+    ...week.map((x) => `${x.R > 0 ? "✅" : "🛑"} ${x.sym} ${x.tf.toUpperCase()} ${x.side}: ${x.pct >= 0 ? "+" : ""}${x.pct.toFixed(2)}% (${x.R >= 0 ? "+" : ""}${x.R.toFixed(1)}R)`),
+    ``,
+    `<b>Desde el inicio</b>`, ...block(h),
+    ``,
+    `<b>Abiertas ahora: ${open.length}</b>`,
+    ...open.map((p) => `• ${p.sym} ${p.tf.toUpperCase()} ${p.side} desde ${fmt(p.price)}`),
+    ``,
+    `<i>R = veces lo arriesgado. +1R = ganaste lo mismo que arriesgabas.</i>`,
+  ].join("\n");
+}
+function weeklyDue(state: State): string | null {
+  const parts = new Intl.DateTimeFormat("en-GB", { timeZone: "Europe/Madrid", weekday: "short", hour: "numeric", hour12: false, year: "numeric", month: "2-digit", day: "2-digit" }).formatToParts(new Date());
+  const g = (t: string) => parts.find((x) => x.type === t)?.value ?? "";
+  const key = `${g("year")}-${g("month")}-${g("day")}`;
+  return g("weekday") === "Sun" && +g("hour") >= 19 && state.lastWeekly !== key ? key : null;
+}
 
 async function scan(report = false) {
   const state = loadState();
@@ -459,7 +492,13 @@ async function scan(report = false) {
           if (pos) {
             const r = silent(track(pos, k, I), pos);
             for (const m of r.msgs) await send(m);
-            if (r.closed) delete state.open[key]; else tags.push(`${st} ${pos.side} abierta`);
+            if (r.closed) {
+              if (pos.exit) {
+                const Lg = pos.side === "LONG", diff = Lg ? pos.exit.price - pos.price : pos.price - pos.exit.price;
+                (state.history ??= []).push({ sym, tf, strat: pos.strat, side: pos.side, entry: pos.price, exit: pos.exit.price, sl: pos.sl, tp: pos.tp, R: diff / Math.abs(pos.price - pos.sl), pct: (diff / pos.price) * 100, opened: pos.t, closed: Date.now(), why: pos.exit.why });
+              }
+              delete state.open[key];
+            } else tags.push(`${st} ${pos.side} abierta`);
             continue;
           }
           if (state.last[key] === last.t) continue;
@@ -477,6 +516,7 @@ async function scan(report = false) {
       }
     }
   }
+  if (!report) { const wk = weeklyDue(state); if (wk) { await sendTelegram(summaryMessage(state)); state.lastWeekly = wk; sent++; } }
   saveState(state);
   console.log(new Date().toLocaleString(), `— mensajes enviados: ${sent} · posiciones abiertas: ${Object.keys(state.open).length}`);
   console.log(lines.join("\n"));
@@ -484,7 +524,8 @@ async function scan(report = false) {
 }
 
 const args = process.argv.slice(2);
-if (args.includes("--sample")) {
+if (args.includes("--summary")) await sendTelegram(summaryMessage(loadState()));
+else if (args.includes("--sample")) {
   // envía ejemplos de formato con precios reales (no son señales reales)
   const k = await fetchBinance("BTCUSDT", "1d"), I = ind(k), i = k.length - 1, c = I.c[i];
   const ex: Entry = { strat: "DON", side: "LONG", price: c, sl: c - 2 * I.atr[i], tp: c + 6 * I.atr[i], t: k[i].t, reasons: [`Rompió el máximo de las últimas 20 velas`, `Tendencia alcista: precio sobre la EMA200`] };
