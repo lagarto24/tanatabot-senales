@@ -666,7 +666,7 @@ function backtestLiq(k: Candle[], p: LiqParams): Trade[] {
 }
 
 // ═════════ Estrategias del curso de Fran Ruiz (clases 1-9), reglas tal como las describe ═════════
-type FranParams = { kind: "cross" | "mabounce" | "ema725" | "fib" | "div" | "retest" | "volbrk" | "double"; side: "L" | "S"; rsiFib?: boolean };
+type FranParams = { kind: "bottom" | "cross" | "mabounce" | "ema725" | "fib" | "div" | "retest" | "volbrk" | "double"; side: "L" | "S"; rsiFib?: boolean };
 function backtestFran(k: Candle[], p: FranParams): Trade[] {
   const c = k.map((x) => x.c), s50 = sma(c, 50), s100 = sma(c, 100), s200 = sma(c, 200), e7 = ema(c, 7), e25 = ema(c, 25), r = rsi(c), { atr } = atrAdx(k);
   const L = p.side === "L", N = 3, trades: Trade[] = [];
@@ -680,7 +680,10 @@ function backtestFran(k: Candle[], p: FranParams): Trade[] {
     const j = i - N; if (isH(j)) highs.push(j); if (isL(j)) lows.push(j);
     const b = k[i], pv = k[i - 1], a = atr[i];
     const entry = c[i]; let sl = NaN, tp = NaN;
-    if (p.kind === "cross") {
+    if (p.kind === "bottom") {
+      // Aviso de posible suelo: RSI diario < 25 (sobreventa extrema) y vela de giro alcista (martillo o envolvente)
+      if (L && (r[i] < 25 || r[i - 1] < 25) && bull(b, pv)) sl = b.l - 0.2 * a;
+    } else     if (p.kind === "cross") {
       // Clase 2: cruce dorado / de la muerte SMA50-200 con ángulo pronunciado (pendiente de la SMA50)
       const slope = (s50[i] - s50[i - 5]) / a;
       if (L ? s50[i - 1] <= s200[i - 1] && s50[i] > s200[i] && slope > 0.5 : s50[i - 1] >= s200[i - 1] && s50[i] < s200[i] && slope < -0.5) sl = L ? entry - 2 * a : entry + 2 * a;
@@ -866,6 +869,7 @@ if (process.env.STRESS) {
     { name: "barrido LONG en tendencia 1:3", side: "L", trend: true, rr: 3 },
   ];
   const FRAN: [string, FranParams][] = [
+    ["Posible suelo (RSI<25 + vela de giro)", { kind: "bottom", side: "L" }],
     ["Cruce dorado SMA50/200", { kind: "cross", side: "L" }], ["Cruce de la muerte SMA50/200", { kind: "cross", side: "S" }],
     ["Rebote en SMA 50/100/200 LONG", { kind: "mabounce", side: "L" }], ["Rechazo en SMA 50/100/200 SHORT", { kind: "mabounce", side: "S" }],
     ["Cruce EMA 7/25 LONG", { kind: "ema725", side: "L" }], ["Cruce EMA 7/25 SHORT", { kind: "ema725", side: "S" }],
@@ -877,7 +881,7 @@ if (process.env.STRESS) {
     ["Doble suelo", { kind: "double", side: "L" }], ["Doble techo", { kind: "double", side: "S" }],
   ];
   const specs: Spec[] = [
-    ...(process.env.FRAN ? FRAN.flatMap(([nm, P]) => (["4h", "1d"] as TF[]).map((tf): Spec => ({ name: `FRAN ${nm} ${tf}`, tfs: [tf], syms: ALL, params: {}, run: (k: Candle[]) => backtestFran(k, P) }))) : []),
+    ...(process.env.FRAN ? FRAN.filter(([nm]) => !process.env.FRANONLY || nm.startsWith(process.env.FRANONLY)).flatMap(([nm, P]) => (["4h", "1d"] as TF[]).map((tf): Spec => ({ name: `FRAN ${nm} ${tf}`, tfs: [tf], syms: ALL, params: {}, run: (k: Candle[]) => backtestFran(k, P) }))) : []),
     ...(process.env.LIQ ? LQ.flatMap((P) => (["4h", "1d"] as TF[]).map((tf): Spec => ({ name: `LIQ ${P.name} ${tf}`, tfs: [tf], syms: process.env.ONLY!.split(","), params: { n: 3, look: 50 }, run: (k: Candle[], _t: TF, _s: string, Q: Record<string, number>) => backtestLiq(k, { ...P, ...Q }) }))) : []),
     ...(process.env.FUND ? FV.map((P): Spec => ({ name: `FUND ${P.name} 4h`, tfs: ["4h"], syms: process.env.ONLY!.split(","), params: { sl: P.sl, pct: P.pct }, run: (k: Candle[], _t: TF, s: string, Q: Record<string, number>) => backtestFund(k, FUNDING[s] ?? [], { ...P, ...Q }) })) : []),
     ...(process.env.PCT ? (["don", "ema", "rng", "sq"] as const).flatMap((kind) => (["L", "S"] as const).flatMap((side) => [[2, 1], [3, 1.5], [4, 2]].map(([tp, sl]): Spec => ({ name: `PCT ${kind} ${side === "L" ? "LONG" : "SHORT"} TP${tp}% SL${sl}%`, tfs: ["4h"], syms: ["BTCUSDT", "HYPEUSDT", "SOLUSDT"], params: kind === "don" ? { n: 20 } : {}, run: (k: Candle[], _t: TF, _s: string, P: Record<string, number>) => backtestPct(k, { kind, side, tp, sl, n: P.n }) })))) : []),

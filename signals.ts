@@ -309,7 +309,7 @@ const madrid = (ms: number) => new Date(ms).toLocaleString("es-ES", { timeZone: 
 //  DON  Donchian 20/10 "Tortugas" — todas las temporalidades y activos. En 1D: PF 1.69 → 1.33 en datos no vistos.
 //  RSI2 Connors RSI(2) — solo acciones, solo LONG, 1D. PF 1.28 → 2.05, acierto ~70%.
 //  EMA  EMA 30/150/200 retroceso — 1D, TP fijo 1:2. PF 1.23 → 1.42.
-type Strat = "DON" | "RSI2" | "EMA" | "RNG" | "VOL";
+type Strat = "DON" | "RSI2" | "EMA" | "RNG" | "VOL" | "BOT";
 const STRAT_INFO: Record<Strat, { name: string; how: string; hist: (tf: TF) => string }> = {
   DON: {
     name: "Ruptura Donchian (método \"Tortugas\")",
@@ -323,6 +323,7 @@ const STRAT_INFO: Record<Strat, { name: string; how: string; hist: (tf: TF) => s
     how: "Una acción en tendencia alcista cae fuerte unos días. Se compra la caída y se vende en el rebote.",
     hist: () => "En pruebas con años de historial: acierta ~70% de las veces, con operaciones cortas (pocos días).",
   },
+  BOT: { name: "Posible suelo (sobreventa extrema + vela de giro)", how: "RSI diario por debajo de 25 y una vela de giro alcista.", hist: () => "En pruebas: PF 1.66 en 71 casos; pocos casos, aún no validado del todo." },
   VOL: { name: "Ruptura con volumen (curso Fran Ruiz, clase 5)", how: "El precio rompe el máximo de 20 velas con un volumen 1,5 veces mayor de lo normal.", hist: () => "PF 1.50 en datos no vistos; pasó las pruebas de estrés." },
   RNG: { name: "Rebote en rango (baja volatilidad)", how: "Mercado tranquilo y sin tendencia: el precio sale por debajo de la banda de Bollinger y vuelve a entrar.", hist: () => "PF 1.62 en datos no vistos." },
   EMA: {
@@ -344,7 +345,10 @@ function entryMessage(sym: string, tf: TF, e: Entry, isCrypto: boolean): string 
   const pct = (x: number) => `${x >= e.price ? "+" : "−"}${Math.abs(((x - e.price) / e.price) * 100).toFixed(2)}%`;
   const rr = e.tp ? Math.abs(e.tp - e.price) / Math.abs(e.price - e.sl) : 0;
   return [
-    `${L ? "🟢" : "🔴"} <b>${e.side} · ${metal ? metal.name : sym}</b> (${tf.toUpperCase()})`,
+    e.strat === "BOT"
+      ? `⚠️ <b>POSIBLE SUELO · ${metal ? metal.name : sym}</b> (${tf.toUpperCase()}) · LONG`
+      : `${L ? "🟢" : "🔴"} <b>${e.side} · ${metal ? metal.name : sym}</b> (${tf.toUpperCase()})`,
+    ...(e.strat === "BOT" ? [`<i>Aviso, no señal validada: ${e.reasons.join(" + ")}. Usa la mitad de tamaño.</i>`] : []),
     ``,
     `Entrada: <b>${fmt(e.price)} ${cur}</b>`,
     `Take profit: <b>${fmt(e.tp!)}</b> (${pct(e.tp!)})`,
@@ -386,7 +390,7 @@ const ind = (k: Candle[]) => {
   const c = k.map((x) => x.c);
   const aa = atrAdx(k), mid = sma(c, 20);
   const sd = c.map((_, i) => { if (i < 19) return NaN; let s = 0; for (let j = i - 19; j <= i; j++) s += (c[j] - mid[i]) ** 2; return Math.sqrt(s / 20); });
-  return { c, e200: ema(c, 200), s200: sma(c, 200), s5: sma(c, 5), r2: rsi(c, 2), atr: aa.atr, adx: aa.adx, mid, bbLo: c.map((_, i) => mid[i] - 2 * sd[i]), bbUp: c.map((_, i) => mid[i] + 2 * sd[i]) };
+  return { c, r14: rsi(c, 14), e200: ema(c, 200), s200: sma(c, 200), s5: sma(c, 5), r2: rsi(c, 2), atr: aa.atr, adx: aa.adx, mid, bbLo: c.map((_, i) => mid[i] - 2 * sd[i]), bbUp: c.map((_, i) => mid[i] + 2 * sd[i]) };
 };
 
 function donchianEntry(k: Candle[], I: ReturnType<typeof ind>): Entry | null {
@@ -406,6 +410,19 @@ function rsi2Entry(k: Candle[], I: ReturnType<typeof ind>): Entry | null {
   return null;
 }
 // Rebote en rango 4H: ADX < 20, bandas estrechas (< 6%), cierre previo bajo la banda inferior y cierre actual dentro. SL 1.5 ATR, TP 1:1.5.
+// Aviso de posible suelo 1D: RSI(14) < 25 (en esta vela o la anterior) + martillo o envolvente alcista. SL bajo la vela, TP 1:2.
+// En pruebas: PF 1.66 en 71 casos (pocos), así que se marca como aviso no validado del todo.
+function bottomEntry(k: Candle[], I: ReturnType<typeof ind>): Entry | null {
+  const i = k.length - 1; if (i < 220) return null;
+  const b = k[i], pv = k[i - 1], a = I.atr[i], body = Math.abs(b.c - b.o), lw = Math.min(b.o, b.c) - b.l, rng = b.h - b.l;
+  const engulf = b.c > b.o && pv.c < pv.o && b.c >= pv.o && b.o <= pv.c;
+  const hammer = rng > 0 && lw >= 2 * body && lw >= 0.6 * rng;
+  if (!((I.r14[i] < 25 || I.r14[i - 1] < 25) && (engulf || hammer))) return null;
+  const sl = b.l - 0.2 * a, risk = b.c - sl;
+  if (!(risk > 0.3 * a && risk < 5 * a)) return null;
+  return { strat: "BOT", side: "LONG", price: b.c, sl, tp: b.c + 2 * risk, t: b.t, reasons: [`RSI diario ${I.r14[i].toFixed(0)} (sobreventa extrema)`, engulf ? "Vela envolvente alcista" : "Vela martillo"] };
+}
+
 // Ruptura con volumen 1D (curso de Fran Ruiz, clase 5): cierre sobre el máximo de 20 velas con volumen > 1,5× la media. SL 1,5 ATR, TP 1:2.
 function volEntry(k: Candle[], I: ReturnType<typeof ind>): Entry | null {
   const i = k.length - 1; if (i < 220) return null;
@@ -451,7 +468,7 @@ function track(p: Position, k: Candle[], I: ReturnType<typeof ind>): { msgs: str
       const t10 = L ? Math.min(...k.slice(m - 9, m + 1).map((y) => y.l)) : Math.max(...k.slice(m - 9, m + 1).map((y) => y.h));
       p.stop = L ? Math.max(p.stop, t10) : Math.min(p.stop, t10);
     }
-    if (p.bars >= (p.strat === "EMA" || p.strat === "RNG" || p.strat === "VOL" ? 60 : 120)) { return done(x.c, "llevaba demasiado tiempo abierta sin resolverse"); }
+    if (p.bars >= (p.strat === "EMA" || p.strat === "RNG" || p.strat === "VOL" || p.strat === "BOT" ? 60 : 120)) { return done(x.c, "llevaba demasiado tiempo abierta sin resolverse"); }
   }
   // avisar de movimiento de stop solo si es relevante (≥ 0.25 ATR); en 1h solo si es ≥ 1 ATR para no saturar
   const a = I.atr[k.length - 1], minMove = (p.tf === "1h" ? 1 : 0.25) * a;
@@ -703,7 +720,7 @@ async function scan(report = false) {
         if (k.length < 220) { lines.push(`${sym} ${tf}: datos insuficientes`); continue; }
         const I = ind(k), last = k[k.length - 1];
         // orden = prioridad si varias estrategias coinciden en el mismo activo
-        const strats: Strat[] = tf === "1d" ? (isCrypto ? ["DON", "VOL", "EMA"] : ["DON", "RSI2", "VOL", "EMA"]) : ["RNG"];
+        const strats: Strat[] = tf === "1d" ? (isCrypto ? ["DON", "VOL", "EMA", "BOT"] : ["DON", "RSI2", "VOL", "EMA", "BOT"]) : ["RNG"];
         const tags: string[] = [];
         for (const st of strats) {
           const key = `${st}|${sym}|${tf}`;
@@ -723,7 +740,7 @@ async function scan(report = false) {
           if (state.last[key] === last.t) continue;
           // una sola operación LONG por activo a la vez (evita acumular riesgo si varias estrategias coinciden)
           if (Object.values(state.open).some((p) => p.sym === sym && p.side === "LONG")) continue;
-          const e = st === "DON" ? donchianEntry(k, I) : st === "RSI2" ? rsi2Entry(k, I) : st === "RNG" ? rangeEntry(k, I) : st === "VOL" ? volEntry(k, I) : emaEntry(k);
+          const e = st === "DON" ? donchianEntry(k, I) : st === "RSI2" ? rsi2Entry(k, I) : st === "RNG" ? rangeEntry(k, I) : st === "VOL" ? volEntry(k, I) : st === "BOT" ? bottomEntry(k, I) : emaEntry(k);
           if (!e) continue;
           tags.push(`${st} ${e.side} NUEVA`);
           if (report) continue;
@@ -777,7 +794,7 @@ else if (args.includes("--sample")) {
           }
           continue;
         }
-        const e = st === "DON" ? donchianEntry(k, I) : st === "RSI2" ? rsi2Entry(k, I) : st === "RNG" ? rangeEntry(k, I) : st === "VOL" ? volEntry(k, I) : emaEntry(k);
+        const e = st === "DON" ? donchianEntry(k, I) : st === "RSI2" ? rsi2Entry(k, I) : st === "RNG" ? rangeEntry(k, I) : st === "VOL" ? volEntry(k, I) : st === "BOT" ? bottomEntry(k, I) : emaEntry(k);
         if (e) pos = { ...e, sym, tf: REPLAY_TF, isCrypto, lastBar: last.t, bars: 0, stop: e.sl };
       }
       const w = R.filter((x) => x > 0), l = R.filter((x) => x <= 0);
