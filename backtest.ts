@@ -12,9 +12,9 @@ const H = 3600_000;
 const TF_MS: Record<TF, number> = { "1h": H, "4h": 4 * H, "1d": 24 * H };
 const HTF: Record<TF, TF | null> = { "1h": "4h", "4h": "1d", "1d": null };
 
-const CRYPTO = ["BTCUSDT", "ETHUSDT", "SOLUSDT", "HYPEUSDT", "BNBUSDT", "DOGEUSDT"];
+const CRYPTO = ["BTCUSDT", "ETHUSDT", "SOLUSDT", "HYPEUSDT", "BNBUSDT", "DOGEUSDT", "XRPUSDT", "SUIUSDT"];
 const HYPERLIQUID: Record<string, string> = { HYPEUSDT: "HYPE" };
-const STOCKS = ["AAPL", "TSLA", "NVDA", "MSFT", "AMZN", "SPY"];
+const STOCKS = ["AAPL", "TSLA", "NVDA", "MSFT", "AMZN", "SPY", "QQQ", "INTC", "AMD"];
 const TFS: TF[] = ["1h", "4h", "1d"];
 let FEE = 0.001; // let: la prueba de estrés la duplica
 const MAX_HOLD = 60; // velas máximas en una operación; luego cierra a mercado
@@ -665,6 +665,92 @@ function backtestLiq(k: Candle[], p: LiqParams): Trade[] {
   return trades;
 }
 
+// ═════════ Estrategias del curso de Fran Ruiz (clases 1-9), reglas tal como las describe ═════════
+type FranParams = { kind: "cross" | "mabounce" | "ema725" | "fib" | "div" | "retest" | "volbrk" | "double"; side: "L" | "S"; rsiFib?: boolean };
+function backtestFran(k: Candle[], p: FranParams): Trade[] {
+  const c = k.map((x) => x.c), s50 = sma(c, 50), s100 = sma(c, 100), s200 = sma(c, 200), e7 = ema(c, 7), e25 = ema(c, 25), r = rsi(c), { atr } = atrAdx(k);
+  const L = p.side === "L", N = 3, trades: Trade[] = [];
+  const isH = (j: number) => j >= N && j + N < k.length && [...Array(N)].every((_, d) => k[j].h >= k[j - d - 1].h && k[j].h > k[j + d + 1].h);
+  const isL = (j: number) => j >= N && j + N < k.length && [...Array(N)].every((_, d) => k[j].l <= k[j - d - 1].l && k[j].l < k[j + d + 1].l);
+  const highs: number[] = [], lows: number[] = [];
+  const bull = (b: Candle, pv: Candle) => { const body = Math.abs(b.c - b.o), lw = Math.min(b.o, b.c) - b.l, rng = b.h - b.l; return (b.c > b.o && pv.c < pv.o && b.c >= pv.o && b.o <= pv.c) || (rng > 0 && lw >= 2 * body && lw >= 0.6 * rng); };
+  const bear = (b: Candle, pv: Candle) => { const body = Math.abs(b.c - b.o), uw = b.h - Math.max(b.o, b.c), rng = b.h - b.l; return (b.c < b.o && pv.c > pv.o && b.c <= pv.o && b.o >= pv.c) || (rng > 0 && uw >= 2 * body && uw >= 0.6 * rng); };
+  let pending: { lvl: number; until: number } | null = null;
+  for (let i = 220; i < k.length - 1; i++) {
+    const j = i - N; if (isH(j)) highs.push(j); if (isL(j)) lows.push(j);
+    const b = k[i], pv = k[i - 1], a = atr[i];
+    const entry = c[i]; let sl = NaN, tp = NaN;
+    if (p.kind === "cross") {
+      // Clase 2: cruce dorado / de la muerte SMA50-200 con ángulo pronunciado (pendiente de la SMA50)
+      const slope = (s50[i] - s50[i - 5]) / a;
+      if (L ? s50[i - 1] <= s200[i - 1] && s50[i] > s200[i] && slope > 0.5 : s50[i - 1] >= s200[i - 1] && s50[i] < s200[i] && slope < -0.5) sl = L ? entry - 2 * a : entry + 2 * a;
+    } else if (p.kind === "mabounce") {
+      // Clases 1 y 2: rebote en SMA 50/100/200 con vela de giro (martillo o envolvente)
+      const trendOk = L ? s50[i] > s200[i] && c[i] > s200[i] : s50[i] < s200[i] && c[i] < s200[i];
+      const touched = [s50[i], s100[i], s200[i]].find((m) => (L ? b.l <= m + 0.2 * a && b.c > m : b.h >= m - 0.2 * a && b.c < m));
+      if (trendOk && touched !== undefined && (L ? bull(b, pv) : bear(b, pv))) sl = L ? b.l - 0.2 * a : b.h + 0.2 * a;
+    } else if (p.kind === "ema725") {
+      // Clase 2: cruce EMA 7/25 a favor de la SMA200
+      if (L ? e7[i - 1] <= e25[i - 1] && e7[i] > e25[i] && c[i] > s200[i] : e7[i - 1] >= e25[i - 1] && e7[i] < e25[i] && c[i] < s200[i]) sl = L ? entry - 1.5 * a : entry + 1.5 * a;
+    } else if (p.kind === "fib") {
+      // Clase 8: retroceso al Golden Pocket (50-61,8%) del último impulso; SL bajo el 78,6%; TP en la extensión -0,27
+      if (highs.length >= 2 && lows.length >= 2) {
+        const hI = highs[highs.length - 1], lI = lows[lows.length - 1];
+        if (L && lI < hI && k[hI].h > k[highs[highs.length - 2]].h) {
+          const H = k[hI].h, Lo = k[lI].l, R = H - Lo, z1 = H - 0.5 * R, z2 = H - 0.618 * R;
+          if (b.l <= z1 && b.c >= z2 && b.l > H - 0.786 * R && (p.rsiFib ? r[i] < 40 : b.c > b.o)) { sl = H - 0.786 * R - 0.1 * a; tp = H + 0.27 * R; }
+        }
+        if (!L && hI < lI && k[lI].l < k[lows[lows.length - 2]].l) {
+          const Lo = k[lI].l, H = k[hI].h, R = H - Lo, z1 = Lo + 0.5 * R, z2 = Lo + 0.618 * R;
+          if (b.h >= z1 && b.c <= z2 && b.h < Lo + 0.786 * R && (p.rsiFib ? r[i] > 60 : b.c < b.o)) { sl = Lo + 0.786 * R + 0.1 * a; tp = Lo - 0.27 * R; }
+        }
+      }
+    } else if (p.kind === "div") {
+      // Clases 5 y 7: divergencia RSI (precio hace nuevo mínimo y el RSI no / precio nuevo máximo y el RSI no)
+      if (L && lows.length >= 2 && lows[lows.length - 1] === j) { const a1 = lows[lows.length - 2]; if (k[j].l < k[a1].l && r[j] > r[a1] && r[j] < 40) sl = k[j].l - 0.2 * a; }
+      if (!L && highs.length >= 2 && highs[highs.length - 1] === j) { const a1 = highs[highs.length - 2]; if (k[j].h > k[a1].h && r[j] < r[a1] && r[j] > 60) sl = k[j].h + 0.2 * a; }
+    } else if (p.kind === "retest") {
+      // Clase 4: ruptura del último máximo/mínimo y entrada en el retesteo (pullback) que aguanta el nivel
+      const lvlIdx = L ? highs[highs.length - 1] : lows[lows.length - 1];
+      let broke = false;
+      if (lvlIdx !== undefined && !pending) {
+        const lvl = L ? k[lvlIdx].h : k[lvlIdx].l;
+        if (L ? pv.c <= lvl && b.c > lvl : pv.c >= lvl && b.c < lvl) { pending = { lvl, until: i + 10 }; broke = true; }
+      }
+      if (pending && i > pending.until) pending = null;
+      if (pending && !broke && (L ? b.l <= pending.lvl + 0.2 * a && b.c > pending.lvl && b.c > b.o : b.h >= pending.lvl - 0.2 * a && b.c < pending.lvl && b.c < b.o)) {
+        sl = L ? Math.min(b.l, pending.lvl) - 0.2 * a : Math.max(b.h, pending.lvl) + 0.2 * a;
+        pending = null;
+      }
+    } else if (p.kind === "volbrk") {
+      // Clase 5: ruptura del rango de 20 velas confirmada con volumen mayor a 1,5 veces la media
+      const hh = Math.max(...k.slice(i - 20, i).map((x) => x.h)), ll = Math.min(...k.slice(i - 20, i).map((x) => x.l));
+      const va = k.slice(i - 20, i).reduce((s, x) => s + x.v, 0) / 20;
+      if (va > 0 && b.v > 1.5 * va && (L ? c[i] > hh : c[i] < ll)) sl = L ? entry - 1.5 * a : entry + 1.5 * a;
+    } else if (p.kind === "double") {
+      // Clase 3: doble suelo / doble techo con ruptura de la línea de cuello; objetivo = altura del patrón
+      if (L && lows.length >= 2) {
+        const a1 = lows[lows.length - 2], a2 = lows[lows.length - 1], neck = Math.max(...k.slice(a1, a2 + 1).map((x) => x.h)), bot = Math.min(k[a1].l, k[a2].l);
+        if (a2 - a1 >= 5 && Math.abs(k[a1].l - k[a2].l) < 0.5 * a && pv.c <= neck && b.c > neck) { sl = bot - 0.2 * a; tp = neck + (neck - bot); }
+      }
+      if (!L && highs.length >= 2) {
+        const a1 = highs[highs.length - 2], a2 = highs[highs.length - 1], neck = Math.min(...k.slice(a1, a2 + 1).map((x) => x.l)), top = Math.max(k[a1].h, k[a2].h);
+        if (a2 - a1 >= 5 && Math.abs(k[a1].h - k[a2].h) < 0.5 * a && pv.c >= neck && b.c < neck) { sl = top + 0.2 * a; tp = neck - (top - neck); }
+      }
+    }
+    if (isNaN(sl)) continue;
+    const risk = Math.abs(entry - sl);
+    if (!(risk > 0.3 * a && risk < 5 * a)) continue;
+    const rr = isNaN(tp) ? 2 : Math.abs(tp - entry) / risk;
+    if (!(rr >= 0.8)) continue;
+    const sim = simulate(k, i, L, entry, sl, rr, false);
+    if (!sim) break;
+    trades.push({ side: L ? "LONG" : "SHORT", r: sim.r - (FEE * entry) / risk, bars: sim.n, t: b.t });
+    i += sim.n;
+  }
+  return trades;
+}
+
 function stats(tr: Trade[]) {
   const n = tr.length, wins = tr.filter((t) => t.r > 0).length;
   const total = tr.reduce((s, t) => s + t.r, 0);
@@ -779,7 +865,19 @@ if (process.env.STRESS) {
     { name: "barrido hacia la liquidez opuesta", side: "LS", trend: false, rr: 2, target: true },
     { name: "barrido LONG en tendencia 1:3", side: "L", trend: true, rr: 3 },
   ];
+  const FRAN: [string, FranParams][] = [
+    ["Cruce dorado SMA50/200", { kind: "cross", side: "L" }], ["Cruce de la muerte SMA50/200", { kind: "cross", side: "S" }],
+    ["Rebote en SMA 50/100/200 LONG", { kind: "mabounce", side: "L" }], ["Rechazo en SMA 50/100/200 SHORT", { kind: "mabounce", side: "S" }],
+    ["Cruce EMA 7/25 LONG", { kind: "ema725", side: "L" }], ["Cruce EMA 7/25 SHORT", { kind: "ema725", side: "S" }],
+    ["Fibonacci Golden Pocket LONG", { kind: "fib", side: "L" }], ["Fibonacci Golden Pocket SHORT", { kind: "fib", side: "S" }],
+    ["Fibonacci + RSI LONG", { kind: "fib", side: "L", rsiFib: true }], ["Fibonacci + RSI SHORT", { kind: "fib", side: "S", rsiFib: true }],
+    ["Divergencia RSI LONG", { kind: "div", side: "L" }], ["Divergencia RSI SHORT", { kind: "div", side: "S" }],
+    ["Ruptura + retesteo LONG", { kind: "retest", side: "L" }], ["Ruptura + retesteo SHORT", { kind: "retest", side: "S" }],
+    ["Ruptura con volumen LONG", { kind: "volbrk", side: "L" }], ["Ruptura con volumen SHORT", { kind: "volbrk", side: "S" }],
+    ["Doble suelo", { kind: "double", side: "L" }], ["Doble techo", { kind: "double", side: "S" }],
+  ];
   const specs: Spec[] = [
+    ...(process.env.FRAN ? FRAN.flatMap(([nm, P]) => (["4h", "1d"] as TF[]).map((tf): Spec => ({ name: `FRAN ${nm} ${tf}`, tfs: [tf], syms: ALL, params: {}, run: (k: Candle[]) => backtestFran(k, P) }))) : []),
     ...(process.env.LIQ ? LQ.flatMap((P) => (["4h", "1d"] as TF[]).map((tf): Spec => ({ name: `LIQ ${P.name} ${tf}`, tfs: [tf], syms: process.env.ONLY!.split(","), params: { n: 3, look: 50 }, run: (k: Candle[], _t: TF, _s: string, Q: Record<string, number>) => backtestLiq(k, { ...P, ...Q }) }))) : []),
     ...(process.env.FUND ? FV.map((P): Spec => ({ name: `FUND ${P.name} 4h`, tfs: ["4h"], syms: process.env.ONLY!.split(","), params: { sl: P.sl, pct: P.pct }, run: (k: Candle[], _t: TF, s: string, Q: Record<string, number>) => backtestFund(k, FUNDING[s] ?? [], { ...P, ...Q }) })) : []),
     ...(process.env.PCT ? (["don", "ema", "rng", "sq"] as const).flatMap((kind) => (["L", "S"] as const).flatMap((side) => [[2, 1], [3, 1.5], [4, 2]].map(([tp, sl]): Spec => ({ name: `PCT ${kind} ${side === "L" ? "LONG" : "SHORT"} TP${tp}% SL${sl}%`, tfs: ["4h"], syms: ["BTCUSDT", "HYPEUSDT", "SOLUSDT"], params: kind === "don" ? { n: 20 } : {}, run: (k: Candle[], _t: TF, _s: string, P: Record<string, number>) => backtestPct(k, { kind, side, tp, sl, n: P.n }) })))) : []),
@@ -812,7 +910,7 @@ if (process.env.STRESS) {
   }));
   const fmtS = (s: ReturnType<typeof stats>) => `${s.n} ops, PF ${s.pf.toFixed(2)}, neto ${s.total.toFixed(1)}R, caída ${s.dd.toFixed(1)}R`;
   const rep: string[] = ["", "════════ PRUEBA DE ESTRÉS ════════"];
-  for (const sp of (process.env.LIQ ? specs.filter((s) => s.name.startsWith("LIQ")) : process.env.FUND ? specs.filter((s) => s.name.startsWith("FUND")) : process.env.PCT ? specs.filter((s) => s.name.startsWith("PCT")) : process.env.ONLY ? specs.filter((s) => s.name.startsWith("ACTIVO")) : specs)) {
+  for (const sp of (process.env.FRAN ? specs.filter((s) => s.name.startsWith("FRAN")) : process.env.LIQ ? specs.filter((s) => s.name.startsWith("LIQ")) : process.env.FUND ? specs.filter((s) => s.name.startsWith("FUND")) : process.env.PCT ? specs.filter((s) => s.name.startsWith("PCT")) : process.env.ONLY ? specs.filter((s) => s.name.startsWith("ACTIVO")) : specs)) {
     const base = runSpec(sp, sp.params), b = stats(base);
     const fails = (s: ReturnType<typeof stats>) => s.pf < 1 || s.dd > 2 * b.dd;
     rep.push("", `■ ${sp.name} — base: ${fmtS(b)}`);
