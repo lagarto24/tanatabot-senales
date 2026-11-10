@@ -557,6 +557,8 @@ else if (args.includes("--sample")) {
   const k = await fetchBinance("BTCUSDT", "1d"), I = ind(k), i = k.length - 1, c = I.c[i];
   const ex: Entry = { strat: "DON", side: "LONG", price: c, sl: c - 2 * I.atr[i], tp: c + 6 * I.atr[i], t: k[i].t, reasons: [`Rompió el máximo de las últimas 20 velas`, `Tendencia alcista: precio sobre la EMA200`] };
   await sendTelegram("🧪 <b>EJEMPLO DE FORMATO — no es una señal real</b>\n\n" + entryMessage("BTCUSDT", "1d", ex, true));
+  const ks = await fetchStock("SLV", "1d"), Is = ind(ks), j = ks.length - 1, cs = Is.c[j];
+  await sendTelegram("🧪 <b>EJEMPLO DE FORMATO (plata) — no es una señal real</b>\n\n" + entryMessage("SLV", "1d", { strat: "VOL", side: "LONG", price: cs, sl: cs - 1.5 * Is.atr[j], tp: cs + 3 * Is.atr[j], t: ks[j].t, reasons: [] }, false));
 } else if (args.includes("--replay")) {
   // verificación: reproduce el historial vela a vela con la lógica en vivo (sin Telegram)
   const REPLAY_TF = (process.env.REPLAY_TF ?? "1d") as TF;
