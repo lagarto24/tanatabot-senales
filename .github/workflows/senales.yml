@@ -4,7 +4,7 @@ name: Señales Tanatabot
 
 on:
   schedule:
-    - cron: "3 * * * *"   # minuto 3 de cada hora (UTC)
+    - cron: "3,33 * * * *"   # cada 30 min (GitHub se salta algunas; así hay margen)
   workflow_dispatch:        # permite lanzarlo a mano desde la pestaña Actions
 
 permissions:
