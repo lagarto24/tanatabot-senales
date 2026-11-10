@@ -12,9 +12,9 @@ const H = 3600_000;
 const TF_MS: Record<TF, number> = { "1h": H, "4h": 4 * H, "1d": 24 * H };
 const HTF: Record<TF, TF | null> = { "1h": "4h", "4h": "1d", "1d": null };
 
-const CRYPTO = ["BTCUSDT", "ETHUSDT", "SOLUSDT", "HYPEUSDT", "BNBUSDT", "DOGEUSDT", "XRPUSDT", "SUIUSDT"];
+const CRYPTO = ["BTCUSDT", "ETHUSDT", "SOLUSDT", "HYPEUSDT", "BNBUSDT", "DOGEUSDT", "XRPUSDT", "SUIUSDT", "AVAXUSDT"];
 const HYPERLIQUID: Record<string, string> = { HYPEUSDT: "HYPE" };
-const STOCKS = ["AAPL", "TSLA", "NVDA", "MSFT", "AMZN", "SPY", "QQQ", "INTC", "AMD"];
+const STOCKS = ["AAPL", "TSLA", "NVDA", "MSFT", "AMZN", "SPY", "QQQ", "INTC", "AMD", "GOOGL", "META", "NFLX", "AVGO", "COST", "LLY", "ORCL", "GLD"];
 const TFS: TF[] = ["1h", "4h", "1d"];
 let FEE = 0.001; // let: la prueba de estrés la duplica
 const MAX_HOLD = 60; // velas máximas en una operación; luego cierra a mercado
@@ -949,4 +949,39 @@ if (process.env.STRESS) {
   const txt = rep.join("\n");
   writeFileSync("prueba_estres.txt", txt);
   console.log(txt);
+}
+
+// ═════════ FRECUENCIA DE SEÑALES (estrategias en vivo, último año) ═════════
+// FREQ=1 bun backtest.ts   (con ONLY=... para probar otros activos)
+if (process.env.FREQ) {
+  const since = Date.now() - 365 * 86400_000;
+  const live: [string, TF, (k: Candle[], s: string, isStock: boolean) => Trade[]][] = [
+    ["Ruptura máximos 1D", "1d", (k) => backtestExit(k, { name: "", kind: "donchian", shorts: false, sl: 2, trail: 9999, tp: 3 })],
+    ["RSI(2) 1D (acciones)", "1d", (k, _s, st) => (st ? backtestExit(k, { name: "", kind: "rsi2", shorts: false, sl: 1.5, ex: 99999, tp: 1.5 }) : [])],
+    ["EMA retroceso 1D", "1d", (k, s) => backtestEMA(k, dailyTrendEMA(k, "1d", DATA[s]["1d"]), { name: "", entry: "pullback", partial: false, slAtr: 2 }).filter((t) => t.side === "LONG")],
+    ["Ruptura con volumen 1D", "1d", (k) => backtestFran(k, { kind: "volbrk", side: "L" })],
+    ["Rebote en rango 4H", "4h", (k) => backtestLV(k, { kind: "range", side: "L", rr: 1.5, sl: 1.5 })],
+  ];
+  const ALLTR: Record<string, Trade[]> = {}, BYASSET: Record<string, Trade[]> = {};
+  const rows: string[] = [], perAsset: Record<string, number> = {}; let total = 0, totR = 0, wins = 0;
+  for (const [nm, tf, fn] of live) {
+    let n = 0, R = 0, w = 0;
+    for (const s of Object.keys(DATA)) {
+      const k = DATA[s][tf]; if (!k || k.length < 300) continue;
+      const all = fn(k, s, !s.endsWith("USDT"));
+      (ALLTR[nm] ??= []).push(...all); (BYASSET[s] ??= []).push(...all);
+      const tr = all.filter((t) => t.t >= since);
+      n += tr.length; R += tr.reduce((a, t) => a + t.r, 0); w += tr.filter((t) => t.r > 0).length; perAsset[s] = (perAsset[s] ?? 0) + tr.length;
+    }
+    total += n; totR += R; wins += w;
+    rows.push(`${nm.padEnd(26)} ${String(n).padStart(4)} señales · acierto ${n ? ((w / n) * 100).toFixed(0) : 0}% · ${R >= 0 ? "+" : ""}${R.toFixed(1)}R`);
+  }
+  console.log("\n═══ SEÑALES DEL ÚLTIMO AÑO ═══");
+  console.log(rows.join("\n"));
+  console.log(`TOTAL: ${total} señales (${(total / 365).toFixed(2)} al día · 1 cada ${(365 / Math.max(total, 1)).toFixed(1)} días) · acierto ${total ? ((wins / total) * 100).toFixed(0) : 0}% · ${totR >= 0 ? "+" : ""}${totR.toFixed(1)}R`);
+  console.log("\n═══ HISTORIAL COMPLETO (todas las estrategias en vivo) ═══");
+  for (const [nm, tr] of Object.entries(ALLTR)) console.log(row(nm, stats(tr)));
+  console.log("\n═══ POR ACTIVO (historial completo) ═══");
+  for (const [s, tr] of Object.entries(BYASSET).sort((a, b) => stats(b[1]).pf - stats(a[1]).pf)) console.log(row(s, stats(tr)));
+  console.log("Por activo: " + Object.entries(perAsset).sort((a, b) => b[1] - a[1]).map(([s, n]) => `${s} ${n}`).join(" · "));
 }
