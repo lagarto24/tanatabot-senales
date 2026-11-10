@@ -325,7 +325,7 @@ const STRAT_INFO: Record<Strat, { name: string; how: string; hist: (tf: TF) => s
   },
   BOT: { name: "Posible suelo (sobreventa extrema + vela de giro)", how: "RSI diario por debajo de 25 y una vela de giro alcista.", hist: () => "En pruebas: PF 1.66 en 71 casos; pocos casos, aún no validado del todo." },
   VOL: { name: "Ruptura con volumen (curso Fran Ruiz, clase 5)", how: "El precio rompe el máximo de 20 velas con un volumen 1,5 veces mayor de lo normal.", hist: () => "PF 1.50 en datos no vistos; pasó las pruebas de estrés." },
-  RNG: { name: "Rebote en rango (baja volatilidad)", how: "Mercado tranquilo y sin tendencia: el precio sale por debajo de la banda de Bollinger y vuelve a entrar.", hist: () => "PF 1.62 en datos no vistos." },
+  RNG: { name: "Rebote en rango (baja volatilidad)", how: "Mercado tranquilo y sin tendencia: el precio sale por debajo de la banda de Bollinger y vuelve a entrar.", hist: () => "PF 1.62 en datos no vistos, pero falló la prueba de sensibilidad del stop (con otros stops conserva solo el 64% del beneficio): en revisión." },
   EMA: {
     name: "Retroceso a la EMA30 (EMA 30/150/200)",
     how: "En tendencia clara, el precio retrocede a su media de 30 velas y rebota a favor.",
@@ -349,6 +349,7 @@ function entryMessage(sym: string, tf: TF, e: Entry, isCrypto: boolean): string 
       ? `⚠️ <b>POSIBLE SUELO · ${metal ? metal.name : sym}</b> (${tf.toUpperCase()}) · LONG`
       : `${L ? "🟢" : "🔴"} <b>${e.side} · ${metal ? metal.name : sym}</b> (${tf.toUpperCase()})`,
     ...(e.strat === "BOT" ? [`<i>Aviso, no señal validada: ${e.reasons.join(" + ")}. Usa la mitad de tamaño.</i>`] : []),
+    ...(e.strat === "RNG" ? [`<i>Estrategia en revisión: no pasó todas las pruebas de estrés. Usa la mitad de tamaño.</i>`] : []),
     ``,
     `Entrada: <b>${fmt(e.price)} ${cur}</b>`,
     `Take profit: <b>${fmt(e.tp!)}</b> (${pct(e.tp!)})`,
