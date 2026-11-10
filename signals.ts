@@ -11,7 +11,7 @@ import { homedir } from "os";
 import { join } from "path";
 
 // ───────────── Configuración ─────────────
-const CRYPTO = ["BTCUSDT", "ETHUSDT", "SOLUSDT", "HYPEUSDT", "BNBUSDT"];
+const CRYPTO = ["BTCUSDT", "ETHUSDT", "SOLUSDT", "HYPEUSDT", "BNBUSDT", "DOGEUSDT", "XRPUSDT", "SUIUSDT"];
 // criptos que se leen de Hyperliquid (Binance tiene poco historial de HYPE)
 const HYPERLIQUID: Record<string, string> = { HYPEUSDT: "HYPE" };
 const STOCKS = ["AAPL", "TSLA", "NVDA", "MSFT", "AMZN", "SPY"];
