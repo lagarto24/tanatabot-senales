@@ -1,0 +1,230 @@
+
+════════ PRUEBA DE ESTRÉS ════════
+
+■ SHORT CLARO ruptura de mínimos 4h TP 1.5R cripto — base: 241 ops, PF 0.75, neto -40.0R, caída 50.8R
+  ❌ NO PASA  Fuera de muestra (30% final): 59 ops, PF 0.68, neto -13.0R, caída 29.4R
+  ❌ NO PASA  Sensibilidad n=20 → 16/18/22/24: PF 0.77 / 0.76 / 0.78 / 0.75 · conserva 95% del beneficio
+  ❌ NO PASA  Sensibilidad sl=2 → 1.6/1.8/2.2/2.4: PF 0.90 / 0.81 / 0.83 / 0.89 · conserva 54% del beneficio
+  ❌ NO PASA  Sensibilidad adx=25 → 20/23/28/30: PF 0.93 / 0.73 / 0.77 / 0.74 · conserva 77% del beneficio
+  ❌ NO PASA  Costes dobles (0.2%): 241 ops, PF 0.72, neto -45.3R, caída 55.9R
+  ❌ NO PASA  Sin el 5% mejores (13 ops): neto -59.3R
+  ❌ NO PASA  Peor racha (1.000 simulaciones, 1%): ruina 7.4% · caída del peor 5%: 52.7%
+  ⇒ VEREDICTO: DESCARTAR
+
+■ SHORT CLARO ruptura de mínimos 4h TP 1.5R acciones — base: 71 ops, PF 0.78, neto -10.3R, caída 16.6R
+  ❌ NO PASA  Fuera de muestra (30% final): 35 ops, PF 0.63, neto -9.0R, caída 10.7R
+  ❌ NO PASA  Sensibilidad n=20 → 16/18/22/24: PF 0.81 / 0.81 / 0.81 / 0.81 · conserva 83% del beneficio
+  ❌ NO PASA  Sensibilidad sl=2 → 1.6/1.8/2.2/2.4: PF 0.77 / 0.78 / 0.76 / 0.72 · conserva 118% del beneficio
+  ❌ NO PASA  Sensibilidad adx=25 → 20/23/28/30: PF 0.75 / 1.03 / 0.69 / 0.55 · conserva 102% del beneficio
+  ❌ NO PASA  Costes dobles (0.2%): 71 ops, PF 0.75, neto -12.0R, caída 17.8R
+  ❌ NO PASA  Sin el 5% mejores (4 ops): neto -16.3R
+  ✅ PASA     Peor racha (1.000 simulaciones, 1%): ruina 0.0% · caída del peor 5%: 25.7%
+  ⇒ VEREDICTO: DESCARTAR
+
+■ SHORT CLARO ruptura de mínimos 4h TP 1.5R todo — base: 312 ops, PF 0.76, neto -50.3R, caída 62.9R
+  ❌ NO PASA  Fuera de muestra (30% final): 94 ops, PF 0.66, neto -22.0R, caída 30.4R
+  ❌ NO PASA  Sensibilidad n=20 → 16/18/22/24: PF 0.78 / 0.77 / 0.79 / 0.76 · conserva 92% del beneficio
+  ❌ NO PASA  Sensibilidad sl=2 → 1.6/1.8/2.2/2.4: PF 0.87 / 0.80 / 0.81 / 0.85 · conserva 67% del beneficio
+  ❌ NO PASA  Sensibilidad adx=25 → 20/23/28/30: PF 0.88 / 0.79 / 0.75 / 0.70 · conserva 82% del beneficio
+  ❌ NO PASA  Costes dobles (0.2%): 312 ops, PF 0.73, neto -57.3R, caída 69.7R
+  ❌ NO PASA  Sin el 5% mejores (16 ops): neto -74.1R
+  ❌ NO PASA  Peor racha (1.000 simulaciones, 1%): ruina 25.6% · caída del peor 5%: 59.1%
+  ⇒ VEREDICTO: DESCARTAR
+
+■ SHORT CLARO ruptura de mínimos 1d TP 1.5R cripto — base: 88 ops, PF 1.05, neto 2.4R, caída 20.1R
+  ✅ PASA     Fuera de muestra (30% final): 37 ops, PF 1.62, neto 9.7R, caída 5.0R
+  ❌ NO PASA  Sensibilidad n=20 → 16/18/22/24: PF 1.02 / 1.03 / 1.01 / 0.96 · conserva 9% del beneficio
+  ❌ NO PASA  Sensibilidad sl=2 → 1.6/1.8/2.2/2.4: PF 1.28 / 1.21 / 0.98 / 1.09 · conserva 264% del beneficio
+  ❌ NO PASA  Sensibilidad adx=25 → 20/23/28/30: PF 0.89 / 0.98 / 1.27 / 1.42 · conserva 123% del beneficio
+  ✅ PASA     Costes dobles (0.2%): 88 ops, PF 1.04, neto 1.7R, caída 20.4R
+  ❌ NO PASA  Sin el 5% mejores (5 ops): neto -5.1R
+  ✅ PASA     Peor racha (1.000 simulaciones, 1%): ruina 0.0% · caída del peor 5%: 19.8%
+  ⇒ VEREDICTO: DESCARTAR
+
+■ SHORT CLARO ruptura de mínimos 1d TP 1.5R acciones — base: 106 ops, PF 0.69, neto -22.0R, caída 26.2R
+  ❌ NO PASA  Fuera de muestra (30% final): 24 ops, PF 0.88, neto -1.8R, caída 5.1R (menos de 30: no cuenta)
+  ❌ NO PASA  Sensibilidad n=20 → 16/18/22/24: PF 0.69 / 0.70 / 0.68 / 0.67 · conserva 102% del beneficio
+  ❌ NO PASA  Sensibilidad sl=2 → 1.6/1.8/2.2/2.4: PF 0.70 / 0.66 / 0.63 / 0.70 · conserva 108% del beneficio
+  ❌ NO PASA  Sensibilidad adx=25 → 20/23/28/30: PF 0.80 / 0.71 / 0.53 / 0.43 · conserva 112% del beneficio
+  ❌ NO PASA  Costes dobles (0.2%): 106 ops, PF 0.67, neto -23.7R, caída 27.6R
+  ❌ NO PASA  Sin el 5% mejores (6 ops): neto -31.0R
+  ✅ PASA     Peor racha (1.000 simulaciones, 1%): ruina 0.0% · caída del peor 5%: 36.3%
+  ⇒ VEREDICTO: DESCARTAR
+
+■ SHORT CLARO ruptura de mínimos 1d TP 1.5R todo — base: 194 ops, PF 0.84, neto -19.7R, caída 34.6R
+  ✅ PASA     Fuera de muestra (30% final): 61 ops, PF 1.26, neto 7.9R, caída 9.1R
+  ❌ NO PASA  Sensibilidad n=20 → 16/18/22/24: PF 0.83 / 0.83 / 0.81 / 0.79 · conserva 113% del beneficio
+  ❌ NO PASA  Sensibilidad sl=2 → 1.6/1.8/2.2/2.4: PF 0.91 / 0.86 / 0.77 / 0.85 · conserva 89% del beneficio
+  ❌ NO PASA  Sensibilidad adx=25 → 20/23/28/30: PF 0.84 / 0.81 / 0.82 / 0.77 · conserva 111% del beneficio
+  ❌ NO PASA  Costes dobles (0.2%): 194 ops, PF 0.82, neto -22.0R, caída 36.3R
+  ❌ NO PASA  Sin el 5% mejores (10 ops): neto -34.6R
+  ✅ PASA     Peor racha (1.000 simulaciones, 1%): ruina 0.0% · caída del peor 5%: 40.6%
+  ⇒ VEREDICTO: DESCARTAR
+
+■ SHORT CLARO ruptura de mínimos 4h TP 2R cripto — base: 217 ops, PF 0.88, neto -18.1R, caída 40.5R
+  ❌ NO PASA  Fuera de muestra (30% final): 54 ops, PF 0.66, neto -13.9R, caída 31.4R
+  ❌ NO PASA  Sensibilidad n=20 → 16/18/22/24: PF 0.88 / 0.89 / 0.92 / 0.89 · conserva 85% del beneficio
+  ❌ NO PASA  Sensibilidad sl=2 → 1.6/1.8/2.2/2.4: PF 0.85 / 0.84 / 0.90 / 0.95 · conserva 101% del beneficio
+  ❌ NO PASA  Sensibilidad adx=25 → 20/23/28/30: PF 0.97 / 0.83 / 0.88 / 0.79 · conserva 102% del beneficio
+  ❌ NO PASA  Costes dobles (0.2%): 217 ops, PF 0.85, neto -23.0R, caída 42.6R
+  ❌ NO PASA  Sin el 5% mejores (11 ops): neto -39.9R
+  ✅ PASA     Peor racha (1.000 simulaciones, 1%): ruina 0.6% · caída del peor 5%: 44.4%
+  ⇒ VEREDICTO: DESCARTAR
+
+■ SHORT CLARO ruptura de mínimos 4h TP 2R acciones — base: 67 ops, PF 0.65, neto -17.3R, caída 26.3R
+  ❌ NO PASA  Fuera de muestra (30% final): 34 ops, PF 0.48, neto -14.0R, caída 17.6R
+  ❌ NO PASA  Sensibilidad n=20 → 16/18/22/24: PF 0.64 / 0.64 / 0.68 / 0.68 · conserva 97% del beneficio
+  ❌ NO PASA  Sensibilidad sl=2 → 1.6/1.8/2.2/2.4: PF 0.63 / 0.58 / 0.70 / 0.61 · conserva 114% del beneficio
+  ❌ NO PASA  Sensibilidad adx=25 → 20/23/28/30: PF 0.73 / 0.91 / 0.46 / 0.45 · conserva 95% del beneficio
+  ❌ NO PASA  Costes dobles (0.2%): 67 ops, PF 0.63, neto -18.8R, caída 27.6R
+  ❌ NO PASA  Sin el 5% mejores (4 ops): neto -25.2R
+  ✅ PASA     Peor racha (1.000 simulaciones, 1%): ruina 0.0% · caída del peor 5%: 30.6%
+  ⇒ VEREDICTO: DESCARTAR
+
+■ SHORT CLARO ruptura de mínimos 4h TP 2R todo — base: 284 ops, PF 0.82, neto -35.3R, caída 55.3R
+  ❌ NO PASA  Fuera de muestra (30% final): 88 ops, PF 0.59, neto -27.9R, caída 36.8R
+  ❌ NO PASA  Sensibilidad n=20 → 16/18/22/24: PF 0.82 / 0.83 / 0.86 / 0.84 · conserva 91% del beneficio
+  ❌ NO PASA  Sensibilidad sl=2 → 1.6/1.8/2.2/2.4: PF 0.79 / 0.77 / 0.85 / 0.85 · conserva 107% del beneficio
+  ❌ NO PASA  Sensibilidad adx=25 → 20/23/28/30: PF 0.90 / 0.85 / 0.77 / 0.71 · conserva 99% del beneficio
+  ❌ NO PASA  Costes dobles (0.2%): 284 ops, PF 0.79, neto -41.8R, caída 58.2R
+  ❌ NO PASA  Sin el 5% mejores (15 ops): neto -65.1R
+  ❌ NO PASA  Peor racha (1.000 simulaciones, 1%): ruina 10.3% · caída del peor 5%: 55.1%
+  ⇒ VEREDICTO: DESCARTAR
+
+■ SHORT CLARO ruptura de mínimos 1d TP 2R cripto — base: 78 ops, PF 1.10, neto 4.4R, caída 23.5R
+  ✅ PASA     Fuera de muestra (30% final): 31 ops, PF 1.87, neto 12.1R, caída 5.0R
+  ✅ PASA     Sensibilidad n=20 → 16/18/22/24: PF 1.13 / 1.15 / 1.08 / 1.05 · conserva 105% del beneficio
+  ✅ PASA     Sensibilidad sl=2 → 1.6/1.8/2.2/2.4: PF 1.08 / 1.19 / 1.19 / 1.29 · conserva 174% del beneficio
+  ✅ PASA     Sensibilidad adx=25 → 20/23/28/30: PF 1.02 / 1.15 / 1.46 / 1.32 · conserva 179% del beneficio
+  ✅ PASA     Costes dobles (0.2%): 78 ops, PF 1.08, neto 3.8R, caída 23.8R
+  ❌ NO PASA  Sin el 5% mejores (4 ops): neto -3.5R
+  ✅ PASA     Peor racha (1.000 simulaciones, 1%): ruina 0.0% · caída del peor 5%: 19.1%
+  ⇒ VEREDICTO: VOLVER AL PASO 2 (revisar la prueba que falla)
+
+■ SHORT CLARO ruptura de mínimos 1d TP 2R acciones — base: 99 ops, PF 0.70, neto -21.2R, caída 27.0R
+  ❌ NO PASA  Fuera de muestra (30% final): 23 ops, PF 0.69, neto -5.3R, caída 7.1R (menos de 30: no cuenta)
+  ❌ NO PASA  Sensibilidad n=20 → 16/18/22/24: PF 0.72 / 0.73 / 0.68 / 0.66 · conserva 100% del beneficio
+  ❌ NO PASA  Sensibilidad sl=2 → 1.6/1.8/2.2/2.4: PF 0.60 / 0.62 / 0.61 / 0.62 · conserva 133% del beneficio
+  ❌ NO PASA  Sensibilidad adx=25 → 20/23/28/30: PF 0.70 / 0.73 / 0.66 / 0.29 · conserva 123% del beneficio
+  ❌ NO PASA  Costes dobles (0.2%): 99 ops, PF 0.68, neto -22.8R, caída 28.2R
+  ❌ NO PASA  Sin el 5% mejores (5 ops): neto -31.2R
+  ✅ PASA     Peor racha (1.000 simulaciones, 1%): ruina 0.0% · caída del peor 5%: 36.4%
+  ⇒ VEREDICTO: DESCARTAR
+
+■ SHORT CLARO ruptura de mínimos 1d TP 2R todo — base: 177 ops, PF 0.86, neto -16.8R, caída 35.7R
+  ✅ PASA     Fuera de muestra (30% final): 54 ops, PF 1.22, neto 6.8R, caída 9.2R
+  ❌ NO PASA  Sensibilidad n=20 → 16/18/22/24: PF 0.88 / 0.89 / 0.84 / 0.82 · conserva 99% del beneficio
+  ❌ NO PASA  Sensibilidad sl=2 → 1.6/1.8/2.2/2.4: PF 0.79 / 0.83 / 0.83 / 0.86 · conserva 122% del beneficio
+  ❌ NO PASA  Sensibilidad adx=25 → 20/23/28/30: PF 0.83 / 0.89 / 0.96 / 0.65 · conserva 108% del beneficio
+  ❌ NO PASA  Costes dobles (0.2%): 177 ops, PF 0.84, neto -18.9R, caída 37.2R
+  ❌ NO PASA  Sin el 5% mejores (9 ops): neto -34.7R
+  ✅ PASA     Peor racha (1.000 simulaciones, 1%): ruina 0.1% · caída del peor 5%: 40.8%
+  ⇒ VEREDICTO: DESCARTAR
+
+■ SHORT CLARO rechazo en EMA20 4h TP 1.5R cripto — base: 235 ops, PF 1.07, neto 9.8R, caída 19.3R
+  ✅ PASA     Fuera de muestra (30% final): 61 ops, PF 1.12, neto 4.1R, caída 17.3R
+  ❌ NO PASA  Sensibilidad sl=2 → 1.6/1.8/2.2/2.4: PF 0.97 / 0.92 / 1.08 / 1.08 · conserva 2% del beneficio
+  ✅ PASA     Sensibilidad adx=25 → 20/23/28/30: PF 1.10 / 1.07 / 1.19 / 1.18 · conserva 162% del beneficio
+  ✅ PASA     Costes dobles (0.2%): 235 ops, PF 1.03, neto 4.3R, caída 20.8R
+  ❌ NO PASA  Sin el 5% mejores (12 ops): neto -8.0R
+  ✅ PASA     Peor racha (1.000 simulaciones, 1%): ruina 0.0% · caída del peor 5%: 29.0%
+  ⇒ VEREDICTO: DESCARTAR
+
+■ SHORT CLARO rechazo en EMA20 4h TP 1.5R acciones — base: 48 ops, PF 0.64, neto -12.0R, caída 18.0R
+  ❌ NO PASA  Fuera de muestra (30% final): 18 ops, PF 0.92, neto -0.9R, caída 3.6R (menos de 30: no cuenta)
+  ❌ NO PASA  Sensibilidad sl=2 → 1.6/1.8/2.2/2.4: PF 0.70 / 0.64 / 0.88 / 0.80 · conserva 66% del beneficio
+  ❌ NO PASA  Sensibilidad adx=25 → 20/23/28/30: PF 0.87 / 0.83 / 0.81 / 0.83 · conserva 44% del beneficio
+  ❌ NO PASA  Costes dobles (0.2%): 48 ops, PF 0.62, neto -13.0R, caída 18.5R
+  ❌ NO PASA  Sin el 5% mejores (3 ops): neto -16.5R
+  ✅ PASA     Peor racha (1.000 simulaciones, 1%): ruina 0.0% · caída del peor 5%: 23.4%
+  ⇒ VEREDICTO: DESCARTAR
+
+■ SHORT CLARO rechazo en EMA20 4h TP 1.5R todo — base: 283 ops, PF 0.99, neto -2.2R, caída 30.6R
+  ✅ PASA     Fuera de muestra (30% final): 79 ops, PF 1.07, neto 3.1R, caída 16.9R
+  ❌ NO PASA  Sensibilidad sl=2 → 1.6/1.8/2.2/2.4: PF 0.92 / 0.87 / 1.04 / 1.02 · conserva 353% del beneficio
+  ❌ NO PASA  Sensibilidad adx=25 → 20/23/28/30: PF 1.05 / 1.02 / 1.13 / 1.12 · conserva -477% del beneficio
+  ❌ NO PASA  Costes dobles (0.2%): 283 ops, PF 0.95, neto -8.7R, caída 32.3R
+  ❌ NO PASA  Sin el 5% mejores (15 ops): neto -24.5R
+  ✅ PASA     Peor racha (1.000 simulaciones, 1%): ruina 0.0% · caída del peor 5%: 37.7%
+  ⇒ VEREDICTO: DESCARTAR
+
+■ SHORT CLARO rechazo en EMA20 1d TP 1.5R cripto — base: 85 ops, PF 0.97, neto -1.3R, caída 20.0R
+  ✅ PASA     Fuera de muestra (30% final): 32 ops, PF 1.81, neto 9.9R, caída 4.2R
+  ❌ NO PASA  Sensibilidad sl=2 → 1.6/1.8/2.2/2.4: PF 1.01 / 1.19 / 0.86 / 0.79 · conserva 141% del beneficio
+  ❌ NO PASA  Sensibilidad adx=25 → 20/23/28/30: PF 0.96 / 0.98 / 1.24 / 1.28 · conserva -234% del beneficio
+  ❌ NO PASA  Costes dobles (0.2%): 85 ops, PF 0.96, neto -2.0R, caída 20.3R
+  ❌ NO PASA  Sin el 5% mejores (5 ops): neto -8.8R
+  ✅ PASA     Peor racha (1.000 simulaciones, 1%): ruina 0.0% · caída del peor 5%: 21.1%
+  ⇒ VEREDICTO: DESCARTAR
+
+■ SHORT CLARO rechazo en EMA20 1d TP 1.5R acciones — base: 72 ops, PF 0.65, neto -17.4R, caída 19.6R
+  ❌ NO PASA  Fuera de muestra (30% final): 19 ops, PF 0.55, neto -6.1R, caída 9.6R (menos de 30: no cuenta)
+  ❌ NO PASA  Sensibilidad sl=2 → 1.6/1.8/2.2/2.4: PF 0.79 / 0.71 / 0.48 / 0.39 · conserva 121% del beneficio
+  ❌ NO PASA  Sensibilidad adx=25 → 20/23/28/30: PF 0.66 / 0.68 / 0.58 / 0.67 · conserva 106% del beneficio
+  ❌ NO PASA  Costes dobles (0.2%): 72 ops, PF 0.64, neto -18.5R, caída 20.4R
+  ❌ NO PASA  Sin el 5% mejores (4 ops): neto -23.4R
+  ✅ PASA     Peor racha (1.000 simulaciones, 1%): ruina 0.0% · caída del peor 5%: 29.9%
+  ⇒ VEREDICTO: DESCARTAR
+
+■ SHORT CLARO rechazo en EMA20 1d TP 1.5R todo — base: 157 ops, PF 0.81, neto -18.7R, caída 28.7R
+  ✅ PASA     Fuera de muestra (30% final): 51 ops, PF 1.15, neto 3.7R, caída 10.5R
+  ❌ NO PASA  Sensibilidad sl=2 → 1.6/1.8/2.2/2.4: PF 0.90 / 0.94 / 0.66 / 0.58 · conserva 123% del beneficio
+  ❌ NO PASA  Sensibilidad adx=25 → 20/23/28/30: PF 0.79 / 0.82 / 0.90 / 0.97 · conserva 83% del beneficio
+  ❌ NO PASA  Costes dobles (0.2%): 157 ops, PF 0.79, neto -20.5R, caída 29.8R
+  ❌ NO PASA  Sin el 5% mejores (8 ops): neto -30.7R
+  ✅ PASA     Peor racha (1.000 simulaciones, 1%): ruina 0.0% · caída del peor 5%: 38.0%
+  ⇒ VEREDICTO: DESCARTAR
+
+■ SHORT CLARO rechazo en EMA20 4h TP 2R cripto — base: 216 ops, PF 1.06, neto 8.1R, caída 26.1R
+  ❌ NO PASA  Fuera de muestra (30% final): 54 ops, PF 0.99, neto -0.4R, caída 20.7R
+  ❌ NO PASA  Sensibilidad sl=2 → 1.6/1.8/2.2/2.4: PF 0.97 / 0.96 / 1.15 / 1.16 · conserva 83% del beneficio
+  ✅ PASA     Sensibilidad adx=25 → 20/23/28/30: PF 1.10 / 1.04 / 1.16 / 1.13 · conserva 163% del beneficio
+  ✅ PASA     Costes dobles (0.2%): 216 ops, PF 1.02, neto 3.1R, caída 27.8R
+  ❌ NO PASA  Sin el 5% mejores (11 ops): neto -13.8R
+  ✅ PASA     Peor racha (1.000 simulaciones, 1%): ruina 0.0% · caída del peor 5%: 31.9%
+  ⇒ VEREDICTO: DESCARTAR
+
+■ SHORT CLARO rechazo en EMA20 4h TP 2R acciones — base: 48 ops, PF 0.62, neto -14.0R, caída 19.7R
+  ❌ NO PASA  Fuera de muestra (30% final): 18 ops, PF 0.74, neto -3.4R, caída 6.3R (menos de 30: no cuenta)
+  ❌ NO PASA  Sensibilidad sl=2 → 1.6/1.8/2.2/2.4: PF 0.67 / 0.62 / 0.91 / 0.94 · conserva 55% del beneficio
+  ❌ NO PASA  Sensibilidad adx=25 → 20/23/28/30: PF 0.83 / 0.76 / 0.79 / 0.77 · conserva 54% del beneficio
+  ❌ NO PASA  Costes dobles (0.2%): 48 ops, PF 0.60, neto -15.0R, caída 20.4R
+  ❌ NO PASA  Sin el 5% mejores (3 ops): neto -20.0R
+  ✅ PASA     Peor racha (1.000 simulaciones, 1%): ruina 0.0% · caída del peor 5%: 25.9%
+  ⇒ VEREDICTO: DESCARTAR
+
+■ SHORT CLARO rechazo en EMA20 4h TP 2R todo — base: 264 ops, PF 0.97, neto -5.9R, caída 32.5R
+  ❌ NO PASA  Fuera de muestra (30% final): 72 ops, PF 0.92, neto -3.9R, caída 24.9R
+  ❌ NO PASA  Sensibilidad sl=2 → 1.6/1.8/2.2/2.4: PF 0.92 / 0.89 / 1.10 / 1.12 · conserva 17% del beneficio
+  ❌ NO PASA  Sensibilidad adx=25 → 20/23/28/30: PF 1.03 / 0.98 / 1.09 / 1.07 · conserva -95% del beneficio
+  ❌ NO PASA  Costes dobles (0.2%): 264 ops, PF 0.93, neto -11.9R, caída 34.5R
+  ❌ NO PASA  Sin el 5% mejores (14 ops): neto -33.7R
+  ✅ PASA     Peor racha (1.000 simulaciones, 1%): ruina 0.1% · caída del peor 5%: 41.8%
+  ⇒ VEREDICTO: DESCARTAR
+
+■ SHORT CLARO rechazo en EMA20 1d TP 2R cripto — base: 78 ops, PF 0.95, neto -2.4R, caída 21.4R
+  ❌ NO PASA  Fuera de muestra (30% final): 29 ops, PF 1.83, neto 9.2R, caída 3.0R (menos de 30: no cuenta)
+  ❌ NO PASA  Sensibilidad sl=2 → 1.6/1.8/2.2/2.4: PF 0.97 / 0.94 / 0.93 / 0.91 · conserva 121% del beneficio
+  ❌ NO PASA  Sensibilidad adx=25 → 20/23/28/30: PF 0.99 / 1.01 / 1.18 / 1.04 · conserva -74% del beneficio
+  ❌ NO PASA  Costes dobles (0.2%): 78 ops, PF 0.93, neto -3.1R, caída 21.7R
+  ❌ NO PASA  Sin el 5% mejores (4 ops): neto -10.4R
+  ✅ PASA     Peor racha (1.000 simulaciones, 1%): ruina 0.0% · caída del peor 5%: 22.9%
+  ⇒ VEREDICTO: DESCARTAR
+
+■ SHORT CLARO rechazo en EMA20 1d TP 2R acciones — base: 68 ops, PF 0.51, neto -26.4R, caída 28.4R
+  ❌ NO PASA  Fuera de muestra (30% final): 19 ops, PF 0.55, neto -6.6R, caída 11.6R (menos de 30: no cuenta)
+  ❌ NO PASA  Sensibilidad sl=2 → 1.6/1.8/2.2/2.4: PF 0.59 / 0.50 / 0.44 / 0.44 · conserva 105% del beneficio
+  ❌ NO PASA  Sensibilidad adx=25 → 20/23/28/30: PF 0.59 / 0.63 / 0.40 / 0.48 · conserva 97% del beneficio
+  ❌ NO PASA  Costes dobles (0.2%): 68 ops, PF 0.50, neto -27.4R, caída 29.4R
+  ❌ NO PASA  Sin el 5% mejores (4 ops): neto -34.3R
+  ✅ PASA     Peor racha (1.000 simulaciones, 1%): ruina 0.0% · caída del peor 5%: 36.3%
+  ⇒ VEREDICTO: DESCARTAR
+
+■ SHORT CLARO rechazo en EMA20 1d TP 2R todo — base: 146 ops, PF 0.71, neto -28.8R, caída 37.9R
+  ✅ PASA     Fuera de muestra (30% final): 48 ops, PF 1.10, neto 2.6R, caída 11.5R
+  ❌ NO PASA  Sensibilidad sl=2 → 1.6/1.8/2.2/2.4: PF 0.77 / 0.71 / 0.66 / 0.65 · conserva 106% del beneficio
+  ❌ NO PASA  Sensibilidad adx=25 → 20/23/28/30: PF 0.76 / 0.80 / 0.74 / 0.76 · conserva 82% del beneficio
+  ❌ NO PASA  Costes dobles (0.2%): 146 ops, PF 0.70, neto -30.5R, caída 39.2R
+  ❌ NO PASA  Sin el 5% mejores (8 ops): neto -44.8R
+  ✅ PASA     Peor racha (1.000 simulaciones, 1%): ruina 0.5% · caída del peor 5%: 43.8%
+  ⇒ VEREDICTO: DESCARTAR

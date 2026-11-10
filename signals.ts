@@ -359,19 +359,11 @@ function entryMessage(sym: string, tf: TF, e: Entry, isCrypto: boolean): string 
   ].join("\n");
 }
 
-function exitMessage(p: Position, price: number, why: string): string {
-  const L = p.side === "LONG";
-  const pct = ((L ? price - p.price : p.price - price) / p.price) * 100;
-  const R = (L ? price - p.price : p.price - price) / Math.abs(p.price - p.sl);
-  const win = pct > 0;
+function exitMessage(p: Position, price: number, _why: string): string {
+  const L = p.side === "LONG", pct = ((L ? price - p.price : p.price - price) / p.price) * 100;
   return [
-    `${win ? "✅" : "🛑"} <b>CERRAR ${p.side}</b> · <b>${p.sym}</b> · ${tfName(p.tf)}`,
-    `Motivo: ${why}`,
-    ``,
-    `Entrada: ${fmt(p.price)} → Salida: <b>${fmt(price)}</b>`,
-    `Resultado: <b>${pct >= 0 ? "+" : ""}${pct.toFixed(2)}%</b> (${R >= 0 ? "+" : ""}${R.toFixed(2)} veces lo arriesgado)`,
-    ...LEVERAGES.map((lev) => `• con x${lev}: ${pct >= 0 ? "+" : ""}${(pct * lev).toFixed(1)}%`),
-    win ? `🎉 ¡Operación ganadora!` : `Las pérdidas pequeñas son parte del plan. Lo importante es respetar el stop.`,
+    `🔔 <b>CERRAR POSICIÓN</b> · <b>${METALS[p.sym]?.name ?? p.sym}</b> ${p.side} (${p.tf.toUpperCase()})`,
+    `Precio: <b>${fmt(price)}</b> · Resultado: <b>${pct >= 0 ? "+" : ""}${pct.toFixed(2)}%</b>`,
   ].join("\n");
 }
 
@@ -476,7 +468,8 @@ function track(p: Position, k: Candle[], I: ReturnType<typeof ind>): { msgs: str
   if (legacy && p.strat === "DON" && Math.abs(p.stop - prevStop) >= minMove) msgs.push(stopMoveMessage(p, p.stop));
   return { msgs, closed: false };
 }
-const silent = (r: { msgs: string[]; closed: boolean }, p: Position) => (p.tp ? { msgs: [], closed: r.closed } : r);
+// Al grupo solo le llega el aviso de cierre (sin avisos de mover el stop, para no marear)
+const silent = (r: { msgs: string[]; closed: boolean }, p: Position) => ({ msgs: r.closed && p.exit ? [exitMessage(p, p.exit.price, p.exit.why)] : [], closed: r.closed });
 
 // ───────────── Noticias económicas de alto impacto (calendario gratuito de ForexFactory) ─────────────
 // Solo eventos de EE.UU. de impacto alto: son los que más mueven cripto, acciones, oro y plata.

@@ -838,6 +838,33 @@ const text = out.join("\n");
 writeFileSync("backtest_resultados.txt", text);
 console.log(text.split("\n═══ DETALLE")[0]);
 
+
+// ═════════ SHORT "claros": solo en tendencia bajista fuerte ═════════
+// Filtro: precio < EMA200, EMA50 < EMA200, EMA200 bajando en 20 velas y ADX > adx.
+// "brk": cierra bajo el mínimo de n velas · "rej": toca la EMA20 y cierra por debajo con vela bajista. SL sl·ATR, TP rr·riesgo.
+type CSParams = { kind: "brk" | "rej"; n: number; sl: number; rr: number; adx: number };
+function backtestShortClear(k: Candle[], p: CSParams, gate?: number[]): Trade[] {
+  const c = k.map((x) => x.c), e20 = ema(c, 20), e50 = ema(c, 50), e200 = ema(c, 200), { atr, adx } = atrAdx(k);
+  const trades: Trade[] = [];
+  for (let i = 230; i < k.length - 1; i++) {
+    if (gate && gate[i] !== -1) continue;
+    const b = k[i];
+    if (!(c[i] < e200[i] && e50[i] < e200[i] && e200[i] < e200[i - 20] && adx[i] > p.adx)) continue;
+    const ok = p.kind === "brk" ? c[i] < Math.min(...k.slice(i - p.n, i).map((x) => x.l)) : b.h >= e20[i] && b.c < e20[i] && b.c < b.o && e20[i] < e50[i];
+    if (!ok) continue;
+    const risk = p.sl * atr[i], entry = c[i], stop = entry + risk, tp = entry - risk * p.rr;
+    let res = NaN, n = 0;
+    for (n = 1; n <= MAX_HOLD && i + n < k.length; n++) {
+      const x = k[i + n];
+      if (x.h >= stop) { res = -1; break; }
+      if (x.l <= tp) { res = p.rr; break; }
+    }
+    if (isNaN(res)) { if (i + n >= k.length) break; res = (entry - k[i + n - 1].c) / risk; }
+    trades.push({ side: "SHORT", r: res - (FEE * entry) / risk, bars: n, t: b.t });
+    i += n;
+  }
+  return trades;
+}
 // ═════════ PRUEBA DE ESTRÉS (paso 6 del kit "Tu estrategia con IA en 7 prompts") ═════════
 // Se ejecuta con: STRESS=1 bun backtest.ts
 if (process.env.STRESS) {
@@ -885,6 +912,11 @@ if (process.env.STRESS) {
     ...(process.env.LIQ ? LQ.flatMap((P) => (["4h", "1d"] as TF[]).map((tf): Spec => ({ name: `LIQ ${P.name} ${tf}`, tfs: [tf], syms: process.env.ONLY!.split(","), params: { n: 3, look: 50 }, run: (k: Candle[], _t: TF, _s: string, Q: Record<string, number>) => backtestLiq(k, { ...P, ...Q }) }))) : []),
     ...(process.env.FUND ? FV.map((P): Spec => ({ name: `FUND ${P.name} 4h`, tfs: ["4h"], syms: process.env.ONLY!.split(","), params: { sl: P.sl, pct: P.pct }, run: (k: Candle[], _t: TF, s: string, Q: Record<string, number>) => backtestFund(k, FUNDING[s] ?? [], { ...P, ...Q }) })) : []),
     ...(process.env.PCT ? (["don", "ema", "rng", "sq"] as const).flatMap((kind) => (["L", "S"] as const).flatMap((side) => [[2, 1], [3, 1.5], [4, 2]].map(([tp, sl]): Spec => ({ name: `PCT ${kind} ${side === "L" ? "LONG" : "SHORT"} TP${tp}% SL${sl}%`, tfs: ["4h"], syms: ["BTCUSDT", "HYPEUSDT", "SOLUSDT"], params: kind === "don" ? { n: 20 } : {}, run: (k: Candle[], _t: TF, _s: string, P: Record<string, number>) => backtestPct(k, { kind, side, tp, sl, n: P.n }) })))) : []),
+    ...(process.env.SHORTS ? (["brk", "rej"] as const).flatMap((kind) => [1.5, 2].flatMap((rr) => (["4h", "1d"] as TF[]).flatMap((tf) => (["cripto", "acciones", "todo"] as const).map((grp): Spec => ({
+      name: `SHORT CLARO ${kind === "brk" ? "ruptura de mínimos" : "rechazo en EMA20"} ${tf} TP ${rr}R ${grp}`, tfs: [tf], syms: grp === "cripto" ? CRYPTO : grp === "acciones" ? STOCKS : ALL,
+      params: kind === "brk" ? { n: 20, sl: 2, adx: 25 } : { sl: 2, adx: 25 },
+      run: (k: Candle[], _t: TF, _s: string, P: Record<string, number>) => backtestShortClear(k, { kind, n: P.n ?? 20, sl: P.sl, rr, adx: P.adx }),
+    }))))) : []),
     ...(process.env.ONLY ? [
       { name: "ACTIVO Donchian 1d TP 3R", tfs: ["1d"] as TF[], syms: process.env.ONLY.split(","), params: { n: 20, sl: 2 }, run: (k: Candle[], _t: TF, _s: string, P: Record<string, number>) => backtestExit(k, { name: "", kind: "donchian", shorts: false, n: P.n, sl: P.sl, trail: 9999, tp: 3 }) },
       { name: "ACTIVO EMA retroceso 1d", tfs: ["1d"] as TF[], syms: process.env.ONLY.split(","), params: { sl: 2 }, run: (k: Candle[], tf: TF, s: string, P: Record<string, number>) => backtestEMA(k, dailyTrendEMA(k, tf, DATA[s]["1d"]), { name: "", entry: "pullback", partial: false, slAtr: P.sl }).filter((t) => t.side === "LONG") },
@@ -914,7 +946,7 @@ if (process.env.STRESS) {
   }));
   const fmtS = (s: ReturnType<typeof stats>) => `${s.n} ops, PF ${s.pf.toFixed(2)}, neto ${s.total.toFixed(1)}R, caída ${s.dd.toFixed(1)}R`;
   const rep: string[] = ["", "════════ PRUEBA DE ESTRÉS ════════"];
-  for (const sp of (process.env.FRAN ? specs.filter((s) => s.name.startsWith("FRAN")) : process.env.LIQ ? specs.filter((s) => s.name.startsWith("LIQ")) : process.env.FUND ? specs.filter((s) => s.name.startsWith("FUND")) : process.env.PCT ? specs.filter((s) => s.name.startsWith("PCT")) : process.env.ONLY ? specs.filter((s) => s.name.startsWith("ACTIVO")) : specs)) {
+  for (const sp of (process.env.FRAN ? specs.filter((s) => s.name.startsWith("FRAN")) : process.env.LIQ ? specs.filter((s) => s.name.startsWith("LIQ")) : process.env.FUND ? specs.filter((s) => s.name.startsWith("FUND")) : process.env.PCT ? specs.filter((s) => s.name.startsWith("PCT")) : process.env.SHORTS ? specs.filter((s) => s.name.startsWith("SHORT CLARO")) : process.env.ONLY ? specs.filter((s) => s.name.startsWith("ACTIVO")) : specs)) {
     const base = runSpec(sp, sp.params), b = stats(base);
     const fails = (s: ReturnType<typeof stats>) => s.pf < 1 || s.dd > 2 * b.dd;
     rep.push("", `■ ${sp.name} — base: ${fmtS(b)}`);
@@ -951,7 +983,7 @@ if (process.env.STRESS) {
     rep.push(`  ⇒ VEREDICTO: ${nFail === 0 ? "PASAR A DEMO" : nFail <= 1 ? "VOLVER AL PASO 2 (revisar la prueba que falla)" : "DESCARTAR"}`);
   }
   const txt = rep.join("\n");
-  writeFileSync("prueba_estres.txt", txt);
+  writeFileSync(process.env.SHORTS ? "prueba_shorts.txt" : "prueba_estres.txt", txt);
   console.log(txt);
 }
 
