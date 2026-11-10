@@ -509,6 +509,8 @@ function agendaMessage(news: NewsEvent[], dayKey: string): string | null {
     ...today.map((e) => `🕒 <b>${new Date(e.t).toLocaleTimeString("es-ES", { timeZone: "Europe/Madrid", hour: "2-digit", minute: "2-digit" })}</b> · ${newsName(e.title)}${e.forecast ? ` · previsión ${e.forecast}` : ""}${e.previous ? ` · anterior ${e.previous}` : ""}`),
     ``,
     `⚠️ Cerca de estas horas el precio puede dar saltos bruscos y tocar stops. Si tienes operaciones abiertas, revisa que el SL esté puesto. Evita entrar justo antes del dato.`,
+    ``,
+    `🔗 Calendario completo y datos en directo: <a href="https://es.investing.com/economic-calendar/">Investing.com</a>`,
   ].join("\n");
 }
 
