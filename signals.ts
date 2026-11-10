@@ -1,6 +1,7 @@
 // Bot de señales técnicas -> Telegram (@Tanatabot)
 // Uso:  bun signals.ts --once   (una pasada: la usa GitHub Actions cada hora)
 //       bun signals.ts --summary (resumen de resultados a Telegram; se envía solo cada domingo 19:00)
+//       bun signals.ts --agenda (noticias fuertes de hoy a Telegram; se envía sola a las 8:00 si las hay)
 //       bun signals.ts --report (estado del mercado a Telegram) · --dry (prueba local) · --replay (verificación) · --sample (ejemplos)
 //
 // Estrategias elegidas por backtest con validación (70% historial / 30% datos no vistos):
@@ -456,9 +457,64 @@ function track(p: Position, k: Candle[], I: ReturnType<typeof ind>): { msgs: str
 }
 const silent = (r: { msgs: string[]; closed: boolean }, p: Position) => (p.tp ? { msgs: [], closed: r.closed } : r);
 
+// ───────────── Noticias económicas de alto impacto (calendario gratuito de ForexFactory) ─────────────
+// Solo eventos de EE.UU. de impacto alto: son los que más mueven cripto, acciones, oro y plata.
+type NewsEvent = { t: number; title: string; forecast: string; previous: string };
+let NEWS: NewsEvent[] | null = null;
+const NEWS_ES: [RegExp, string][] = [
+  [/Core CPI/i, "Inflación subyacente EE.UU. (IPC subyacente)"], [/CPI/i, "Inflación EE.UU. (IPC)"],
+  [/Core PCE/i, "Inflación PCE subyacente (la favorita de la Fed)"], [/PCE/i, "Inflación PCE"],
+  [/Core PPI/i, "Precios de producción subyacentes (IPP)"], [/PPI/i, "Precios de producción (IPP)"],
+  [/Non-Farm|NFP/i, "Empleo EE.UU. (nóminas NFP)"], [/Unemployment Rate/i, "Tasa de paro EE.UU."],
+  [/Federal Funds Rate|FOMC Statement|Interest Rate/i, "Decisión de tipos de la Fed"], [/FOMC Press Conference/i, "Rueda de prensa de la Fed"],
+  [/FOMC.*Minutes/i, "Actas de la Fed"], [/Powell|Fed Chair/i, "Discurso de Powell (presidente de la Fed)"],
+  [/GDP/i, "PIB EE.UU."], [/Retail Sales/i, "Ventas minoristas EE.UU."], [/ISM/i, "Índice ISM"], [/JOLTS/i, "Ofertas de empleo JOLTS"],
+];
+const newsName = (t: string) => NEWS_ES.find(([re]) => re.test(t))?.[1] ?? t;
+async function loadNews(cache?: { newsCache?: { at: number; ev: NewsEvent[] } }): Promise<NewsEvent[]> {
+  if (NEWS) return NEWS;
+  const c = cache?.newsCache;
+  if (c && Date.now() - c.at < 6 * 3600_000 && c.ev.length) return (NEWS = c.ev); // copia guardada reciente
+  try {
+    const r = await fetch("https://nfs.faireconomy.media/ff_calendar_thisweek.json", { headers: { "User-Agent": "Mozilla/5.0" } });
+    const j: any[] = r.ok ? await r.json() : [];
+    NEWS = j.filter((e) => e.impact === "High" && e.country === "USD").map((e) => ({ t: Date.parse(e.date), title: e.title, forecast: e.forecast ?? "", previous: e.previous ?? "" })).filter((e) => !isNaN(e.t));
+    if (!r.ok) throw new Error("calendario " + r.status);
+    if (cache) cache.newsCache = { at: Date.now(), ev: NEWS };
+  } catch (e) { console.error("Calendario no disponible:", (e as Error).message); NEWS = c?.ev ?? []; }
+  return NEWS;
+}
+const hhmm = (ms: number) => new Date(ms).toLocaleString("es-ES", { timeZone: "Europe/Madrid", weekday: "short", hour: "2-digit", minute: "2-digit" });
+// Nota para una señal: noticias fuertes en las próximas horas (24 h en 1D, 6 h en 4H) o en la última hora
+function newsNote(tf: TF, news: NewsEvent[]): string {
+  const now = Date.now(), ahead = (tf === "1d" ? 24 : 6) * 3600_000;
+  const near = news.filter((e) => e.t > now - 3600_000 && e.t < now + ahead);
+  if (!near.length) return "";
+  const names = [...new Set(near.map((e) => `${newsName(e.title)} (${hhmm(e.t)})`))];
+  return `\n\n📰 <b>Atención, noticia fuerte:</b> ${names.join(", ")}. Suele mover mucho el precio: mejor entrar después del dato o con menos tamaño.`;
+}
+// Agenda de la mañana: se envía una vez al día (8:00-8:59 hora España) solo si hay noticias fuertes hoy
+function agendaDue(state: { lastAgenda?: string; newsCache?: { at: number; ev: NewsEvent[] } }): string | null {
+  const p = new Intl.DateTimeFormat("en-GB", { timeZone: "Europe/Madrid", hour: "numeric", hour12: false, year: "numeric", month: "2-digit", day: "2-digit" }).formatToParts(new Date());
+  const g = (t: string) => p.find((x) => x.type === t)?.value ?? "";
+  const key = `${g("year")}-${g("month")}-${g("day")}`;
+  return +g("hour") === 8 && state.lastAgenda !== key ? key : null;
+}
+function agendaMessage(news: NewsEvent[], dayKey: string): string | null {
+  const today = news.filter((e) => new Date(e.t).toLocaleDateString("en-CA", { timeZone: "Europe/Madrid" }) === dayKey).sort((a, b) => a.t - b.t);
+  if (!today.length) return null;
+  return [
+    `📰 <b>NOTICIAS IMPORTANTES HOY</b> (EE.UU., impacto alto)`,
+    ``,
+    ...today.map((e) => `🕒 <b>${new Date(e.t).toLocaleTimeString("es-ES", { timeZone: "Europe/Madrid", hour: "2-digit", minute: "2-digit" })}</b> · ${newsName(e.title)}${e.forecast ? ` · previsión ${e.forecast}` : ""}${e.previous ? ` · anterior ${e.previous}` : ""}`),
+    ``,
+    `⚠️ Cerca de estas horas el precio puede dar saltos bruscos y tocar stops. Si tienes operaciones abiertas, revisa que el SL esté puesto. Evita entrar justo antes del dato.`,
+  ].join("\n");
+}
+
 // ───────────── Bucle ─────────────
 type Closed = { sym: string; tf: TF; strat: Strat; side: "LONG" | "SHORT"; entry: number; exit: number; sl: number; tp?: number; R: number; pct: number; opened: number; closed: number; why: string };
-type State = { last: Record<string, number>; open: Record<string, Position>; history?: Closed[]; lastWeekly?: string };
+type State = { last: Record<string, number>; open: Record<string, Position>; history?: Closed[]; lastWeekly?: string; lastAgenda?: string };
 const loadState = (): State => {
   const raw = existsSync(STATE_FILE) ? JSON.parse(readFileSync(STATE_FILE, "utf8")) : {};
   return raw.open ? raw : { last: {}, open: {} }; // formato antiguo → empezar limpio
@@ -498,6 +554,7 @@ function weeklyDue(state: State): string | null {
 
 async function scan(report = false) {
   const state = loadState();
+  const news = await loadNews(state);
   const lines: string[] = [];
   let sent = 0;
   const send = async (m: string) => { if (report) return true; const ok = await sendTelegram(m); if (ok) sent++; return ok; };
@@ -533,7 +590,7 @@ async function scan(report = false) {
           if (!e) continue;
           tags.push(`${st} ${e.side} NUEVA`);
           if (report) continue;
-          if (!(await send(entryMessage(sym, tf, e, isCrypto)))) { tags.push("(no enviada, se reintenta)"); continue; } // si Telegram falla, no se marca: se reintenta en la próxima pasada
+          if (!(await send(entryMessage(sym, tf, e, isCrypto) + newsNote(tf, news)))) { tags.push("(no enviada, se reintenta)"); continue; } // si Telegram falla, no se marca: se reintenta en la próxima pasada
           state.last[key] = last.t;
           state.open[key] = { ...e, sym, tf, isCrypto, lastBar: last.t, bars: 0, stop: e.sl };
         }
@@ -543,6 +600,7 @@ async function scan(report = false) {
       }
     }
   }
+  if (!report) { const day = agendaDue(state); if (day) { const m = agendaMessage(news, day); if (!m || (await sendTelegram(m))) state.lastAgenda = day; } }
   if (!report) { const wk = weeklyDue(state); if (wk) { await sendTelegram(summaryMessage(state)); state.lastWeekly = wk; sent++; } }
   saveState(state);
   console.log(new Date().toLocaleString(), `— mensajes enviados: ${sent} · posiciones abiertas: ${Object.keys(state.open).length}`);
@@ -552,6 +610,7 @@ async function scan(report = false) {
 
 const args = process.argv.slice(2);
 if (args.includes("--summary")) await sendTelegram(summaryMessage(loadState()));
+else if (args.includes("--agenda")) { const d = new Date().toLocaleDateString("en-CA", { timeZone: "Europe/Madrid" }); const st0 = loadState(); const nw = await loadNews(st0); saveState(st0); console.log("eventos fuertes cargados:", nw.length); const m = agendaMessage(nw, d); console.log(m ?? "sin noticias fuertes hoy"); if (m) await sendTelegram(m); }
 else if (args.includes("--sample")) {
   // envía ejemplos de formato con precios reales (no son señales reales)
   const k = await fetchBinance("BTCUSDT", "1d"), I = ind(k), i = k.length - 1, c = I.c[i];
