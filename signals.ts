@@ -5,7 +5,7 @@
 //       bun signals.ts --report (estado del mercado a Telegram) · --dry (prueba local) · --replay (verificación) · --sample (ejemplos)
 //
 // Estrategias elegidas por backtest con validación (70% historial / 30% datos no vistos):
-//   Donchian 20/10 solo LONG (todas), RSI(2) Connors (acciones 1D), EMA 30/150/200 retroceso solo LONG (1D).
+//   Donchian 20/10 solo LONG (todas), RSI(2) Connors (acciones 1D). EMA 30/150/200 retirada el 11/11/2026 (ver cartera_resultados_3.txt).
 // Sigue las posiciones abiertas: avisa de mover el stop y de cerrar. NO es asesoría financiera.
 
 import { readFileSync, writeFileSync, existsSync } from "fs";
@@ -820,7 +820,12 @@ async function scan(report = false) {
         if (k.length < 220) { lines.push(`${sym} ${tf}: datos insuficientes`); continue; }
         const I = ind(k), last = k[k.length - 1];
         // orden = prioridad si varias estrategias coinciden en el mismo activo
-        const strats: Strat[] = tf === "1d" ? (isCrypto ? ["DON", "VOL", "EMA", "BOT", "SHC"] : ["DON", "RSI2", "VOL", "EMA", "BOT"]) : ["RNG"];
+        // EMA retroceso retirada (11/11/2026): en el backtest de cartera (cartera.ts) ocupaba el hueco del activo con
+        // operaciones flojas (PF 1.21) y bloqueaba rupturas Donchian. Sin ella: neto 672R → 716R, PF en datos no vistos 1.52 → 1.64,
+        // caída máxima en datos no vistos 35.4R → 21.1R. Las posiciones EMA que sigan abiertas se siguen hasta cerrarse.
+        const active: Strat[] = tf === "1d" ? (isCrypto ? ["DON", "VOL", "BOT", "SHC"] : ["DON", "RSI2", "VOL", "BOT"]) : ["RNG"];
+        const leftover = Object.values(state.open).filter((p) => p.sym === sym && p.tf === tf && !active.includes(p.strat)).map((p) => p.strat);
+        const strats: Strat[] = [...active, ...leftover];
         const tags: string[] = [];
         for (const st of strats) {
           const key = `${st}|${sym}|${tf}`;

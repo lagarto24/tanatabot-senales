@@ -1,0 +1,37 @@
+BACKTEST DE CARTERA (lógica en vivo, 1D) · 27 activos · 2026-11-11
+Corte datos no vistos: desde 2024-04-11 · comisiones 0,1% · "cap" = crecimiento arriesgando 1% por operación (orden de entrada)
+
+■ A. ACTUAL (como está el bot)
+   todo:        2029 ops · acierto 42% · PF 1.56 · neto  671.7R · media 0.33R · caída 71.6R · cap +61974%
+   no vistos:    639 ops · acierto 42% · PF 1.52 · neto  195.5R · media 0.31R · caída 35.4R
+   último año:   242 ops · acierto 40% · PF 1.38 · neto   55.0R · media 0.23R · caída 13.7R
+   sin el 5% mejores: 366.6R
+   por estrategia: DON 931 ops PF 1.85 495R · EMA 257 ops PF 1.21 33R · BOT 56 ops PF 1.35 11R · SHC 88 ops PF 1.01 0R · VOL 129 ops PF 1.80 55R · RSI2 568 ops PF 1.25 78R
+
+■ K. Actual sin EMA (TP 3R)
+   todo:        1870 ops · acierto 43% · PF 1.65 · neto  716.1R · media 0.38R · caída 57.3R · cap +97399%
+   no vistos:    589 ops · acierto 43% · PF 1.64 · neto  214.9R · media 0.36R · caída 21.1R
+   último año:   233 ops · acierto 41% · PF 1.42 · neto   57.5R · media 0.25R · caída 13.1R
+   sin el 5% mejores: 435.0R
+   por estrategia: DON 1011 ops PF 1.88 551R · BOT 56 ops PF 1.35 11R · SHC 88 ops PF 1.01 0R · VOL 129 ops PF 1.80 55R · RSI2 586 ops PF 1.32 99R
+
+■ K. Sin EMA + Donchian TP 4R
+   todo:        1662 ops · acierto 39% · PF 1.69 · neto  707.6R · media 0.43R · caída 49.8R · cap +85469%
+   no vistos:    534 ops · acierto 40% · PF 1.66 · neto  213.6R · media 0.40R · caída 21.3R
+   último año:   224 ops · acierto 38% · PF 1.36 · neto   50.2R · media 0.22R · caída 16.3R
+   sin el 5% mejores: 372.3R
+   por estrategia: DON 907 ops PF 1.93 567R · BOT 54 ops PF 1.44 13R · SHC 88 ops PF 1.01 0R · VOL 129 ops PF 1.80 55R · RSI2 484 ops PF 1.27 72R
+
+■ K. Sin EMA + Donchian TP 5R
+   todo:        1570 ops · acierto 39% · PF 1.83 · neto  808.3R · media 0.51R · caída 48.0R · cap +221150%
+   no vistos:    513 ops · acierto 40% · PF 1.78 · neto  241.2R · media 0.47R · caída 20.5R
+   último año:   213 ops · acierto 38% · PF 1.44 · neto   59.0R · media 0.28R · caída 18.1R
+   sin el 5% mejores: 414.0R
+   por estrategia: DON 825 ops PF 2.14 650R · BOT 54 ops PF 1.44 13R · SHC 88 ops PF 1.01 0R · VOL 129 ops PF 1.80 55R · RSI2 474 ops PF 1.36 90R
+
+■ K. Sin EMA + Donchian sin TP (stop móvil)
+   todo:        2126 ops · acierto 45% · PF 1.80 · neto  830.7R · media 0.39R · caída 42.0R · cap +241977%
+   no vistos:    668 ops · acierto 46% · PF 1.90 · neto  284.6R · media 0.43R · caída 18.9R
+   último año:   258 ops · acierto 42% · PF 1.57 · neto   75.7R · media 0.29R · caída 18.0R
+   sin el 5% mejores: 118.7R
+   por estrategia: DON 1027 ops PF 2.35 600R · BOT 56 ops PF 1.35 11R · SHC 88 ops PF 1.01 0R · VOL 129 ops PF 1.80 55R · RSI2 826 ops PF 1.38 164R

@@ -3,3 +3,5 @@ bot.log.old
 node_modules/
 .env
 bt_err.txt
+_cache_cartera.json
+_vivo_tmp.ts
