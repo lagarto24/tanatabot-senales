@@ -39,9 +39,8 @@ jobs:
           while [ $SECONDS -lt $end ]; do
             git pull -q --rebase || true
             bun signals.ts --once || echo "pasada con error, se reintenta en 15 min"
-            # bot de scalping (grupo "Tanatabot Scalping"): solo actúa cuando cierra una vela de 1h nueva
-            bun scalping/scalp.ts --once || echo "scalping con error, se reintenta en 15 min"
-            git add signals_state.json scalping/scalp_state.json 2>/dev/null || git add signals_state.json
+            # (signals.ts --once también ejecuta el bot de scalping de la carpeta scalping/ y deja su estado preparado)
+            git add signals_state.json
             if ! git diff --cached --quiet; then
               git commit -q -m "estado de señales"
               git push -q || (git pull -q --rebase && git push -q) || echo "no se pudo guardar el estado, se reintenta"
