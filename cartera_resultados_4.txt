@@ -1,0 +1,30 @@
+BACKTEST DE CARTERA (lógica en vivo, 1D) · 27 activos · 2026-11-11
+Corte datos no vistos: desde 2024-04-11 · comisiones 0,1% · "cap" = crecimiento arriesgando 1% por operación (orden de entrada)
+
+■ K. Bot actual (sin EMA)
+   todo:        1870 ops · acierto 43% · PF 1.65 · neto  716.1R · media 0.38R · caída 57.3R · cap +97399%
+   no vistos:    589 ops · acierto 43% · PF 1.64 · neto  214.9R · media 0.36R · caída 21.1R
+   último año:   233 ops · acierto 41% · PF 1.42 · neto   57.5R · media 0.25R · caída 13.1R
+   sin el 5% mejores: 435.0R
+   por estrategia: DON 1011 ops PF 1.88 551R · BOT 56 ops PF 1.35 11R · SHC 88 ops PF 1.01 0R · VOL 129 ops PF 1.80 55R · RSI2 586 ops PF 1.32 99R
+
+■ M1. + filtro de mercado en acciones (SPY > SMA200)
+   todo:        1740 ops · acierto 42% · PF 1.62 · neto  641.5R · media 0.37R · caída 66.8R · cap +46957%
+   no vistos:    576 ops · acierto 43% · PF 1.61 · neto  203.6R · media 0.35R · caída 21.1R
+   último año:   230 ops · acierto 41% · PF 1.40 · neto   55.1R · media 0.24R · caída 13.1R
+   sin el 5% mejores: 381.3R
+   por estrategia: DON 988 ops PF 1.82 506R · BOT 36 ops PF 1.37 8R · SHC 88 ops PF 1.01 0R · VOL 109 ops PF 1.71 42R · RSI2 519 ops PF 1.30 85R
+
+■ M2. + filtro de mercado en cripto (BTC > SMA200)
+   todo:        1802 ops · acierto 43% · PF 1.67 · neto  706.0R · media 0.39R · caída 53.6R · cap +88747%
+   no vistos:    565 ops · acierto 44% · PF 1.67 · neto  214.3R · media 0.38R · caída 19.0R
+   último año:   213 ops · acierto 43% · PF 1.49 · neto   60.9R · media 0.29R · caída 13.3R
+   sin el 5% mejores: 433.8R
+   por estrategia: DON 996 ops PF 1.88 542R · SHC 91 ops PF 0.99 -1R · VOL 86 ops PF 2.23 50R · RSI2 586 ops PF 1.32 99R · BOT 43 ops PF 1.69 16R
+
+■ M3. + filtro de mercado en ambos
+   todo:        1672 ops · acierto 42% · PF 1.64 · neto  631.4R · media 0.38R · caída 57.6R · cap +42781%
+   no vistos:    552 ops · acierto 43% · PF 1.64 · neto  202.9R · media 0.37R · caída 19.0R
+   último año:   210 ops · acierto 42% · PF 1.48 · neto   58.5R · media 0.28R · caída 12.6R
+   sin el 5% mejores: 380.1R
+   por estrategia: DON 973 ops PF 1.81 497R · SHC 91 ops PF 0.99 -1R · VOL 66 ops PF 2.19 38R · RSI2 519 ops PF 1.30 85R · BOT 23 ops PF 2.07 12R

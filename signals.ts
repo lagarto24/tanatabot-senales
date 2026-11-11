@@ -813,6 +813,10 @@ async function scan(report = false) {
   let sent = 0;
   const send = async (m: string) => { if (report) return true; const ok = await sendTelegram(m); if (ok) sent++; return ok; };
   const jobs = [...CRYPTO.map((s) => [s, true] as const), ...STOCKS.map((s) => [s, false] as const)];
+  // Filtro de mercado cripto (11/11/2026): no se abren LONG en cripto si BTC cierra bajo su media de 200 días.
+  // Backtest de cartera (cartera_resultados_4.txt): PF en datos no vistos 1.64 → 1.67, caída 21.1R → 19.0R, último año 57.5R → 60.9R.
+  let btcBull = true;
+  try { const kb = await fetchCrypto("BTCUSDT", "1d"), Ib = ind(kb), j = kb.length - 1; btcBull = !(Ib.c[j] < Ib.s200[j]); } catch {}
   for (const [sym, isCrypto] of jobs) {
     for (const tf of TIMEFRAMES) {
       try {
@@ -847,6 +851,7 @@ async function scan(report = false) {
           if (Object.values(state.open).some((p) => p.sym === sym)) continue; // una sola operación por activo (LONG o SHORT)
           const e = st === "DON" ? donchianEntry(k, I) : st === "RSI2" ? rsi2Entry(k, I) : st === "RNG" ? rangeEntry(k, I) : st === "VOL" ? volEntry(k, I) : st === "BOT" ? bottomEntry(k, I) : st === "SHC" ? shortClearEntry(k, I) : emaEntry(k);
           if (!e) continue;
+          if (isCrypto && tf === "1d" && e.side === "LONG" && !btcBull) { tags.push(`${st} LONG descartada (BTC bajo su media de 200)`); continue; }
           tags.push(`${st} ${e.side} NUEVA`);
           if (report) continue;
           if (!(await send(entryMessage(sym, tf, e, isCrypto) + newsNote(tf, news)))) { tags.push("(no enviada, se reintenta)"); continue; } // si Telegram falla, no se marca: se reintenta en la próxima pasada

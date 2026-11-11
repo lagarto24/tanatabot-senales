@@ -56,16 +56,29 @@ for (const s of [...L.CRYPTO, ...L.STOCKS]) {
 
 // 3) Simulador de cartera (réplica de scan() en 1D)
 type Trade = { sym: string; strat: string; side: string; t: number; r: number; bars: number };
-type Variant = { name: string; crypto: string[]; stocks: string[]; donTP?: number | null };
+type Variant = { name: string; crypto: string[]; stocks: string[]; donTP?: number | null; regime?: "c" | "s" | "cs"; regimeLongOnly?: boolean };
+// Filtro de mercado: el índice de referencia (BTC para cripto, SPY para acciones) cierra sobre su media de 200 días
+const REG: Record<string, Map<number, boolean>> = {};
+for (const [ref, key] of [["BTCUSDT", "c"], ["SPY", "s"]] as const) { const k = DATA[ref], I0 = L.ind(k); REG[key] = new Map(k.map((c, i) => [Math.floor(c.t / 86400_000), i >= 200 && c.c > I0.s200[i]])); }
+const bull = (key: string, t: number) => { const m = REG[key]; for (let d = Math.floor(t / 86400_000), j = 0; j < 5; j++, d--) if (m.has(d)) return m.get(d)!; return true; };
 const PREC: Record<string, any> = {};
 for (const s of Object.keys(DATA)) if (DATA[s].length >= 300) PREC[s] = L.ind(DATA[s]); // indicadores causales: el valor en i no depende del futuro
 
+// Cruce dorado SMA50/200 (artículo de Traders Union): compra cuando la SMA50 cruza sobre la SMA200. SL 2 ATR, TP 3R.
+const SMA50: Record<string, number[]> = {};
+function gcEntry(k: Candle[], I: any) {
+  const i = k.length - 1, sym = (k as any).sym; const s50 = SMA50[sym];
+  if (!(s50[i - 1] <= I.s200[i - 1] && s50[i] > I.s200[i])) return null;
+  const c = I.c[i], a = I.atr[i];
+  return { strat: "GC", side: "LONG", price: c, sl: c - 2 * a, tp: c + 6 * a, t: k[i].t, reasons: [] };
+}
+for (const s of Object.keys(DATA)) { const c = DATA[s].map((x) => x.c), o: number[] = []; let acc = 0; c.forEach((x, i) => { acc += x; if (i >= 50) acc -= c[i - 50]; o.push(i >= 49 ? acc / 50 : NaN); }); SMA50[s] = o; }
 function runAsset(sym: string, v: Variant): Trade[] {
   const all = DATA[sym], I = PREC[sym]; if (!I) return [];
   const strats = sym.endsWith("USDT") ? v.crypto : v.stocks, out: Trade[] = [];
   let pos: any = null;
   for (let n = 222; n <= all.length; n++) {
-    const k = all.slice(0, n);
+    const k = all.slice(0, n); (k as any).sym = sym;
     if (pos) {
       const r = L.track(pos, k, I);
       if (r.closed) {
@@ -76,8 +89,10 @@ function runAsset(sym: string, v: Variant): Trade[] {
       continue; // la vela en que se cierra no abre otra (igual que el bot: la siguiente pasada ya es otra vela)
     }
     for (const st of strats) {
-      let e = st === "DON" ? L.donchianEntry(k, I) : st === "RSI2" ? L.rsi2Entry(k, I) : st === "VOL" ? L.volEntry(k, I) : st === "BOT" ? L.bottomEntry(k, I) : st === "SHC" ? L.shortClearEntry(k, I) : st === "EMA" ? L.emaEntry(k) : null;
+      let e = st === "GC" ? gcEntry(k, I) : st === "DON" ? L.donchianEntry(k, I) : st === "RSI2" ? L.rsi2Entry(k, I) : st === "VOL" ? L.volEntry(k, I) : st === "BOT" ? L.bottomEntry(k, I) : st === "SHC" ? L.shortClearEntry(k, I) : st === "EMA" ? L.emaEntry(k) : null;
       if (!e) continue;
+      const rk = sym.endsWith("USDT") ? "c" : "s";
+      if (v.regime?.includes(rk) && e.side === "LONG" && !bull(rk, k[n - 1].t)) continue; // mercado bajista: no se compra
       if (st === "DON" && v.donTP !== undefined) { const risk = e.price - e.sl; e = { ...e, tp: v.donTP === null ? undefined : e.price + v.donTP * risk }; }
       pos = { ...e, sym, tf: "1d", isCrypto: sym.endsWith("USDT"), lastBar: k[n - 1].t, bars: 0, stop: e.sl };
       break;
@@ -96,7 +111,16 @@ const fmtS = (x: ReturnType<typeof stats>) => `${String(x.n).padStart(4)} ops ·
 const ACT_C = ["DON", "VOL", "EMA", "BOT", "SHC"], ACT_S = ["DON", "RSI2", "VOL", "EMA", "BOT"];
 const NO_SHC = ACT_C.filter((x) => x !== "SHC");
 const NO_EMA_C = ACT_C.filter((x) => x !== "EMA"), NO_EMA_S = ACT_S.filter((x) => x !== "EMA");
-const VARIANTS: Variant[] = process.env.V3 ? [
+const VARIANTS: Variant[] = process.env.V5 ? [
+  { name: "M2. Bot actual + filtro BTC en cripto", crypto: NO_EMA_C, stocks: NO_EMA_S, regime: "c" },
+  { name: "N1. M2 + cruce dorado SMA50/200 (al final)", crypto: [...NO_EMA_C, "GC"], stocks: [...NO_EMA_S, "GC"], regime: "c" },
+  { name: "N2. Solo cruce dorado SMA50/200", crypto: ["GC"], stocks: ["GC"] },
+] : process.env.V4 ? [
+  { name: "K. Bot actual (sin EMA)", crypto: NO_EMA_C, stocks: NO_EMA_S },
+  { name: "M1. + filtro de mercado en acciones (SPY > SMA200)", crypto: NO_EMA_C, stocks: NO_EMA_S, regime: "s" },
+  { name: "M2. + filtro de mercado en cripto (BTC > SMA200)", crypto: NO_EMA_C, stocks: NO_EMA_S, regime: "c" },
+  { name: "M3. + filtro de mercado en ambos", crypto: NO_EMA_C, stocks: NO_EMA_S, regime: "cs" },
+] : process.env.V3 ? [
   { name: "A. ACTUAL (como está el bot)", crypto: ACT_C, stocks: ACT_S },
   { name: "K. Actual sin EMA (TP 3R)", crypto: NO_EMA_C, stocks: NO_EMA_S },
   ...[4, 5].map((tp): Variant => ({ name: `K. Sin EMA + Donchian TP ${tp}R`, crypto: NO_EMA_C, stocks: NO_EMA_S, donTP: tp })),
@@ -128,4 +152,4 @@ for (const v of VARIANTS) {
   const by: Record<string, Trade[]> = {}; for (const x of tr) (by[x.strat] ??= []).push(x);
   rep.push("   por estrategia: " + Object.entries(by).map(([k2, t2]) => { const s2 = stats(t2); return `${k2} ${s2.n} ops PF ${s2.pf.toFixed(2)} ${s2.total.toFixed(0)}R`; }).join(" · "), "");
 }
-const txt = rep.join("\n"); writeFileSync(join(import.meta.dir, process.env.V3 ? "cartera_resultados_3.txt" : process.env.V2 ? "cartera_resultados_2.txt" : "cartera_resultados.txt"), txt); console.log(txt);
+const txt = rep.join("\n"); writeFileSync(join(import.meta.dir, process.env.V5 ? "cartera_resultados_5.txt" : process.env.V4 ? "cartera_resultados_4.txt" : process.env.V3 ? "cartera_resultados_3.txt" : process.env.V2 ? "cartera_resultados_2.txt" : "cartera_resultados.txt"), txt); console.log(txt);

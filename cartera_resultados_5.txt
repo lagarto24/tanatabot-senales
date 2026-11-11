@@ -1,0 +1,23 @@
+BACKTEST DE CARTERA (lógica en vivo, 1D) · 27 activos · 2026-11-11
+Corte datos no vistos: desde 2024-04-11 · comisiones 0,1% · "cap" = crecimiento arriesgando 1% por operación (orden de entrada)
+
+■ M2. Bot actual + filtro BTC en cripto
+   todo:        1802 ops · acierto 43% · PF 1.67 · neto  706.0R · media 0.39R · caída 53.6R · cap +88747%
+   no vistos:    565 ops · acierto 44% · PF 1.67 · neto  214.3R · media 0.38R · caída 19.0R
+   último año:   213 ops · acierto 43% · PF 1.49 · neto   60.9R · media 0.29R · caída 13.3R
+   sin el 5% mejores: 433.8R
+   por estrategia: DON 996 ops PF 1.88 542R · SHC 91 ops PF 0.99 -1R · VOL 86 ops PF 2.23 50R · RSI2 586 ops PF 1.32 99R · BOT 43 ops PF 1.69 16R
+
+■ N1. M2 + cruce dorado SMA50/200 (al final)
+   todo:        1816 ops · acierto 43% · PF 1.66 · neto  702.9R · media 0.39R · caída 47.1R · cap +85898%
+   no vistos:    565 ops · acierto 44% · PF 1.68 · neto  218.3R · media 0.39R · caída 17.0R
+   último año:   214 ops · acierto 43% · PF 1.48 · neto   59.9R · media 0.28R · caída 13.6R
+   sin el 5% mejores: 430.7R
+   por estrategia: DON 970 ops PF 1.89 532R · SHC 91 ops PF 0.99 -1R · VOL 86 ops PF 2.23 50R · GC 44 ops PF 1.23 7R · RSI2 582 ops PF 1.31 98R · BOT 43 ops PF 1.69 16R
+
+■ N2. Solo cruce dorado SMA50/200
+   todo:         161 ops · acierto 45% · PF 2.38 · neto  124.5R · media 0.77R · caída 10.1R · cap +235%
+   no vistos:     48 ops · acierto 46% · PF 2.49 · neto   39.3R · media 0.82R · caída 10.1R
+   último año:    13 ops · acierto 15% · PF 0.54 · neto   -5.2R · media -0.40R · caída 10.1R
+   sin el 5% mejores: 97.6R
+   por estrategia: GC 161 ops PF 2.38 125R
