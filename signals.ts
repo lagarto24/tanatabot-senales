@@ -940,7 +940,7 @@ else if (args.includes("--sample")) {
       console.log(sym, tf, k.length, "velas", "DON:", donchianEntry(k, I)?.side ?? "-", "RSI2:", rsi2Entry(k, I)?.side ?? "-", "EMA:", tf === "1d" ? emaEntry(k)?.side ?? "-" : "n/a");
     }
 } else if (args.includes("--report")) await scan(true);
-else if (args.includes("--once")) { await scan(); await scalping(); }
+else if (args.includes("--once")) await scan(); // el scalping funciona ahora en su propio repositorio (lagarto24/rearme)
 else {
   await sendTelegram(`✅ <b>Bot de señales activo</b>\nVigilando ${CRYPTO.length} criptos y ${STOCKS.length} acciones en 1h, 4h y 1D.`);
   while (true) { await scan(); await Bun.sleep(CHECK_EVERY_MIN * 60_000); }

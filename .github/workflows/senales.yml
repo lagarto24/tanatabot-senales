@@ -1,4 +1,4 @@
-# Bot de señales Tanatabot (y el de scalping, carpeta scalping/): siempre encendido en la nube de GitHub (repositorio público = minutos ilimitados).
+# Bot de señales Tanatabot: siempre encendido en la nube de GitHub (repositorio público = minutos ilimitados).
 # Cada ejecución revisa el mercado cada 15 minutos durante ~5 h 40 min y, al terminar, lanza la siguiente.
 # El cron es solo un respaldo por si la cadena se corta. El token y el chat son secretos cifrados.
 name: Señales Tanatabot
@@ -39,7 +39,6 @@ jobs:
           while [ $SECONDS -lt $end ]; do
             git pull -q --rebase || true
             bun signals.ts --once || echo "pasada con error, se reintenta en 15 min"
-            # (signals.ts --once también ejecuta el bot de scalping de la carpeta scalping/ y deja su estado preparado)
             git add signals_state.json
             if ! git diff --cached --quiet; then
               git commit -q -m "estado de señales"
