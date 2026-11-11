@@ -945,15 +945,3 @@ else {
   await sendTelegram(`✅ <b>Bot de señales activo</b>\nVigilando ${CRYPTO.length} criptos y ${STOCKS.length} acciones en 1h, 4h y 1D.`);
   while (true) { await scan(); await Bun.sleep(CHECK_EVERY_MIN * 60_000); }
 }
-
-// Bot de scalping (carpeta scalping/, grupo "Tanatabot Scalping"): en GitHub Actions se ejecuta después de cada pasada.
-// Va aquí y no en el workflow para que funcione también en la ejecución que ya está en marcha (signals.ts se descarga en cada vuelta).
-// Deja su estado preparado para el commit del bucle. Un fallo del scalping nunca afecta a las señales de Tanatabot.
-async function scalping() {
-  if (process.env.GITHUB_ACTIONS !== "true" || !existsSync(join(import.meta.dir, "scalping", "scalp.ts"))) return;
-  try {
-    const r = Bun.spawnSync([process.execPath, "scalping/scalp.ts", "--once"], { cwd: import.meta.dir, stdout: "inherit", stderr: "inherit", env: process.env });
-    if (r.exitCode !== 0) console.error("scalping terminó con error", r.exitCode);
-    if (existsSync(join(import.meta.dir, "scalping", "scalp_state.json"))) Bun.spawnSync(["git", "add", "scalping/scalp_state.json"], { cwd: import.meta.dir });
-  } catch (e) { console.error("scalping no se pudo ejecutar:", (e as Error).message); }
-}
