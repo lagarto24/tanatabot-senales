@@ -85,5 +85,8 @@
       "closed": 1794355365625,
       "why": "RSI por debajo de 30: fin de la caída"
     }
-  ]
+  ],
+  "opens": {
+    "ASIA": "2026-11-11"
+  }
 }
