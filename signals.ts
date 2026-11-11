@@ -45,7 +45,9 @@ function loadChatIds(): string[] {
   return a.allowFrom ?? [];
 }
 const TOKEN = loadToken();
-const CHATS = loadChatIds();
+// Personas que también reciben las señales por privado (ID de Telegram). Tienen que haber pulsado "Iniciar" en el bot.
+const EXTRA_CHATS: string[] = ["936234915"];
+const CHATS = [...new Set([...loadChatIds(), ...EXTRA_CHATS])];
 
 // Devuelve true si llegó a todos los chats. Si Telegram rechaza el formato HTML, reenvía en texto plano.
 // Destino de las noticias (grupo y tema): secreto TELEGRAM_NEWS_TARGET con formato "chat_id:tema". Si no existe, van al privado.
@@ -75,7 +77,7 @@ async function sendTelegram(text: string, to?: { chat: string; thread?: number }
       }
       await Bun.sleep(attempt * 3000);
     }
-    allOk &&= ok;
+    if (!EXTRA_CHATS.includes(chat_id)) allOk &&= ok; // un fallo en un privado extra no repite la señal en el grupo
   }
   return allOk;
 }
