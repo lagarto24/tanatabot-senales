@@ -2,7 +2,9 @@
   "last": {
     "DON|BTCUSDT|1d": 1794096000000,
     "DON|ETHUSDT|1d": 1794096000000,
-    "DON|SOLUSDT|1d": 1794096000000
+    "DON|SOLUSDT|1d": 1794096000000,
+    "DON|AAPL|1d": 1794407400000,
+    "DON|COST|1d": 1794407400000
   },
   "open": {
     "DON|BTCUSDT|1d": {
@@ -21,6 +23,42 @@
       "lastBar": 1794268800000,
       "bars": 2,
       "stop": 79439.20686299259
+    },
+    "DON|AAPL|1d": {
+      "strat": "DON",
+      "side": "LONG",
+      "price": 355.6300048828125,
+      "sl": 338.3196907822018,
+      "tp": 407.56094718464465,
+      "t": 1794407400000,
+      "reasons": [
+        "Rompió el máximo de las últimas 20 velas (355.38)",
+        "Tendencia alcista: precio sobre la EMA200"
+      ],
+      "sym": "AAPL",
+      "tf": "1d",
+      "isCrypto": false,
+      "lastBar": 1794407400000,
+      "bars": 0,
+      "stop": 338.3196907822018
+    },
+    "DON|COST|1d": {
+      "strat": "DON",
+      "side": "LONG",
+      "price": 1087.6099853515625,
+      "sl": 1047.4088947453452,
+      "tp": 1208.2132571702143,
+      "t": 1794407400000,
+      "reasons": [
+        "Rompió el máximo de las últimas 20 velas (1081.55)",
+        "Tendencia alcista: precio sobre la EMA200"
+      ],
+      "sym": "COST",
+      "tf": "1d",
+      "isCrypto": false,
+      "lastBar": 1794407400000,
+      "bars": 0,
+      "stop": 1047.4088947453452
     }
   },
   "newsCache": {
