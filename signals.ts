@@ -45,14 +45,17 @@ function loadChatIds(): string[] {
   return a.allowFrom ?? [];
 }
 const TOKEN = loadToken();
+// Grupo "Tanatabot Señales" (creado el 11/11/2026; dentro está el socio del proyecto, José Antonio, sin ser admin).
+const GRUPO_SENALES = "-5369563953";
 // Personas que también reciben las señales por privado (ID de Telegram). Tienen que haber pulsado "Iniciar" en el bot.
-const EXTRA_CHATS: string[] = ["936234915"];
+// Vacío: el socio (936234915) ya las ve en el grupo "Tanatabot Señales".
+const EXTRA_CHATS: string[] = [];
 // Grupo extra que recibiría TODO (señales y noticias). Vacío: las señales van solo al grupo de señales y a los privados.
 // "Acciones VS criptos" (-1003735205184) se queda separado: allí solo llegan las noticias (TELEGRAM_NEWS_TARGET).
 const GRUPO_ACCIONES: string = "";
 const ACCIONES_ID = "-1003735205184";
 const SECONDARY = [...EXTRA_CHATS, ...(GRUPO_ACCIONES ? [GRUPO_ACCIONES] : [])];
-const CHATS = [...new Set([...loadChatIds(), ...SECONDARY])];
+const CHATS = [...new Set([...loadChatIds(), GRUPO_SENALES, ...SECONDARY])];
 
 // Devuelve true si llegó a todos los chats. Si Telegram rechaza el formato HTML, reenvía en texto plano.
 // Destino de las noticias (grupo y tema): secreto TELEGRAM_NEWS_TARGET con formato "chat_id:tema". Si no existe, van al privado.
