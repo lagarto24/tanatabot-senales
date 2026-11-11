@@ -1,0 +1,31 @@
+DIVERSIFICACIÓN (idea de Ray Dalio): límite de operaciones abiertas a la vez · bot actual (sin EMA, filtro BTC)
+
+■ máx cripto sin límite · máx acciones sin límite
+   todo:       1802 ops · acierto 43% · PF 1.67 · neto  706.0R · media 0.39R · caída 53.6R · caída real 45.7R · beneficio/caída 15.5 · máx abiertas 24
+   no vistos:   565 ops · acierto 44% · PF 1.67 · neto  214.3R · media 0.38R · caída 19.0R · caída real 22.9R
+   último año:  213 ops · acierto 43% · PF 1.49 · neto   60.9R · media 0.29R · caída 13.3R
+
+■ máx cripto 4 · máx acciones sin límite
+   todo:       1723 ops · acierto 43% · PF 1.67 · neto  672.6R · media 0.39R · caída 53.6R · caída real 45.2R · beneficio/caída 14.9 · máx abiertas 21
+   no vistos:   523 ops · acierto 43% · PF 1.63 · neto  188.1R · media 0.36R · caída 18.0R · caída real 21.8R
+   último año:  195 ops · acierto 41% · PF 1.41 · neto   47.4R · media 0.24R · caída 15.3R
+
+■ máx cripto 3 · máx acciones sin límite
+   todo:       1673 ops · acierto 43% · PF 1.66 · neto  646.1R · media 0.39R · caída 53.6R · caída real 46.9R · beneficio/caída 13.8 · máx abiertas 20
+   no vistos:   506 ops · acierto 43% · PF 1.62 · neto  179.5R · media 0.35R · caída 17.3R · caída real 20.8R
+   último año:  189 ops · acierto 41% · PF 1.37 · neto   42.7R · media 0.23R · caída 17.3R
+
+■ máx cripto 2 · máx acciones sin límite
+   todo:       1610 ops · acierto 43% · PF 1.66 · neto  620.8R · media 0.39R · caída 55.4R · caída real 48.6R · beneficio/caída 12.8 · máx abiertas 19
+   no vistos:   486 ops · acierto 44% · PF 1.63 · neto  175.9R · media 0.36R · caída 16.3R · caída real 19.8R
+   último año:  183 ops · acierto 40% · PF 1.35 · neto   38.8R · media 0.21R · caída 16.3R
+
+■ máx cripto 3 · máx acciones 8
+   todo:       1189 ops · acierto 42% · PF 1.62 · neto  434.6R · media 0.37R · caída 32.1R · caída real 35.1R · beneficio/caída 12.4 · máx abiertas 11
+   no vistos:   362 ops · acierto 43% · PF 1.58 · neto  123.0R · media 0.34R · caída 14.7R · caída real 13.4R
+   último año:  144 ops · acierto 40% · PF 1.33 · neto   29.2R · media 0.20R · caída 13.4R
+
+■ máx cripto 3 · máx acciones 5
+   todo:        911 ops · acierto 43% · PF 1.63 · neto  335.1R · media 0.37R · caída 24.3R · caída real 22.1R · beneficio/caída 15.2 · máx abiertas 8
+   no vistos:   269 ops · acierto 40% · PF 1.43 · neto   70.2R · media 0.26R · caída 21.3R · caída real 19.6R
+   último año:  108 ops · acierto 39% · PF 1.25 · neto   17.1R · media 0.16R · caída 12.5R

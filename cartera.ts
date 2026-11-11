@@ -55,7 +55,7 @@ for (const s of [...L.CRYPTO, ...L.STOCKS]) {
 }
 
 // 3) Simulador de cartera (réplica de scan() en 1D)
-type Trade = { sym: string; strat: string; side: string; t: number; r: number; bars: number };
+type Trade = { sym: string; strat: string; side: string; t: number; r: number; bars: number; tc?: number };
 type Variant = { name: string; crypto: string[]; stocks: string[]; donTP?: number | null; regime?: "c" | "s" | "cs"; regimeLongOnly?: boolean };
 // Filtro de mercado: el índice de referencia (BTC para cripto, SPY para acciones) cierra sobre su media de 200 días
 const REG: Record<string, Map<number, boolean>> = {};
@@ -84,7 +84,7 @@ function runAsset(sym: string, v: Variant): Trade[] {
       if (r.closed) {
         const ex = pos.exit, lg = pos.side === "LONG", risk = Math.abs(pos.price - pos.sl);
         const R = ((lg ? ex.price - pos.price : pos.price - ex.price) - FEE * pos.price) / risk;
-        out.push({ sym, strat: pos.strat, side: pos.side, t: pos.t, r: R, bars: pos.bars }); pos = null;
+        out.push({ sym, strat: pos.strat, side: pos.side, t: pos.t, r: R, bars: pos.bars, tc: k[n - 1].t }); pos = null;
       }
       continue; // la vela en que se cierra no abre otra (igual que el bot: la siguiente pasada ya es otra vela)
     }
@@ -111,7 +111,7 @@ const fmtS = (x: ReturnType<typeof stats>) => `${String(x.n).padStart(4)} ops ·
 const ACT_C = ["DON", "VOL", "EMA", "BOT", "SHC"], ACT_S = ["DON", "RSI2", "VOL", "EMA", "BOT"];
 const NO_SHC = ACT_C.filter((x) => x !== "SHC");
 const NO_EMA_C = ACT_C.filter((x) => x !== "EMA"), NO_EMA_S = ACT_S.filter((x) => x !== "EMA");
-const VARIANTS: Variant[] = process.env.V5 ? [
+const VARIANTS: Variant[] = process.env.V6 ? [] : process.env.V5 ? [
   { name: "M2. Bot actual + filtro BTC en cripto", crypto: NO_EMA_C, stocks: NO_EMA_S, regime: "c" },
   { name: "N1. M2 + cruce dorado SMA50/200 (al final)", crypto: [...NO_EMA_C, "GC"], stocks: [...NO_EMA_S, "GC"], regime: "c" },
   { name: "N2. Solo cruce dorado SMA50/200", crypto: ["GC"], stocks: ["GC"] },
@@ -153,3 +153,33 @@ for (const v of VARIANTS) {
   rep.push("   por estrategia: " + Object.entries(by).map(([k2, t2]) => { const s2 = stats(t2); return `${k2} ${s2.n} ops PF ${s2.pf.toFixed(2)} ${s2.total.toFixed(0)}R`; }).join(" · "), "");
 }
 const txt = rep.join("\n"); writeFileSync(join(import.meta.dir, process.env.V5 ? "cartera_resultados_5.txt" : process.env.V4 ? "cartera_resultados_4.txt" : process.env.V3 ? "cartera_resultados_3.txt" : process.env.V2 ? "cartera_resultados_2.txt" : "cartera_resultados.txt"), txt); console.log(txt);
+
+// ═══ V6 · Diversificación al estilo Ray Dalio ("Santo Grial": muchas apuestas poco correlacionadas) ═══
+// Las criptos se mueven casi a la vez: se limita cuántas operaciones cripto puede haber abiertas a la vez.
+// Aproximación: la operación que no cabe se descarta (en vivo, ese activo quedaría libre para otra señal).
+if (process.env.V6) {
+  const base = syms.flatMap((s) => runAsset(s, { name: "", crypto: ["DON", "VOL", "BOT", "SHC"], stocks: ["DON", "RSI2", "VOL", "BOT"], regime: "c" })).sort((a, b) => a.t - b.t);
+  const cap = (maxC: number, maxS: number) => {
+    const open: Trade[] = [], kept: Trade[] = [];
+    for (const x of base) {
+      for (let j = open.length - 1; j >= 0; j--) if ((open[j].tc ?? 0) <= x.t) open.splice(j, 1);
+      const c = x.sym.endsWith("USDT"), nOpen = open.filter((o) => o.sym.endsWith("USDT") === c).length;
+      if (nOpen >= (c ? maxC : maxS)) continue;
+      open.push(x); kept.push(x);
+    }
+    return kept;
+  };
+  // caída "real" con posiciones simultáneas: curva por fecha de cierre, en R
+  const realDD = (tr: Trade[]) => { const s2 = [...tr].sort((a, b) => (a.tc ?? 0) - (b.tc ?? 0)); let e = 0, pk = 0, dd = 0; for (const x of s2) { e += x.r; pk = Math.max(pk, e); dd = Math.max(dd, pk - e); } return dd; };
+  const maxConc = (tr: Trade[]) => { const ev: [number, number][] = []; for (const x of tr) { ev.push([x.t, 1], [x.tc ?? x.t, -1]); } ev.sort((a, b) => a[0] - b[0] || a[1] - b[1]); let n = 0, m = 0; for (const [, d] of ev) { n += d; m = Math.max(m, n); } return m; };
+  const rows: string[] = ["DIVERSIFICACIÓN (idea de Ray Dalio): límite de operaciones abiertas a la vez · bot actual (sin EMA, filtro BTC)", ""];
+  for (const [mc, ms] of [[99, 99], [4, 99], [3, 99], [2, 99], [3, 8], [3, 5]]) {
+    const tr = cap(mc, ms), a = stats(tr), o = stats(tr.filter((x) => x.t >= cut)), y = stats(tr.filter((x) => x.t >= since1y));
+    const dd = realDD(tr);
+    rows.push(`■ máx cripto ${mc === 99 ? "sin límite" : mc} · máx acciones ${ms === 99 ? "sin límite" : ms}`,
+      `   todo:       ${fmtS(a)} · caída real ${dd.toFixed(1)}R · beneficio/caída ${(a.total / dd).toFixed(1)} · máx abiertas ${maxConc(tr)}`,
+      `   no vistos:  ${fmtS(o)} · caída real ${realDD(tr.filter((x) => x.t >= cut)).toFixed(1)}R`,
+      `   último año: ${fmtS(y)}`, "");
+  }
+  const t6 = rows.join("\n"); writeFileSync(join(import.meta.dir, "cartera_resultados_6.txt"), t6); console.log(t6);
+}
