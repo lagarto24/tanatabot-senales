@@ -18,43 +18,9 @@
       "sym": "BTCUSDT",
       "tf": "1d",
       "isCrypto": true,
-      "lastBar": 1794182400000,
-      "bars": 1,
+      "lastBar": 1794268800000,
+      "bars": 2,
       "stop": 79439.20686299259
-    },
-    "DON|ETHUSDT|1d": {
-      "strat": "DON",
-      "side": "SHORT",
-      "price": 2127.46,
-      "sl": 2326.1114526282004,
-      "t": 1794096000000,
-      "reasons": [
-        "Rompió el mínimo de las últimas 20 velas (2174.08)",
-        "Tendencia bajista: precio bajo la EMA200"
-      ],
-      "sym": "ETHUSDT",
-      "tf": "1d",
-      "isCrypto": true,
-      "lastBar": 1794182400000,
-      "bars": 1,
-      "stop": 2326.1114526282004
-    },
-    "DON|SOLUSDT|1d": {
-      "strat": "DON",
-      "side": "SHORT",
-      "price": 86.54,
-      "sl": 95.55796669862076,
-      "t": 1794096000000,
-      "reasons": [
-        "Rompió el mínimo de las últimas 20 velas (88.300)",
-        "Tendencia bajista: precio bajo la EMA200"
-      ],
-      "sym": "SOLUSDT",
-      "tf": "1d",
-      "isCrypto": true,
-      "lastBar": 1794182400000,
-      "bars": 1,
-      "stop": 95.55796669862076
     }
   },
   "newsCache": {
@@ -89,5 +55,35 @@
   "resultsDone": [
     "Core CPI m/m|1794317400000",
     "CPI m/m|1794317400000"
+  ],
+  "history": [
+    {
+      "sym": "ETHUSDT",
+      "tf": "1d",
+      "strat": "DON",
+      "side": "SHORT",
+      "entry": 2127.46,
+      "exit": 2053.21,
+      "sl": 2326.1114526282004,
+      "R": 0.3737702343358528,
+      "pct": 3.490077369257236,
+      "opened": 1794096000000,
+      "closed": 1794355365176,
+      "why": "RSI por debajo de 30: fin de la caída"
+    },
+    {
+      "sym": "SOLUSDT",
+      "tf": "1d",
+      "strat": "DON",
+      "side": "SHORT",
+      "entry": 86.54,
+      "exit": 83.35,
+      "sl": 95.55796669862076,
+      "R": 0.35373827677672665,
+      "pct": 3.686156690547737,
+      "opened": 1794096000000,
+      "closed": 1794355365625,
+      "why": "RSI por debajo de 30: fin de la caída"
+    }
   ]
 }
