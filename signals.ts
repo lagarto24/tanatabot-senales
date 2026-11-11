@@ -47,21 +47,28 @@ function loadChatIds(): string[] {
 const TOKEN = loadToken();
 // Personas que también reciben las señales por privado (ID de Telegram). Tienen que haber pulsado "Iniciar" en el bot.
 const EXTRA_CHATS: string[] = ["936234915"];
-const CHATS = [...new Set([...loadChatIds(), ...EXTRA_CHATS])];
+// Grupo privado de acciones (el amigo es admin; solo entra quien añadáis): recibe TODO lo del bot, señales y noticias.
+// Un fallo al enviar aquí no repite el mensaje en el grupo principal.
+const GRUPO_ACCIONES: string = "-1003735205184"; // "Acciones VS criptos" (privado desde el 11/11/2026)
+const SECONDARY = [...EXTRA_CHATS, ...(GRUPO_ACCIONES ? [GRUPO_ACCIONES] : [])];
+const CHATS = [...new Set([...loadChatIds(), ...SECONDARY])];
 
 // Devuelve true si llegó a todos los chats. Si Telegram rechaza el formato HTML, reenvía en texto plano.
 // Destino de las noticias (grupo y tema): secreto TELEGRAM_NEWS_TARGET con formato "chat_id:tema". Si no existe, van al privado.
 const NEWS_TARGET = process.env.TELEGRAM_NEWS_TARGET?.trim() || "";
-const newsTo = () => { if (!NEWS_TARGET) return undefined; const [chat, th] = NEWS_TARGET.split(":"); return { chat, thread: th ? +th : undefined }; };
+// El grupo dejó de ser público (11/11/2026): si el destino usaba su antiguo @nombre, se cambia por su ID numérico.
+const newsTo = () => { if (!NEWS_TARGET) return undefined; let [chat, th] = NEWS_TARGET.split(":"); if (/^@profit99828273$/i.test(chat)) chat = GRUPO_ACCIONES; return { chat, thread: th ? +th : undefined }; };
 async function sendTelegram(text: string, to?: { chat: string; thread?: number }): Promise<boolean> {
   let allOk = true;
-  for (const chat_id of to ? [to.chat] : CHATS) {
+  const targets = to ? [to.chat, ...(GRUPO_ACCIONES && GRUPO_ACCIONES !== to.chat ? [GRUPO_ACCIONES] : [])] : CHATS;
+  for (const chat_id of targets) {
+    const th = to && chat_id === to.chat ? to.thread : undefined; // el tema (thread) solo existe en el grupo de noticias
     let ok = false, html = true;
     for (let attempt = 1; attempt <= 4 && !ok; attempt++) {
       try {
         const body = html
-          ? { chat_id, text, parse_mode: "HTML", disable_web_page_preview: true, ...(to?.thread ? { message_thread_id: to.thread } : {}) }
-          : { chat_id, text: text.replace(/<[^>]+>/g, ""), disable_web_page_preview: true, ...(to?.thread ? { message_thread_id: to.thread } : {}) };
+          ? { chat_id, text, parse_mode: "HTML", disable_web_page_preview: true, ...(th ? { message_thread_id: th } : {}) }
+          : { chat_id, text: text.replace(/<[^>]+>/g, ""), disable_web_page_preview: true, ...(th ? { message_thread_id: th } : {}) };
         const r = await fetch(`https://api.telegram.org/bot${TOKEN}/sendMessage`, {
           method: "POST",
           headers: { "content-type": "application/json" },
@@ -77,7 +84,7 @@ async function sendTelegram(text: string, to?: { chat: string; thread?: number }
       }
       await Bun.sleep(attempt * 3000);
     }
-    if (!EXTRA_CHATS.includes(chat_id)) allOk &&= ok; // un fallo en un privado extra no repite la señal en el grupo
+    if (!SECONDARY.includes(chat_id)) allOk &&= ok; // un fallo en un privado o en el grupo de acciones no repite la señal en el grupo
   }
   return allOk;
 }
