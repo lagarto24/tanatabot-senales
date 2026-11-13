@@ -21,8 +21,8 @@
       "sym": "AAPL",
       "tf": "1d",
       "isCrypto": false,
-      "lastBar": 1794493800000,
-      "bars": 1,
+      "lastBar": 1794580200000,
+      "bars": 2,
       "stop": 338.3196907822018
     },
     "DON|COST|1d": {
@@ -39,8 +39,8 @@
       "sym": "COST",
       "tf": "1d",
       "isCrypto": false,
-      "lastBar": 1794493800000,
-      "bars": 1,
+      "lastBar": 1794580200000,
+      "bars": 2,
       "stop": 1047.4088947453452
     }
   },
