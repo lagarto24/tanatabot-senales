@@ -7,23 +7,6 @@
     "DON|COST|1d": 1794407400000
   },
   "open": {
-    "DON|BTCUSDT|1d": {
-      "strat": "DON",
-      "side": "SHORT",
-      "price": 74851.44,
-      "sl": 79439.20686299259,
-      "t": 1794096000000,
-      "reasons": [
-        "Rompió el mínimo de las últimas 20 velas (74888.00)",
-        "Tendencia bajista: precio bajo la EMA200"
-      ],
-      "sym": "BTCUSDT",
-      "tf": "1d",
-      "isCrypto": true,
-      "lastBar": 1794355200000,
-      "bars": 3,
-      "stop": 79439.20686299259
-    },
     "DON|AAPL|1d": {
       "strat": "DON",
       "side": "LONG",
@@ -121,6 +104,20 @@
       "pct": 3.686156690547737,
       "opened": 1794096000000,
       "closed": 1794355365625,
+      "why": "RSI por debajo de 30: fin de la caída"
+    },
+    {
+      "sym": "BTCUSDT",
+      "tf": "1d",
+      "strat": "DON",
+      "side": "SHORT",
+      "entry": 74851.44,
+      "exit": 71460,
+      "sl": 79439.20686299259,
+      "R": 0.7392354714789874,
+      "pct": 4.530894796412737,
+      "opened": 1794096000000,
+      "closed": 1794528214541,
       "why": "RSI por debajo de 30: fin de la caída"
     }
   ],
